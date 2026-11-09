@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Kaean Warlock</title>
+<meta name="theme-color" content="#0b0f0b">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Alegreya:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+:root{
+  --night:#0b0f0b; --night-2:#141a12; --bone:#ecdfc2;
+  --card:#e8d8b2; --ink:#24170f; --ink-soft:#5a412c;
+  --blood:#7a2424; --blood-soft:#a8382f; --gold:#b08a3e; --candle:#e9c06a; --ivy:#4c5e32; --ivy-l:#87995a; --rule:#9c7c4c; --heal:#3a5a2a;
+  --frame:#0d110c; --frame-ink:#e6d9ba;
+  --deco:"Cinzel Decorative", "Cinzel", Georgia, serif;
+  --display:"Cinzel", "Palatino Linotype", Georgia, serif;
+  --body:"Alegreya", Georgia, "Times New Roman", serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{height:100%}
+body{
+  margin:0;min-height:100%;background:var(--night);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.4;
+  background-attachment:fixed;
+  background-image:
+    radial-gradient(ellipse at 50% -10%, rgba(122,36,36,.30), transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(76,94,50,.35), transparent 60%),
+    radial-gradient(ellipse at 0% 60%, rgba(76,94,50,.22), transparent 55%),
+    linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
+  font-variant-numeric:lining-nums tabular-nums;
+  padding-bottom:calc(150px + env(safe-area-inset-bottom,0px));
+}
+body::before,body::after{content:"";position:fixed;top:0;bottom:0;width:70px;z-index:1;pointer-events:none;opacity:.55;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="70" height="260" viewBox="0 0 70 260"%3E%3Cpath d="M35,0 Q51,16.2 35,32.5 Q19,48.8 35,65.0 Q51,81.2 35,97.5 Q19,113.8 35,130.0 Q51,146.2 35,162.5 Q19,178.8 35,195.0 Q51,211.2 35,227.5 Q19,243.8 35,260.0 " fill="none" stroke="#5e4528" stroke-width="1.6"/%3E%3Cg transform="translate(43.0,16.2) rotate(9) scale(1.02)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#5f7240"/%3E%3C/g%3E%3Cg transform="translate(27.0,26.2) rotate(204) scale(1.03)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#738a4c"/%3E%3C/g%3E%3Cg transform="translate(27.0,48.8) rotate(208) scale(0.83)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#87995a"/%3E%3C/g%3E%3Cg transform="translate(43.0,58.8) rotate(26) scale(0.91)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#5f7240"/%3E%3C/g%3E%3Cg transform="translate(43.0,81.2) rotate(-34) scale(0.87)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#4c5e32"/%3E%3C/g%3E%3Cg transform="translate(27.0,91.2) rotate(158) scale(1.06)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#87995a"/%3E%3C/g%3E%3Cg transform="translate(21.0,97.5)"%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(0)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(72)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(144)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(216)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(288)"/%3E%3Ccircle r="1.2" fill="#d9b25a"/%3E%3C/g%3E%3Cg transform="translate(27.0,113.8) rotate(201) scale(0.84)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#87995a"/%3E%3C/g%3E%3Cg transform="translate(43.0,123.8) rotate(-26) scale(0.80)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#5f7240"/%3E%3C/g%3E%3Cg transform="translate(49.0,130.0)"%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(0)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(72)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(144)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(216)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(288)"/%3E%3Ccircle r="1.2" fill="#d9b25a"/%3E%3C/g%3E%3Cg transform="translate(43.0,146.2) rotate(-20) scale(1.09)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#738a4c"/%3E%3C/g%3E%3Cg transform="translate(27.0,156.2) rotate(165) scale(1.09)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#738a4c"/%3E%3C/g%3E%3Cg transform="translate(21.0,162.5)"%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(0)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(72)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(144)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(216)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(288)"/%3E%3Ccircle r="1.2" fill="#d9b25a"/%3E%3C/g%3E%3Cg transform="translate(27.0,178.8) rotate(213) scale(0.86)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#87995a"/%3E%3C/g%3E%3Cg transform="translate(43.0,188.8) rotate(-14) scale(0.91)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#738a4c"/%3E%3C/g%3E%3Cg transform="translate(43.0,211.2) rotate(-17) scale(0.90)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#5f7240"/%3E%3C/g%3E%3Cg transform="translate(27.0,221.2) rotate(187) scale(1.01)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#5f7240"/%3E%3C/g%3E%3Cg transform="translate(21.0,227.5)"%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(0)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(72)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(144)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(216)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(288)"/%3E%3Ccircle r="1.2" fill="#d9b25a"/%3E%3C/g%3E%3Cg transform="translate(27.0,243.8) rotate(202) scale(0.94)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#4c5e32"/%3E%3C/g%3E%3Cg transform="translate(43.0,253.8) rotate(-22) scale(0.94)"%3E%3Cpath d="M0,0 C1,-4 3,-7 6,-6 C7,-10 11,-11 12,-7 C15,-8 18,-4 16,-1 L18,0 L16,1 C18,4 15,8 12,7 C11,11 7,10 6,6 C3,7 1,4 0,0Z" fill="#738a4c"/%3E%3C/g%3E%3Cg transform="translate(49.0,260.0)"%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(0)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(72)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(144)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(216)"/%3E%3Cellipse cx="0" cy="-2.6" rx="1.8" ry="2.6" fill="#b5838a" transform="rotate(288)"/%3E%3Ccircle r="1.2" fill="#d9b25a"/%3E%3C/g%3E%3C/svg%3E");background-repeat:repeat-y;background-size:70px auto}
+body::before{left:0}
+body::after{right:0;transform:scaleX(-1)}
+@media (max-width:760px){body::before,body::after{width:34px;background-size:34px auto;opacity:.4}}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px solid var(--candle);outline-offset:2px}
+input,textarea,select{font:inherit;color:var(--ink)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main,.tray,header.top{position:relative;z-index:2}
+
+/* Header */
+header.top{position:sticky;top:0;z-index:20;color:var(--frame-ink);border-bottom:1px solid #2b3322;box-shadow:0 6px 24px rgba(0,0,0,.6);
+  background:linear-gradient(180deg,rgba(12,16,11,.94) 0%,rgba(10,13,9,.82) 100%);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding-top:env(safe-area-inset-top,0px)}
+header.top::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--blood) 50%,var(--gold) 80%,transparent)}
+header .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding-block:10px}
+.ident h1{font-family:var(--deco);font-weight:700;font-size:2.1rem;margin:0;line-height:1;color:var(--bone);text-shadow:0 0 16px rgba(122,36,36,.8),0 2px 0 #000}
+.ident p{margin:4px 0 0;font-size:.82rem;opacity:.8}
+.vitals{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chip{display:flex;flex-direction:column;align-items:center;min-width:58px;padding:4px 8px;border:1px solid rgba(176,138,62,.45);border-radius:2px;background:rgba(8,10,7,.55)}
+.chip b{font-family:var(--body);font-weight:700;font-size:1.25rem;line-height:1.1}
+.chip span{font-size:.64rem;letter-spacing:.09em;text-transform:uppercase;opacity:.75}
+button.chip{border-color:rgba(236,220,184,.55)}
+.hpbox{display:grid;grid-template-columns:auto auto;gap:4px 10px;align-items:center;min-width:220px}
+.hpnum{font-family:var(--body);font-weight:700;font-size:1.9rem;line-height:1;color:var(--bone)}
+.hpnum small{font-size:1rem;opacity:.75}
+.hpbar{grid-column:1/-1;height:9px;background:#050605;border:1px solid #2b3322;overflow:hidden;position:relative}
+.hpbar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(180deg,#b33a2c,#6a1414);box-shadow:0 0 10px rgba(179,58,44,.6)}
+.hpbar i.temp{background:#c9a24f;opacity:.85}
+.hptags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border-radius:3px;background:var(--blood);color:#f6e7c8}
+.tag.gold{background:var(--gold)}.tag.ivy{background:var(--ivy)}
+.sync{font-size:.72rem;opacity:.7}
+.rests{grid-column:1/-1;display:flex;gap:6px;justify-content:flex-end}
+.btn.rest{background:rgba(8,10,7,.55);border-color:rgba(176,138,62,.6);color:var(--frame-ink);font-size:.82rem;padding:4px 10px}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;padding-block:8px 0;scrollbar-width:none}
+nav.tabs button{flex:0 0 auto;background:transparent;border:0;border-bottom:3px solid transparent;color:var(--frame-ink);padding:6px 12px;font-family:var(--display);font-size:.98rem;letter-spacing:.05em;opacity:.72}
+nav.tabs button[aria-selected="true"]{opacity:1;border-bottom-color:var(--gold);color:var(--bone)}
+
+/* Panels */
+main{padding-block:18px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));align-items:start}
+.panel{background:radial-gradient(ellipse at 50% 45%, #f0e3c4 0%, #e6d4ac 58%, #cfb383 90%, #9a7646 100%);border:1px solid #2a1a0c;border-radius:2px;padding:16px 18px;min-width:0;position:relative;
+  box-shadow:0 10px 28px rgba(0,0,0,.65),0 0 0 1px rgba(176,138,62,.25),inset 0 0 26px rgba(90,60,20,.35)}
+.panel::before{content:"";position:absolute;inset:6px;border:1px solid rgba(90,60,28,.35);pointer-events:none}
+.panel h2{font-family:var(--display);font-weight:700;font-size:1.12rem;color:var(--blood);border-bottom:1px solid rgba(122,36,36,.35);padding-bottom:6px;margin:0 0 10px;letter-spacing:.04em;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.panel h2 small{font-family:var(--body);font-weight:400;font-size:.8rem;color:var(--ink-soft);letter-spacing:0}
+.panel h3{font-family:var(--display);font-weight:500;font-size:.95rem;margin:14px 0 6px;color:var(--ink-soft)}
+.muted{color:var(--ink-soft);font-size:.88rem}
+.span2{grid-column:1/-1}
+.abil{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.abil button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;background:rgba(120,80,40,.12);border:1px solid var(--rule);border-radius:2px}
+.abil .mod{font-weight:700;font-size:1.7rem;line-height:1}
+.abil .lbl{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.abil .score{font-size:.82rem;border:1px solid var(--rule);border-radius:10px;padding:0 8px;background:var(--card)}
+.rows{display:flex;flex-direction:column}
+.rowwrap{display:flex;align-items:center;gap:6px;border-bottom:1px dotted var(--rule)}
+.rowwrap:last-child{border-bottom:0}
+.row{flex:1;min-width:0;display:grid;grid-template-columns:22px 1fr auto;align-items:center;gap:8px;padding:6px 4px;border:0;background:transparent;text-align:left}
+.row:active{background:rgba(122,36,36,.08)}
+.row .dot{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--ink-soft);justify-self:center}
+.row .dot.on{background:var(--blood);border-color:var(--blood)}
+.row .val{font-weight:700;min-width:2.6em;text-align:right}
+.row .note{font-size:.75rem;color:var(--gold);margin-left:6px}
+.cols2{columns:2 230px;column-gap:24px}
+.cols2 .rowwrap{break-inside:avoid}
+.btn{border:1px solid var(--ink-soft);background:rgba(255,248,230,.45);border-radius:2px;padding:7px 12px;line-height:1.1}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:linear-gradient(180deg,#8e2a2a,#561212);border-color:#2e0606;color:#f6e7c8;text-shadow:0 1px 0 #000}
+.btn.heal{background:linear-gradient(180deg,#4a6e36,#2a4220);border-color:#16290f;color:#eef3df}
+.btn.sm{padding:4px 9px;font-size:.88rem}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.btns{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.confirm{background:var(--gold)!important;border-color:var(--gold)!important;color:#fff8e6!important}
+.hpctl{display:grid;gap:10px}
+.hpctl .entry{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap}
+.hpctl input{width:90px;text-align:center;font-size:1.4rem;border:1px solid var(--rule);background:rgba(255,250,235,.7);border-radius:2px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.92rem}
+.kv dt{color:var(--ink-soft);font-weight:600}
+.kv dd{margin:0}
+.pips{display:flex;gap:6px;flex-wrap:wrap}
+.pip{width:26px;height:26px;border-radius:50%;border:2px solid var(--ink-soft);background:rgba(255,248,230,.4);padding:0}
+.pip.on{background:radial-gradient(circle at 35% 30%,#c4483a,#5e1010);border-color:#2e0606;box-shadow:0 0 6px rgba(160,20,20,.5)}
+.pip.ok.on{background:var(--heal);border-color:var(--heal)}
+.pip.big{width:34px;height:34px}
+.pip.slot.on{background:radial-gradient(circle at 35% 30%,#7d4fa8,#2c1240);border-color:#1a0a26;box-shadow:0 0 8px rgba(125,79,168,.6)}
+.resline{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center;padding:7px 0;border-bottom:1px dotted var(--rule)}
+.resline:last-child{border-bottom:0}
+.rl{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap}
+.alert{border-left:4px solid var(--blood);background:rgba(122,36,36,.08);padding:8px 10px;font-size:.92rem;margin-bottom:8px}
+.alert.gold{border-color:var(--gold);background:rgba(142,106,46,.12)}
+.alert.ivy{border-color:var(--ivy);background:rgba(76,94,50,.12)}
+.conds{display:flex;flex-wrap:wrap;gap:6px}
+.cond{border:1px solid var(--rule);background:rgba(255,248,230,.45);border-radius:14px;padding:3px 10px;font-size:.86rem}
+.cond.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th{font-family:var(--display);font-weight:500;font-size:.82rem;text-align:left;color:var(--ink-soft);border-bottom:1px solid var(--rule);padding:4px 6px}
+td{padding:6px;border-bottom:1px dotted var(--rule);vertical-align:middle}
+td .btn{white-space:nowrap}
+.info{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--blood);background:rgba(255,248,230,.5);color:var(--blood);font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:.95rem;line-height:1;padding:0}
+.info:active{background:var(--blood);color:#f6e7c8}
+.spell{border-bottom:1px dotted var(--rule)}
+.spell:last-child{border-bottom:0}
+.sphead{display:flex;align-items:center;gap:8px}
+.sphead > button.open{flex:1;min-width:0;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:baseline;background:transparent;border:0;text-align:left;padding:8px 2px}
+.spell .nm{font-weight:600}
+.spell .lv{font-size:.75rem;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase}
+.badge{font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--gold);color:var(--gold);border-radius:3px;padding:0 4px;margin-left:6px;vertical-align:2px}
+.badge.red{border-color:var(--blood);color:var(--blood)}
+.badge.ivy{border-color:var(--ivy);color:var(--ivy)}
+.spell .body{padding:2px 2px 12px;display:flex;flex-direction:column;gap:8px}
+.modal{position:fixed;inset:0;z-index:50;background:rgba(4,6,4,.72);display:flex;align-items:center;justify-content:center;padding:16px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.modal .panel{width:min(640px,100%);max-height:100%;overflow:auto}
+.modal h2{font-size:1.3rem;padding-right:84px}
+.modal .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:6px 14px;margin:0 0 12px;font-size:.92rem}
+.modal .meta div{border-bottom:1px dotted var(--rule);padding-bottom:4px}
+.modal .meta b{display:block;font-family:var(--display);font-weight:500;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.modal p{margin:0 0 8px;max-width:65ch}
+.modal .tip{border-left:4px solid var(--gold);background:rgba(142,106,46,.14);padding:8px 10px;margin-top:10px}
+.modal .close{position:absolute;top:10px;right:12px;z-index:1}
+.inv .item{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:8px 0;border-bottom:1px dotted var(--rule);align-items:center}
+.inv .item:last-child{border-bottom:0}
+.inv .item .nm{font-weight:600}
+.inv .item .nt{grid-column:1/-1;font-size:.84rem;color:var(--ink-soft)}
+.stepper{display:inline-flex;align-items:center;gap:6px}
+.stepper b{min-width:1.6em;text-align:center}
+.coins{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.coins label{display:flex;flex-direction:column;align-items:center;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.coins input{width:100%;text-align:center;font-size:1.15rem;border:1px solid var(--rule);background:#fbf4e3;border-radius:3px;padding:4px}
+.addform{display:grid;grid-template-columns:2fr 70px 2fr auto;gap:8px}
+.addform input{border:1px solid var(--rule);background:#fbf4e3;border-radius:3px;padding:6px 8px;min-width:0}
+textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fbf4e3;border-radius:3px;padding:10px;line-height:1.5;resize:vertical}
+.story p{margin:0 0 10px;max-width:65ch}
+.debt{font-family:var(--display);font-weight:700;font-size:1.6rem;color:var(--blood)}
+
+/* Dice tray */
+.tray{position:fixed;left:0;right:0;bottom:0;z-index:25;background:linear-gradient(180deg,rgba(14,18,12,.9),rgba(6,8,5,.97));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--frame-ink);border-top:1px solid #2b3322;padding-bottom:env(safe-area-inset-bottom,0px)}
+.tray .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 16px;padding-block:10px;align-items:center}
+.result{display:flex;align-items:center;gap:14px;min-width:0}
+.result .total{font-weight:700;font-size:2.6rem;line-height:1;min-width:2.8ch;text-align:center;color:var(--candle);text-shadow:0 0 14px rgba(233,192,106,.45)}
+.result .total.crit{color:#9fd36b;text-shadow:0 0 12px rgba(159,211,107,.55)}
+.result .total.fumble{color:#e0473a}
+.result .lab{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.result .det{font-size:.85rem;opacity:.8;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.result .txt{min-width:0;flex:1}
+.result.flash .total{animation:pop .35s ease-out}
+@keyframes pop{0%{transform:scale(.6) rotate(-12deg);opacity:.2}100%{transform:none;opacity:1}}
+.traytools{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.seg{display:inline-flex;border:1px solid var(--ink-soft);border-radius:3px;overflow:hidden}
+.seg button{border:0;background:var(--card);padding:5px 10px;border-right:1px solid var(--ink-soft)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--card)}
+.tray .seg{border-color:rgba(236,220,184,.5)}
+.tray .seg button{background:transparent;color:var(--frame-ink);border-right-color:rgba(236,220,184,.5);font-size:.9rem}
+.tray .seg button[aria-pressed="true"]{background:var(--frame-ink);color:var(--frame)}
+.dice{display:flex;gap:6px;flex-wrap:wrap}
+.die,.logbtn{border:1px solid rgba(236,220,184,.5);background:transparent;color:var(--frame-ink);border-radius:3px;padding:5px 8px;font-size:.9rem}
+.die:active{background:rgba(255,255,255,.12)}
+.insp{border:1px solid var(--ivy-l);color:#c7d9a4;background:transparent;border-radius:3px;padding:5px 10px;font-size:.9rem}
+.insp[aria-pressed="true"]{background:var(--ivy);color:#f0f5e4;box-shadow:0 0 12px rgba(135,153,90,.6)}
+.expr{display:flex;gap:6px}
+.expr input{width:120px;background:rgba(255,255,255,.08);border:1px solid rgba(236,220,184,.5);color:var(--frame-ink);border-radius:3px;padding:5px 8px}
+.log{max-height:38vh;overflow:auto;border-top:1px solid rgba(236,220,184,.25);grid-column:1/-1}
+.log ol{list-style:none;margin:0;padding:6px 0}
+.log li{display:grid;grid-template-columns:3.2em 1fr auto;gap:10px;padding:4px 0;border-bottom:1px dotted rgba(236,220,184,.18);font-size:.88rem}
+.log li b{font-size:1.2rem;text-align:right}
+.log time{opacity:.55;font-size:.78rem}
+#traytoggle{display:none;flex:0 0 auto}
+@media (max-width:760px){
+  header.top{position:relative}
+  header .wrap{grid-template-columns:1fr auto;gap:8px}
+  .vitals{grid-column:1/-1;order:3;justify-content:flex-start}
+  .ident h1{font-size:1.7rem}
+  .hpbox{min-width:0}
+  .chip{min-width:50px;padding:3px 6px}
+  .tray .wrap{grid-template-columns:1fr}
+  .traytools{justify-content:flex-start}
+  .result .total{font-size:2.1rem}
+  .addform{grid-template-columns:1fr 70px}
+  .addform .full{grid-column:1/-1}
+  #traytoggle{display:inline-block}
+  .tray:not(.open) .traytools,.tray:not(.open) .log{display:none!important}
+}
+@media (prefers-reduced-motion:reduce){.result.flash .total{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="ident">
+      <h1>Kaean</h1>
+      <p>Tiefling infernale • Warlock 3 (Immondo) • da Aurena</p>
+    </div>
+    <div class="vitals" id="vitals"></div>
+    <div class="hpbox" id="hpbox"></div>
+  </div>
+  <div class="wrap">
+    <nav class="tabs" role="tablist" id="tabs">
+      <button role="tab" data-tab="combat">Combattimento</button>
+      <button role="tab" data-tab="sheet">Caratteristiche</button>
+      <button role="tab" data-tab="spells">Incantesimi</button>
+      <button role="tab" data-tab="feat">Privilegi</button>
+      <button role="tab" data-tab="inv">Zaino</button>
+      <button role="tab" data-tab="guide">Guida</button>
+      <button role="tab" data-tab="notes">Note</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section id="tab-combat" class="grid" role="tabpanel"></section>
+  <section id="tab-sheet" class="grid" role="tabpanel" hidden></section>
+  <section id="tab-spells" class="grid" role="tabpanel" hidden></section>
+  <section id="tab-feat" class="grid" role="tabpanel" hidden></section>
+  <section id="tab-inv" class="grid" role="tabpanel" hidden>
+    <div class="panel inv"><h2>Equipaggiamento <small id="invcount"></small></h2><div id="invlist"></div></div>
+    <div class="panel">
+      <h2>Monete</h2>
+      <div class="coins" id="coins"></div>
+      <h3>Aggiungi oggetto</h3>
+      <form class="addform" id="addform">
+        <input id="add-name" placeholder="Nome" required class="full">
+        <input id="add-qty" type="number" min="1" value="1" aria-label="Quantità">
+        <input id="add-note" placeholder="Nota (facoltativa)">
+        <button class="btn primary" type="submit">Aggiungi</button>
+      </form>
+      <h3>La carrozza</h3>
+      <p class="muted">Carrozza nera laccata, sedili di velluto, finestrini scuri e uno scomparto segreto sotto il posto del cocchiere (dentro c'è il secondo registro). La traina Notturna, che non va mai portata in battaglia.</p>
+    </div>
+  </section>
+  <section id="tab-guide" class="grid" role="tabpanel" hidden>
+    <div class="panel span2">
+      <h2>Guida al combattimento <small>Kaean, warlock 3</small></h2>
+      <p>Kaean combatte <b>a distanza</b> e con la <b>parola</b>. Ha pochi PF (21) e una CA bassa (13): deve restare indietro, dietro copertura, e lasciare la prima linea agli altri. Ha solo <b>2 slot</b>, sempre di 2° livello, ma li recupera con ogni <b>riposo breve</b>: usali senza paura e chiedi una pausa al gruppo quando sono finiti.</p>
+    </div>
+    <div class="panel">
+      <h2>Cosa hai in ogni turno</h2>
+      <dl class="kv">
+        <dt>Azione</dt><dd>Deflagrazione Occulta, un incantesimo o un attacco col pugnale</dd>
+        <dt>Azione bonus</dt><dd>Maleficio (o spostarlo su un nuovo bersaglio)</dd>
+        <dt>Movimento</dt><dd>9 m: allontanati dai nemici e cerca copertura</dd>
+        <dt>Reazione</dt><dd>Rimprovero Infernale quando un nemico ti ferisce (1 volta gratis per riposo lungo)</dd>
+      </dl>
+      <h3>Due regole da non dimenticare</h3>
+      <p><b>Una sola concentrazione.</b> Maleficio, Blocca Persone, Invisibilità, Suggestione e Amicizia richiedono concentrazione: se ne lanci un altro, il primo finisce. Quando subisci danni fai un TS di Costituzione (+1) con CD 10 o metà dei danni: la scheda te lo ricorda.</p>
+      <p><b>Benedizione dell'Oscuro.</b> Quando un nemico va a 0 PF per mano tua, o entro 3 m da te, ottieni 6 PF temporanei. Premi il pulsante nel riquadro dei PF.</p>
+    </div>
+    <div class="panel">
+      <h2>Le tue armi</h2>
+      <dl class="kv">
+        <dt>Deflagrazione Occulta</dt><dd>+5 a colpire, 36 m, 1d10+3 forza. Con Maleficio +1d6 necrotici. Il tuo attacco di ogni turno.</dd>
+        <dt>Blocca Persone</dt><dd>Paralizza un umanoide (TS Sag CD 13). Gli attacchi in mischia contro di lui sono critici automatici.</dd>
+        <dt>Comando</dt><dd>Due bersagli (slot di 2°): "Fuggi", "A terra", "Lascia". Nessuna concentrazione.</dd>
+        <dt>Raggio Rovente</dt><dd>3 raggi da 2d6 fuoco, ognuno con il suo tiro per colpire.</dd>
+        <dt>Mani Brucianti</dt><dd>Cono di 4,5 m, 4d6 fuoco (TS Des). Per i gruppi vicini, ma ti espone.</dd>
+      </dl>
+    </div>
+    <div class="panel span2">
+      <h2>La sequenza da fare quasi sempre</h2>
+      <h3>Turno 1</h3>
+      <p>• <b>Azione bonus: Maleficio</b> sul nemico più resistente (usa uno slot, dura 4 ore e passa al bersaglio successivo).<br>• <b>Azione: Deflagrazione Occulta</b> sullo stesso bersaglio.<br>• Contro un umanoide pericoloso, invece: <b>Blocca Persone</b> e lascia che i compagni in mischia lo finiscano.</p>
+      <h3>Dal turno 2 in poi</h3>
+      <p>• <b>Azione: Deflagrazione Occulta</b> ogni turno (1d10+3, più 1d6 con Maleficio).<br>• <b>Azione bonus:</b> se il bersaglio di Maleficio è caduto, sposta la maledizione.<br>• Tieni il secondo slot per un'emergenza: Comando, Invisibilità per fuggire o Rimprovero Infernale potenziato.</p>
+      <h3>Dopo lo scontro</h3>
+      <p>• Chiedi un <b>riposo breve</b> (1 ora): ritornano tutti gli slot.<br>• Se non c'è tempo: <b>Astuzia Magica</b> (1 minuto, una volta per riposo lungo) ti ridà 1 slot.</p>
+    </div>
+    <div class="panel span2">
+      <h2>Fuori dal combattimento</h2>
+      <dl class="kv">
+        <dt>Convincere qualcuno</dt><dd>Persuasione +5 o Inganno +5. Se non basta: Amicizia (vantaggio, ma poi capisce) o Charme su Persone.</dd>
+        <dt>Passare inosservato</dt><dd>Maschera dai Molti Volti: Camuffare Sé Stesso a volontà, senza slot.</dd>
+        <dt>Testi e lingue</dt><dd>Comprendere Linguaggi come rituale dal Libro delle Ombre (10 minuti, nessuno slot).</dd>
+        <dt>Documenti falsi</dt><dd>Strumenti da falsario: un vecchio talento dell'Ufficio delle Adesioni.</dd>
+        <dt>Piante</dt><dd>Natura +2 con competenza: il suo pollice verde, senza magia.</dd>
+      </dl>
+    </div>
+    <div class="panel span2">
+      <h2>Errori da evitare</h2>
+      <p>• <b>Stare in prima linea:</b> con CA 13 e 21 PF cadi in due colpi.<br>• <b>Lanciare un'altra concentrazione</b> mentre hai Maleficio o Blocca Persone attivi: perdi il primo.<br>• <b>Risparmiare gli slot:</b> tornano con il riposo breve, usali.<br>• <b>Usare l'Amicizia su chi ti serve dopo:</b> quando finisce, capisce di essere stato manipolato.<br>• <b>Invisibilità e attacchi:</b> l'invisibilità finisce appena attacchi o lanci un incantesimo.</p>
+    </div>
+  </section>
+  <section id="tab-notes" class="grid" role="tabpanel" hidden>
+    <div class="panel"><h2>Note di sessione</h2><textarea id="notes" placeholder="PNG, indizi, luoghi, firme, debiti..."></textarea></div>
+    <div class="panel story">
+      <h2>Kaean <small>registrato come Kaeraldo</small></h2>
+      <p>Tiefling nato ad Aurena, città di teatri della Congregazione dell'Ispirazione di Simpoh, in una famiglia di comparse. Da bambino impara a nascondere i suoi occhi da serpente dietro lenti scure, e scopre di saper convincere chiunque. La sorella maggiore <b>Elena</b> è una cantante di talento: lui la adora e la invidia.</p>
+      <p>Fallisce l'audizione all'Accademia, ma <b>Morgana Voss</b> lo nota e lo porta all'<b>Ufficio delle Adesioni</b>, che convince le comunità indipendenti ad aderire a Simpoh. A diciotto anni firma con lei l'<b>Accordo Privato</b>: il <b>Creditore</b>, un diavolo dei contratti, gli presta potere in cambio di firme. Il segno è una firma d'inchiostro sul polso sinistro.</p>
+      <p>Morgana affama gli indipendenti per costringerli a firmare. Kaean finge di eseguire gli ordini, ma li sabota in segreto e aiuta le vittime, usando proprio il potere del Creditore: il suo debito cresce ogni anno. A Pietrafonda conosce <b>Lucerys</b> e stringe con lui l'Accordo, l'unico contratto senza inchiostro della sua vita.</p>
+      <p>A Valdoro vede il mugnaio colpito dalla <b>Collera</b> e la figlia <b>Mirta</b>. Scopre che le copie dei suoi registri vanno a qualcuno con un sigillo sconosciuto (non quello del Creditore). Morgana minaccia Elena. Kaean parte per una "missione prolungata", perde un registro in una locanda e si stabilisce a <b>Ivacuus</b>, dove vive da quasi undici mesi tra piante, la cavalla <b>Notturna</b>, <b>Nonna Pruna</b> e Lucerys.</p>
+      <dl class="kv">
+        <dt>Tratto</dt><dd>Parla a voce bassa e con ironia; finge di essere peggio di quello che è.</dd>
+        <dt>Ideale</dt><dd>Libertà: ognuno ha diritto di scegliere, e di ricevere aiuto senza firmare niente.</dd>
+        <dt>Legame</dt><dd>Elena deve restare lontana dall'Accordo Privato, a qualunque costo.</dd>
+        <dt>Legame</dt><dd>Mirta e il registro perduto: c'è una risposta che deve.</dd>
+        <dt>Difetto</dt><dd>Crede di poter gestire ogni rischio da solo, con una buona bugia e senza spiegazioni.</dd>
+        <dt>Paura</dt><dd>Le campane: tre colpi lunghi e due brevi erano la sua convocazione ad Aurena.</dd>
+      </dl>
+      <h3>Al tavolo</h3>
+      <p class="muted">• Non si toglie mai gli occhiali scuri in pubblico, e tiene i polsini abbottonati.<br>• Minaccia le piante ad alta voce, poi le cura con pazienza.<br>• Aiuta di nascosto e nega tutto: "Si è riparato da solo".<br>• Ha sempre una mela in tasca per Notturna.<br>• Quando suonano le campane cerca con lo sguardo l'uscita.</p>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="modal" hidden role="dialog" aria-modal="true"><div class="panel" id="modal-body"></div></div>
+<div class="tray" id="tray">
+  <div class="wrap">
+    <div class="result" id="result" aria-live="polite">
+      <div class="total" id="r-total">d20</div>
+      <div class="txt"><div class="lab" id="r-lab">Tocca un'abilità, un tiro salvezza o un attacco</div><div class="det" id="r-det">I modificatori vengono aggiunti in automatico</div></div>
+      <button class="logbtn" id="traytoggle" aria-expanded="false">Dadi ▴</button>
+    </div>
+    <div class="traytools">
+      <div class="seg" id="mode" role="group" aria-label="Modalità d20">
+        <button data-mode="dis" aria-pressed="false">Svant.</button>
+        <button data-mode="norm" aria-pressed="true">Normale</button>
+        <button data-mode="adv" aria-pressed="false">Vant.</button>
+      </div>
+      <button class="insp" id="insp" aria-pressed="false">Ispirazione <span id="insp-n">0</span></button><button class="die" id="inspadd" aria-label="Aggiungi ispirazione">+</button>
+      <div class="dice" id="dice"></div>
+      <form class="expr" id="exprform"><input id="expr" placeholder="es. 1d10+3" aria-label="Espressione dadi"><button class="die" type="submit">Tira</button></form>
+      <button class="logbtn" id="logbtn" aria-expanded="false">Storico</button>
+    </div>
+    <div class="log" id="log" hidden><ol id="logl"></ol></div>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const KEY = 'kaean-warlock-v1';
+const FB_URL = 'https://kaean-scheda-default-rtdb.europe-west1.firebasedatabase.app/kaean-warlock.json';
+const LVL = 3, PB = 2, BASE_HP = 21, HD_MAX = 3, SLOT_MAX = 2, SLOT_LVL = 2, AC = 13, SPEED = '9 m';
+
+const ABIL = [
+  {k:'for',n:'Forza',s:8},{k:'des',n:'Destrezza',s:15},{k:'cos',n:'Costituzione',s:13},
+  {k:'int',n:'Intelligenza',s:10},{k:'sag',n:'Saggezza',s:12},{k:'car',n:'Carisma',s:17}
+];
+const mod = s => Math.floor((s - 10) / 2);
+const M = Object.fromEntries(ABIL.map(a => [a.k, mod(a.s)]));
+const SAVES = {for:0, des:0, cos:0, int:0, sag:1, car:1};
+const ABBR = {for:'For',des:'Des',cos:'Cos',int:'Int',sag:'Sag',car:'Car'};
+const SKILLS = [
+  ['Acrobazia','des'],['Addestrare Animali','sag'],['Arcano','int',1],['Atletica','for'],['Furtività','des'],
+  ['Indagare','int'],['Inganno','car',1],['Intimidire','car',1],['Intrattenere','car'],['Intuizione','sag',1],
+  ['Medicina','sag'],['Natura','int',1],['Percezione','sag'],['Persuasione','car',1],['Rapidità di Mano','des',1],
+  ['Religione','int'],['Sopravvivenza','sag'],['Storia','int']
+];
+const SKILL_SRC = {'Arcano':'Warlock','Inganno':'Ciarlatano','Intimidire':'Warlock','Intuizione':'Talento Abile','Natura':'Talento Abile','Persuasione':'Talento Abile','Rapidità di Mano':'Ciarlatano'};
+const DC = 8 + PB + M.car, SATK = PB + M.car;
+const BLESS = Math.max(1, M.car + LVL);
+const CONDS = ['Accecato','Affascinato','Afferrato','Assordato','Avvelenato','Incapacitato','Invisibile','Paralizzato','Pietrificato','Prono','Spaventato','Stordito','Svenuto','Trattenuto'];
+const fmt = n => (n >= 0 ? '+' : '−') + Math.abs(n);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const skillMod = (ab, p) => M[ab] + (p ? PB : 0);
+const PASSIVE = 10 + skillMod('sag', 0);
+
+// src: w=warlock, f=patrono, t=tomo, r=retaggio, m=maschera
+const SPELLS = [
+  {id:'eb',n:'Deflagrazione Occulta',l:0,src:'w',t:'Azione • 36 m',atk:1,dmg:()=>`1d10+${M.car}`,dt:'forza',hexable:1,
+    s:'Invocazione',ct:'Azione',rg:'36 m',cp:'V, S',du:'Istantanea',
+    full:['Un raggio di energia crepitante colpisce una creatura entro gittata: tiro per colpire con incantesimo a distanza.','Se colpisce, il bersaglio subisce 1d10 danni da forza. Con Deflagrazione Agonizzante aggiungi il Carisma (+3).','Al 5° livello spari 2 raggi, all\'11° 3 raggi, al 17° 4 raggi, anche su bersagli diversi.'],
+    tip:'Il tuo attacco di ogni turno. Con Maleficio sul bersaglio aggiungi 1d6 necrotici a ogni raggio che colpisce.'},
+  {id:'fb',n:'Dardo di Fuoco',l:0,src:'r',t:'Azione • 36 m',atk:1,dmg:()=>'1d10',dt:'fuoco',
+    s:'Invocazione',ct:'Azione',rg:'36 m',cp:'V, S',du:'Istantanea',
+    full:['Scagli un dardo di fuoco: tiro per colpire con incantesimo a distanza.','Se colpisce: 1d10 danni da fuoco. Un oggetto infiammabile non indossato o trasportato prende fuoco.'],
+    tip:'Dal Retaggio Infernale. Fa meno danni della Deflagrazione: usalo solo contro chi resiste alla forza o per accendere qualcosa.'},
+  {id:'mi',n:'Illusione Minore',l:0,src:'w',t:'Azione • 9 m • 1 minuto',
+    s:'Illusione',ct:'Azione',rg:'9 m',cp:'S, M (un po\' di vello)',du:'1 minuto',
+    full:['Crei un suono oppure l\'immagine di un oggetto (non più grande di un cubo di 1,5 m).','L\'immagine non emette luce, suono o odore; toccandola si capisce che è falsa.',`Una creatura che studia l\'illusione con un\'azione fa una prova di Intelligenza (Indagare) contro CD ${DC}: se riesce, capisce che è un\'illusione.`],
+    tip:'Una cassa per nascondersi, passi in un corridoio, una voce che chiama le guardie altrove. Ottima per i sabotaggi alla Kaean.'},
+  {id:'tau',n:'Taumaturgia',l:0,src:'r',t:'Azione • 9 m • 1 minuto',
+    s:'Trasmutazione',ct:'Azione',rg:'9 m',cp:'V',du:'Fino a 1 minuto',
+    full:['Un piccolo prodigio: voce tre volte più forte, fiamme che tremolano, piccoli tremori, un suono improvviso, porte che sbattono, occhi che cambiano aspetto.','Fino a tre effetti attivi alla volta.'],
+    tip:'Da Presenza Ultraterrena del tiefling. Per un tocco teatrale: gli occhi da serpente che brillano dietro le lenti.'},
+  {id:'msg',n:'Messaggio',l:0,src:'t',t:'Azione • 36 m',
+    s:'Trasmutazione',ct:'Azione',rg:'36 m',cp:'S, M (un filo di rame)',du:'1 round',
+    full:['Sussurri un messaggio a una creatura entro gittata; solo lei lo sente e può rispondere con un sussurro.','Puoi lanciarlo attraverso gli oggetti se conosci il bersaglio e sai che è dall\'altra parte.'],
+    tip:'Dal Libro delle Ombre. Perfetto per coordinarsi con Lucerys senza farsi sentire.'},
+  {id:'ami',n:'Amicizia',l:0,src:'t',t:'Azione • 3 m • conc. 1 minuto',c:1,
+    s:'Ammaliamento',ct:'Azione',rg:'3 m',cp:'S, M (un po\' di trucco)',du:'Concentrazione, fino a 1 minuto',
+    full:['Una creatura che vedi entro 3 m fa un TS di Saggezza: se fallisce è Affascinata da te per la durata.',`CD ${DC}. Riesce automaticamente se non è umanoide, se state combattendo o se l\'hai già bersagliata nelle ultime 24 ore.`,'Finisce se il bersaglio subisce danni o se tu attacchi, fai danni o imponi un TS a qualcuno. Quando finisce, la creatura sa di essere stata affascinata.'],
+    tip:'Usalo su chi non rivedrai: quando finisce, capisce tutto.'},
+  {id:'gui',n:'Guida',l:0,src:'t',t:'Azione • contatto • conc. 1 minuto',c:1,
+    s:'Divinazione',ct:'Azione',rg:'Contatto',cp:'V, S',du:'Concentrazione, fino a 1 minuto',
+    full:['Tocchi una creatura consenziente e scegli un\'abilità.','Finché dura, aggiunge 1d4 alle prove di caratteristica con quell\'abilità.'],
+    tip:'Dal Libro delle Ombre. Lancialo su un compagno prima di una prova importante.'},
+
+  {id:'hex',n:'Maleficio',l:1,src:'w',t:'Azione bonus • 27 m • conc. 4 ore',c:1,hex:1,
+    s:'Ammaliamento',ct:'Azione bonus',rg:'27 m',cp:'V, S, M (l\'occhio pietrificato di un tritone)',du:'Concentrazione, fino a 4 ore (slot di 2°)',
+    full:['Maledici una creatura che vedi. Quando la colpisci con un attacco, le infliggi 1d6 danni necrotici in più.','Scegli una caratteristica: il bersaglio ha svantaggio alle prove con quella caratteristica.','Se il bersaglio scende a 0 PF prima della fine, nei turni successivi puoi spostare la maledizione su un\'altra creatura con un\'azione bonus.'],
+    tip:'Il compagno perfetto della Deflagrazione. Con uno slot di 2° dura 4 ore: si sposta da un nemico all\'altro per tutto lo scontro.'},
+  {id:'charm',n:'Charme su Persone',l:1,src:'w',t:'Azione • 9 m • 1 ora',
+    s:'Ammaliamento',ct:'Azione',rg:'9 m',cp:'V, S',du:'1 ora',
+    full:[`Un umanoide che vedi fa un TS di Saggezza (CD ${DC}), con vantaggio se tu o i tuoi alleati lo state combattendo.`,'Se fallisce è Affascinato da te finché dura o finché tu o i tuoi alleati non gli fate del male.','Con uno slot di 2° puoi bersagliare 2 umanoidi. Quando finisce, sa di essere stato affascinato.'],
+    tip:'Nessuna concentrazione: lo puoi combinare con Maleficio. Ottimo per le trattative.'},
+  {id:'cmd',n:'Comando',l:1,src:'f',t:'Azione • 18 m',
+    s:'Ammaliamento',ct:'Azione',rg:'18 m',cp:'V',du:'Istantanea',
+    full:[`Pronunci un ordine di una parola a una creatura che vedi: TS di Saggezza CD ${DC}, se fallisce obbedisce nel suo turno successivo.`,'Avvicinati, Lascia (l\'oggetto che tiene), Fuggi, A terra (cade prona), Fermo (non si muove e non agisce).','Con uno slot di 2° bersagli 2 creature entro 9 m l\'una dall\'altra.'],
+    tip:'Sempre preparato (patrono). "Lascia" disarma, "A terra" dà vantaggio ai compagni in mischia, "Fuggi" allontana un nemico da te.'},
+  {id:'burn',n:'Mani Brucianti',l:1,src:'f',t:'Azione • cono 4,5 m',save:'Des',dmg:L=>`${L+2}d6`,dt:'fuoco',half:1,
+    s:'Invocazione',ct:'Azione',rg:'Cono di 4,5 m',cp:'V, S',du:'Istantanea',
+    full:[`Un ventaglio di fiamme: ogni creatura nel cono fa un TS di Destrezza (CD ${DC}).`,'Se fallisce subisce 3d6 danni da fuoco, metà se riesce. Con uno slot di 2°: 4d6.','Gli oggetti infiammabili non trasportati prendono fuoco.'],
+    tip:'Sempre preparato (patrono). Contro gruppi vicini, ma ti porta in mischia: usalo e poi allontanati.'},
+  {id:'rebuke',n:'Rimprovero Infernale',l:1,src:'r',t:'Reazione • 18 m',save:'Des',dmg:L=>`${L+1}d10`,dt:'fuoco',half:1,rebuke:1,
+    s:'Invocazione',ct:'Reazione, quando una creatura entro 18 m ti infligge danni',rg:'18 m',cp:'V, S',du:'Istantanea',
+    full:[`La creatura che ti ha ferito è avvolta dalle fiamme: TS di Destrezza CD ${DC}.`,'Se fallisce subisce 2d10 danni da fuoco, metà se riesce. Con uno slot di 2°: 3d10.','Retaggio Infernale: una volta per riposo lungo lo lanci gratis (al 1° livello); poi anche con uno slot.'],
+    tip:'Danno ottimo per una reazione. Usa prima la versione gratuita.'},
+  {id:'inv',n:'Invisibilità',l:2,src:'w',t:'Azione • contatto • conc. 1 ora',c:1,
+    s:'Illusione',ct:'Azione',rg:'Contatto',cp:'V, S, M (un ciglio nella gomma arabica)',du:'Concentrazione, fino a 1 ora',
+    full:['Una creatura che tocchi ottiene la condizione Invisibile.','Finisce subito dopo che il bersaglio fa un tiro per colpire, infligge danni o lancia un incantesimo.'],
+    tip:'Per fuggire, infiltrarsi o salvare un compagno in difficoltà. Non per attaccare.'},
+  {id:'hold',n:'Blocca Persone',l:2,src:'w',t:'Azione • 18 m • conc. 1 minuto',c:1,
+    s:'Ammaliamento',ct:'Azione',rg:'18 m',cp:'V, S, M (un pezzetto di ferro dritto)',du:'Concentrazione, fino a 1 minuto',
+    full:[`Un umanoide che vedi fa un TS di Saggezza (CD ${DC}): se fallisce è Paralizzato.`,'Alla fine di ogni suo turno ripete il TS: se riesce, l\'incantesimo finisce.','Contro un Paralizzato gli attacchi hanno vantaggio, e i colpi entro 1,5 m sono critici automatici.'],
+    tip:'Il tuo incantesimo più forte contro un umanoide pericoloso. Avvisa i compagni in mischia: ogni loro colpo è un critico.'},
+  {id:'ray',n:'Raggio Rovente',l:2,src:'f',t:'Azione • 36 m',atk:1,dmg:()=>'2d6',dt:'fuoco',rays:3,hexable:1,
+    s:'Invocazione',ct:'Azione',rg:'36 m',cp:'V, S',du:'Istantanea',
+    full:['Crei tre raggi di fuoco e li scagli su uno o più bersagli entro gittata.','Fai un tiro per colpire con incantesimo a distanza per ogni raggio. Ogni raggio che colpisce infligge 2d6 danni da fuoco.'],
+    tip:'Sempre preparato (patrono). Fino a 6d6 su un bersaglio: buono per finire un nemico. Con Maleficio attivo, ogni raggio che colpisce il bersaglio maledetto fa +1d6 necrotici.'},
+  {id:'sugg',n:'Suggestione',l:2,src:'f',t:'Azione • 9 m • conc. 8 ore',c:1,
+    s:'Ammaliamento',ct:'Azione',rg:'9 m',cp:'V, M (una goccia di miele)',du:'Concentrazione, fino a 8 ore',
+    full:[`Suggerisci una linea d\'azione (massimo 25 parole) a una creatura che vedi e ti sente: TS di Saggezza CD ${DC}.`,'Se fallisce è Affascinata e segue il suggerimento al meglio delle sue possibilità.','Il suggerimento deve sembrare ragionevole e non può spingerla a farsi del male in modo evidente. Finisce se tu o i tuoi alleati la danneggiate.'],
+    tip:'Sempre preparato (patrono). L\'arma perfetta di un ex funzionario: "Sarebbe meglio controllare il magazzino a nord, no?"'},
+  {id:'mask',n:'Camuffare Sé Stesso',l:1,src:'m',t:'Azione • personale • 1 ora',free:1,
+    s:'Illusione',ct:'Azione',rg:'Personale',cp:'V, S',du:'1 ora',
+    full:['Cambi il tuo aspetto, vestiti e oggetti compresi: puoi sembrare più alto o basso di 30 cm, più magro o più grasso, ma non cambiare la forma del corpo.','Al tatto l\'illusione non regge. Chi studia il tuo aspetto con un\'azione fa una prova di Intelligenza (Indagare) contro la tua CD per accorgersene.','Con Maschera dai Molti Volti lo lanci a volontà, senza slot.'],
+    tip:'Nascondi corna e occhi in città, o prendi il volto di un funzionario di Simpoh.'},
+  {id:'comp',n:'Comprendere Linguaggi',l:1,src:'t',t:'Rituale • 1 ora',ritual:1,free:1,
+    s:'Divinazione',ct:'Azione o rituale (10 minuti in più)',rg:'Personale',cp:'V, S, M (un pizzico di fuliggine e sale)',du:'1 ora',
+    full:['Capisci il significato letterale di qualunque lingua parlata che senti, e di qualunque testo scritto che tocchi (1 minuto per pagina).','Non decifra codici segreti né messaggi in simboli magici.'],
+    tip:'Dal Libro delle Ombre, come rituale: nessuno slot. Utile con i documenti e i registri.'},
+  {id:'det',n:'Individuazione del Magico',l:1,src:'t',t:'Rituale • conc. 10 minuti',c:1,ritual:1,free:1,
+    s:'Divinazione',ct:'Azione o rituale (10 minuti in più)',rg:'Personale',cp:'V, S',du:'Concentrazione, fino a 10 minuti',
+    full:['Percepisci la presenza di effetti magici entro 9 m.','Con un\'azione vedi un\'aura attorno a creature e oggetti magici visibili e ne capisci la scuola di magia.'],
+    tip:'Dal Libro delle Ombre, come rituale: nessuno slot. Utile per capire se un sigillo o un contratto è magico.'}
+];
+const SRC_LBL = {w:'Warlock',f:'Patrono',t:'Libro delle Ombre',r:'Retaggio infernale',m:'Maschera'};
+
+const FEATS = [
+  {id:'pact',n:'Magia del Patto',g:'Warlock 1',full:['Hai 2 slot incantesimo, e sono sempre di 2° livello: ogni incantesimo che lanci con uno slot è potenziato al 2°.','Recuperi tutti gli slot con un riposo breve o lungo.',`Caratteristica da incantatore: Carisma. CD ${DC}, attacco ${fmt(SATK)}. Focus: il Libro delle Ombre.`]},
+  {id:'invoc',n:'Suppliche Occulte',g:'Warlock 1',full:['Ne conosci 3: Patto del Tomo, Deflagrazione Agonizzante e Maschera dai Molti Volti.','Ogni volta che sali di livello warlock puoi sostituirne una.']},
+  {id:'tome',n:'Patto del Tomo',g:'Supplica',full:['Il tuo Libro delle Ombre: un registro nero dalla copertina sobria, che a volte sembra scritto con lo stesso inchiostro della firma sul polso.','Contiene 3 trucchetti (Messaggio, Amicizia, Guida) e 2 rituali di 1° livello (Comprendere Linguaggi, Individuazione del Magico), sempre preparati.','Puoi usarlo come focus. Se lo perdi, con un rituale di 1 ora ne crei uno nuovo durante un riposo.']},
+  {id:'agon',n:'Deflagrazione Agonizzante',g:'Supplica',full:[`Aggiungi il Carisma (${fmt(M.car)}) ai danni di Deflagrazione Occulta.`]},
+  {id:'mask',n:'Maschera dai Molti Volti',g:'Supplica',full:['Lanci Camuffare Sé Stesso a volontà, senza slot.']},
+  {id:'cunning',n:'Astuzia Magica',g:'Warlock 2',full:['Con un rito di 1 minuto recuperi slot del patto spesi fino a metà del massimo (arrotondato per eccesso): con 2 slot, ne recuperi 1.','Una volta per riposo lungo.']},
+  {id:'bless',n:'Benedizione dell\'Oscuro',g:'Immondo 3',full:[`Quando riduci un nemico a 0 PF, ottieni ${BLESS} PF temporanei (Carisma + livello da warlock).`,'Li ottieni anche se qualcun altro riduce a 0 PF un nemico entro 3 m da te.']},
+  {id:'fiendspells',n:'Incantesimi dell\'Immondo',g:'Immondo 3',full:['Sempre preparati, non contano nel limite: Mani Brucianti, Comando, Raggio Rovente, Suggestione.']},
+  {id:'dark',n:'Scurovisione',g:'Tiefling',full:['Vedi nella penombra entro 18 m come in luce intensa, e al buio come in penombra (solo in bianco e nero).']},
+  {id:'legacy',n:'Retaggio Infernale',g:'Tiefling',full:['Resistenza ai danni da fuoco.','Conosci Dardo di Fuoco. Dal 3° livello Rimprovero Infernale, dal 5° Oscurità: ognuno una volta per riposo lungo senza slot, oppure con gli slot.','Usano il Carisma.']},
+  {id:'presence',n:'Presenza Ultraterrena',g:'Tiefling',full:['Conosci il trucchetto Taumaturgia, con il Carisma.']},
+  {id:'skilled',n:'Abile',g:'Talento d\'origine',full:['Competenza in tre abilità: Persuasione, Intuizione e Natura.']},
+  {id:'charl',n:'Ciarlatano',g:'Background',full:['Competenze: Inganno, Rapidità di Mano, Strumenti da falsario.','Il background dell\'Ufficio delle Adesioni: documenti, firme e moduli non hanno segreti per lui.']}
+];
+const SKILL_INFO = {
+  'Persuasione':'Convincere con onestà e buone maniere. Il suo talento naturale.',
+  'Inganno':'Mentire in modo credibile, travestirsi, sviare. Il Metodo Kaeraldo.',
+  'Intimidire':'Minacciare. Con le piante funziona benissimo.',
+  'Intuizione':'Capire se qualcuno mente o cosa vuole davvero. Utile con Morgana.',
+  'Natura':'Piante, animali, clima. Il suo pollice verde.',
+  'Arcano':'Magia, patti, simboli, sigilli. Utile per studiare il sigillo sconosciuto.',
+  'Rapidità di Mano':'Borseggiare, nascondere un oggetto, scambiare un documento.'
+};
+
+const INIT_ITEMS = [
+  {n:'Armatura di cuoio',q:1,t:'CA 11 + Des. Nera, ovviamente.'},
+  {n:'Pugnale',q:2,t:'1d4 perforanti, accurato, leggero, da lancio (6/18 m).'},
+  {n:'Falcetto',q:1,t:'1d4 taglienti, leggero. Lo usa per potare, non per combattere.'},
+  {n:'Libro delle Ombre',q:1,t:'Il registro nero del Patto del Tomo. Focus da incantatore.'},
+  {n:'Strumenti da falsario',q:1,t:'Inchiostri, penne, sigilli di cera, carta di vari tipi.'},
+  {n:'Costume',q:1,t:'Per il travestimento, oltre alla Maschera.'},
+  {n:'Abiti pregiati neri',q:1,t:'Farsetto elegante, stivali lucidi, polsini abbottonati.'},
+  {n:'Occhiali dalle lenti scure',q:1,t:'Non li toglie mai in pubblico.'},
+  {n:'Dotazione da studioso',q:1,t:'Libro, inchiostro, pennino, pergamene, sacchetto di sabbia, coltellino.'},
+  {n:'Registro dell\'Ufficio',q:1,t:'Il secondo registro, nascosto nello scomparto della carrozza. Mai riletto.'},
+  {n:'Lettere di Elena',q:1,t:'Tutte conservate, molte ancora chiuse.'},
+  {n:'Mele',q:5,t:'Per Notturna. Capitate in tasca per caso.'},
+  {n:'Cesoie e attrezzi da giardino',q:1,t:'Per le piante del quartiere.'}
+];
+const uid = () => Math.random().toString(36).slice(2, 9);
+const fresh = () => ({
+  hp:{cur:BASE_HP, temp:0}, slots:0, cunning:false, rebuke:false, hd:HD_MAX,
+  death:{s:0,f:0}, conds:[], conc:null, hexOn:false, insp:0, debt:0,
+  items:INIT_ITEMS.map(i => ({id:uid(), ...i})), coins:{mr:0,ma:0,me:0,mo:30,mp:0},
+  notes:'', log:[], updatedAt:0
+});
+function load(){
+  try { const raw = localStorage.getItem(KEY); if (raw) return Object.assign(fresh(), JSON.parse(raw)); } catch (e) {}
+  return fresh();
+}
+let S = load();
+let tab = 'combat', rollMode = 'norm', useInsp = false, openSpell = null;
+let docRef = null, syncState = 'local', saving = false, saveAgain = false, saveTimer = null;
+let pendingConfirm = null, confirmTimer = null;
+
+function commit(){
+  S.updatedAt = Date.now();
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  render(); queueSave();
+}
+function queueSave(){ if (!docRef) return; clearTimeout(saveTimer); saveTimer = setTimeout(flush, 700); }
+async function flush(){
+  if (!docRef) return;
+  if (saving){ saveAgain = true; return; }
+  saving = true; syncState = 'saving'; renderSync();
+  try { await docRef.set(JSON.parse(JSON.stringify(S))); syncState = 'synced'; }
+  catch (e) { if (e && e.code === 'denied'){ docRef = null; syncState = 'readonly'; } else syncState = 'error'; }
+  saving = false; renderSync();
+  if (saveAgain){ saveAgain = false; flush(); }
+}
+function fbDoc(url){
+  const snap = d => ({exists: d != null, data: () => d});
+  return {
+    async set(d){
+      const r = await fetch(url, {method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(d)});
+      if (!r.ok) throw {code: r.status === 401 || r.status === 403 ? 'denied' : 'unavailable'};
+    },
+    onSnapshot(next, err){
+      const refetch = () => fetch(url).then(r => r.json()).then(d => next(snap(d))).catch(() => {});
+      const es = new EventSource(url);
+      es.addEventListener('put', e => { try { const m = JSON.parse(e.data); if (m.path === '/') next(snap(m.data)); else refetch(); } catch (x) {} });
+      es.addEventListener('patch', refetch);
+      es.addEventListener('cancel', () => err && err());
+      es.onerror = () => { if (es.readyState === 2) err && err(); };
+      return () => es.close();
+    }
+  };
+}
+function initDb(){
+  if (!FB_URL || !window.EventSource) return;
+  docRef = fbDoc(FB_URL);
+  syncState = 'saving'; renderSync();
+  let first = true;
+  docRef.onSnapshot(snap => {
+    if (snap.exists){
+      const remote = snap.data();
+      if ((remote.updatedAt||0) > (S.updatedAt||0) && !saving){
+        S = Object.assign(fresh(), JSON.parse(JSON.stringify(remote)));
+        if (!Array.isArray(S.conds)) S.conds = [];
+        if (!Array.isArray(S.items)) S.items = [];
+        if (!Array.isArray(S.log)) S.log = [];
+        try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+        render();
+      } else if (first && (S.updatedAt||0) > (remote.updatedAt||0)) flush();
+    } else if (first) flush();
+    first = false;
+    if (!saving){ syncState = 'synced'; renderSync(); }
+  }, () => { if (docRef){ syncState = 'error'; renderSync(); } });
+}
+
+// Dice
+const rnd = n => { const a = new Uint32Array(1); crypto.getRandomValues(a); return (a[0] % n) + 1; };
+function rollExpr(expr, crit){
+  const clean = String(expr).replace(/\s+/g,'').toLowerCase();
+  if (!/^[+-]?(\d*d\d+|\d+)([+-](\d*d\d+|\d+))*$/.test(clean)) return null;
+  let total = 0; const parts = [];
+  clean.replace(/([+-]?)(\d*)d(\d+)|([+-]?)(\d+)/g, (m, s1, cnt, sides, s2, num) => {
+    if (sides){
+      let c = parseInt(cnt || '1', 10); if (crit) c *= 2;
+      const sign = s1 === '-' ? -1 : 1, rolls = [];
+      for (let i = 0; i < Math.min(c, 100); i++) rolls.push(rnd(+sides));
+      total += sign * rolls.reduce((a,b)=>a+b,0);
+      parts.push(`${sign<0?'−':''}${c}d${sides}[${rolls.join(',')}]`);
+    } else { const v = parseInt(num, 10) * (s2 === '-' ? -1 : 1); total += v; parts.push(fmt(v)); }
+    return m;
+  });
+  return {total, text:parts.join(' ')};
+}
+function show(label, total, detail, kind){
+  const r = document.getElementById('result'), t = document.getElementById('r-total');
+  t.textContent = total; t.className = 'total' + (kind ? ' ' + kind : '');
+  document.getElementById('r-lab').textContent = label;
+  document.getElementById('r-det').textContent = detail;
+  r.classList.remove('flash'); void r.offsetWidth; r.classList.add('flash');
+  S.log.unshift({t:Date.now(), label, total, detail, kind:kind||''});
+  S.log = S.log.slice(0, 40);
+}
+let lastCrit = false;
+function d20(label, m, opts = {}){
+  const adv = rollMode === 'adv' || !!opts.adv, dis = rollMode === 'dis' || !!opts.dis;
+  let bonus = 0, bonusTxt = '';
+  let mode = adv && !dis ? 'adv' : dis && !adv ? 'dis' : 'norm';
+  if (useInsp && S.insp > 0){ S.insp -= 1; useInsp = false; mode = mode === 'dis' ? 'norm' : 'adv'; bonus = rnd(6); bonusTxt = ` • ispirazione +1d6[${bonus}]`; }
+  const a = rnd(20), b = rnd(20);
+  const k = mode === 'adv' ? Math.max(a,b) : mode === 'dis' ? Math.min(a,b) : a;
+  const total = k + m + bonus;
+  const kind = k === 20 ? 'crit' : k === 1 ? 'fumble' : '';
+  lastCrit = !!opts.attack && k === 20;
+  const dTxt = mode === 'norm' ? `d20[${k}]` : `d20[${a},${b}] ${mode === 'adv' ? 'vant.' : 'svant.'}`;
+  show(label + (k === 20 && opts.attack ? ' • CRITICO' : ''), total, `${dTxt} ${fmt(m)}${bonusTxt}`, kind);
+  commit();
+}
+function rollDmg(label, expr, dt){
+  const r = rollExpr(expr, lastCrit);
+  if (!r) return;
+  show(label + (lastCrit ? ' (critico)' : ''), r.total, `${r.text}${dt ? ' • ' + dt : ''}`);
+  lastCrit = false; commit();
+}
+
+// HP
+function damage(n){
+  if (!(n > 0)) return;
+  let rest = n;
+  const t = Math.min(S.hp.temp, rest); S.hp.temp -= t; rest -= t;
+  const wasUp = S.hp.cur > 0;
+  S.hp.cur = Math.max(0, S.hp.cur - rest);
+  let msg = `${n} danni`;
+  if (S.hp.cur === 0 && wasUp){ msg += ' • a 0 PF: tiri contro la morte'; if (S.conc){ S.conc = null; S.hexOn = false; } }
+  else if (S.hp.cur === 0 && !wasUp && rest > 0){ S.death.f = Math.min(3, S.death.f + 1); msg += ' • un fallimento contro la morte'; }
+  else if (S.conc){ msg += ` • TS Cos CD ${Math.max(10, Math.floor(n/2))} per ${S.conc}`; }
+  show('Danni subiti', n, msg, 'fumble'); commit();
+}
+function heal(n){
+  if (!(n > 0)) return;
+  if (S.hp.cur === 0){ S.death = {s:0,f:0}; S.conds = S.conds.filter(c => c !== 'Svenuto'); }
+  S.hp.cur = Math.min(BASE_HP, S.hp.cur + n);
+  show('Cure ricevute', n, `PF ${S.hp.cur}/${BASE_HP}`); commit();
+}
+function needConfirm(key){
+  if (pendingConfirm === key){ pendingConfirm = null; clearTimeout(confirmTimer); return true; }
+  pendingConfirm = key; clearTimeout(confirmTimer);
+  confirmTimer = setTimeout(() => { pendingConfirm = null; render(); }, 2600);
+  render(); return false;
+}
+const cbtn = (key, label, cls='btn') => `<button class="${cls}${pendingConfirm === key ? ' confirm' : ''}" data-a="${key}">${pendingConfirm === key ? 'Conferma?' : label}</button>`;
+
+// Render
+function renderSync(){
+  const el = document.getElementById('syncst'); if (!el) return;
+  el.textContent = {local:'solo su questo dispositivo', saving:'sincronizzo…', synced:'sincronizzato', error:'offline, riprovo', readonly:'sync non autorizzato'}[syncState];
+}
+function renderHeader(){
+  const ini = M.des;
+  document.getElementById('vitals').innerHTML = [
+    ['CA', AC], ['Iniz.', fmt(ini), 'init'], ['Vel.', SPEED], ['CD', DC], ['Att. inc.', fmt(SATK)], ['Comp.', fmt(PB)], ['Perc. pass.', PASSIVE]
+  ].map(([l,v,a]) => a ? `<button class="chip" data-a="${a}"><b>${v}</b><span>${l}</span></button>` : `<div class="chip"><b>${v}</b><span>${l}</span></div>`).join('');
+  const pct = Math.round(100 * S.hp.cur / BASE_HP), tp = Math.min(100, Math.round(100 * S.hp.temp / BASE_HP));
+  const tags = [];
+  if (S.hp.cur === 0) tags.push('<span class="tag">A terra</span>');
+  else if (S.hp.cur <= BASE_HP / 2) tags.push('<span class="tag">Sanguinante</span>');
+  if (S.conc) tags.push(`<span class="tag gold">Conc.: ${esc(S.conc)}</span>`);
+  if (S.hexOn) tags.push('<span class="tag ivy">Maleficio</span>');
+  document.getElementById('hpbox').innerHTML = `
+    <div class="hpnum">${S.hp.cur}<small>/${BASE_HP}</small>${S.hp.temp ? ` <small>+${S.hp.temp}</small>` : ''}</div>
+    <div class="hptags">${tags.join('')}</div>
+    <div class="hpbar"><i style="width:${pct}%"></i>${S.hp.temp ? `<i class="temp" style="left:${pct}%;width:${tp}%"></i>` : ''}</div>
+    <div class="rests"><span class="sync" id="syncst"></span>${cbtn('short','Riposo breve','btn rest')}${cbtn('long','Riposo lungo','btn rest')}</div>`;
+  renderSync();
+}
+const pips = (n, used, act, cls='') => Array.from({length:n}, (_, i) => `<button class="pip ${cls} ${i < n - used ? 'on' : ''}" data-a="${act}" data-i="${i}" aria-label="Slot ${i+1}"></button>`).join('');
+function renderCombat(){
+  const el = document.getElementById('tab-combat');
+  const down = S.hp.cur === 0;
+  const atkRows = [
+    ['Deflagrazione Occulta', SATK, '36 m', `1d10+${M.car}${S.hexOn ? ' +1d6' : ''}`, 'forza', 'eb'],
+    ['Dardo di Fuoco', SATK, '36 m', '1d10', 'fuoco', 'fb'],
+    ['Pugnale', PB + M.des, '1,5 m / 6-18 m', `1d4+${M.des}`, 'perforanti', 'dag'],
+    ['Falcetto', PB + M.for, '1,5 m', `1d4${M.for}`, 'taglienti', 'sick']
+  ];
+  el.innerHTML = `
+  <div class="panel">
+    <h2>Punti Ferita <small>dado vita d8</small></h2>
+    ${down ? `<div class="alert"><b>Sei a 0 PF.</b> Tira contro la morte a inizio turno: 10 o più è un successo, 20 ti rialza con 1 PF, 1 vale due fallimenti.</div>` : ''}
+    <div class="hpctl">
+      <div class="entry"><input id="hpin" type="number" inputmode="numeric" min="0" placeholder="0" aria-label="Quantità">
+        <button class="btn primary" data-a="dmg">Danni</button><button class="btn heal" data-a="heal">Cura</button><button class="btn" data-a="temp">PF temp.</button></div>
+      <div class="btns"><button class="btn sm" data-a="bless">Benedizione dell'Oscuro +${BLESS}</button>${S.hp.temp ? '<button class="btn sm" data-a="cleartemp">Azzera temp.</button>' : ''}</div>
+    </div>
+    ${down ? `<h3>Tiri contro la morte</h3><div class="resline"><span>Successi</span><div class="pips">${[0,1,2].map(i=>`<button class="pip ok ${i<S.death.s?'on':''}" data-a="ds" data-i="${i}"></button>`).join('')}</div></div>
+    <div class="resline"><span>Fallimenti</span><div class="pips">${[0,1,2].map(i=>`<button class="pip ${i<S.death.f?'on':''}" data-a="df" data-i="${i}"></button>`).join('')}</div></div>
+    <div class="btns" style="margin-top:8px"><button class="btn primary" data-a="deathroll">Tira contro la morte</button></div>` : ''}
+    <h3>Concentrazione</h3>
+    ${S.conc ? `<div class="resline"><span><b>${esc(S.conc)}</b></span><div class="btns"><button class="btn sm" data-a="concsave">TS Cos ${fmt(M.cos)}</button><button class="btn sm" data-a="concend">Termina</button></div></div>` : '<p class="muted">Nessun incantesimo attivo.</p>'}
+  </div>
+  <div class="panel">
+    <h2>Magia del Patto <small>slot di ${SLOT_LVL}° livello</small></h2>
+    <div class="resline"><span class="rl"><b>Slot</b> <span class="muted">${SLOT_MAX - S.slots}/${SLOT_MAX}, tornano col riposo breve</span></span><div class="pips">${pips(SLOT_MAX, S.slots, 'slot', 'slot big')}</div></div>
+    <div class="resline"><span class="rl"><b>Astuzia Magica</b> <button class="info" data-info="feat:cunning">i</button><span class="muted">1 minuto, recupera 1 slot</span></span>${S.cunning ? '<span class="muted">usata</span>' : '<button class="btn sm" data-a="cunning"' + (S.slots ? '' : ' disabled') + '>Usa</button>'}</div>
+    <div class="resline"><span class="rl"><b>Rimprovero Infernale</b> <button class="info" data-info="sp:rebuke">i</button><span class="muted">gratis 1/riposo lungo</span></span>${S.rebuke ? '<span class="muted">usato</span>' : '<button class="btn sm" data-a="rebukefree">Lancia</button>'}</div>
+    <div class="resline"><span class="rl"><b>Dadi vita</b> <span class="muted">${S.hd}/${HD_MAX} d8</span></span><button class="btn sm" data-a="hd"${S.hd && !down ? '' : ' disabled'}>Spendi 1d8${fmt(M.cos)}</button></div>
+    <div class="resline"><span class="rl"><b>Maleficio attivo</b><span class="muted">+1d6 necrotici a colpo</span></span><button class="btn sm" data-a="hextoggle">${S.hexOn ? 'Sì' : 'No'}</button></div>
+  </div>
+  <div class="panel span2">
+    <h2>Attacchi</h2>
+    <div class="tablewrap"><table><thead><tr><th>Attacco</th><th>Colpire</th><th>Gittata</th><th>Danni</th></tr></thead><tbody>
+    ${atkRows.map(([n,b,r,d,t,k]) => `<tr><td><b>${n}</b>${k==='eb'||k==='fb' ? ` <button class="info" data-info="sp:${k}">i</button>` : ''}</td>
+      <td><button class="btn sm" data-a="atk" data-k="${k}">${fmt(b)}</button></td><td>${r}</td>
+      <td><button class="btn sm" data-a="dmgroll" data-k="${k}">${d}</button> <span class="muted">${t}</span></td></tr>`).join('')}
+    </tbody></table></div>
+    <p class="muted">Con Maleficio attivo, i danni della Deflagrazione includono già +1d6 necrotici. Dopo un 20 naturale il tiro dei danni raddoppia i dadi.</p>
+  </div>
+  <div class="panel span2">
+    <h2>Condizioni</h2>
+    <div class="conds">${CONDS.map(c => `<button class="cond ${S.conds.includes(c)?'on':''}" data-a="cond" data-c="${c}">${c}</button>`).join('')}</div>
+  </div>`;
+}
+function renderSheet(){
+  const el = document.getElementById('tab-sheet');
+  el.innerHTML = `
+  <div class="panel">
+    <h2>Caratteristiche <small>tocca per una prova</small></h2>
+    <div class="abil">${ABIL.map(a => `<button data-a="check" data-k="${a.k}"><span class="lbl">${a.n}</span><span class="mod">${fmt(M[a.k])}</span><span class="score">${a.s}</span></button>`).join('')}</div>
+    <h3>Tiri salvezza</h3>
+    <div class="rows">${ABIL.map(a => `<div class="rowwrap"><button class="row" data-a="save" data-k="${a.k}"><span class="dot ${SAVES[a.k]?'on':''}"></span><span>${a.n}</span><span class="val">${fmt(M[a.k] + (SAVES[a.k]?PB:0))}</span></button></div>`).join('')}</div>
+  </div>
+  <div class="panel">
+    <h2>Abilità <small>● competente</small></h2>
+    <div class="rows cols2">${SKILLS.map(([n,ab,p]) => `<div class="rowwrap"><button class="row" data-a="skill" data-n="${n}"><span class="dot ${p?'on':''}"></span><span>${n} <span class="muted">${ABBR[ab]}</span></span><span class="val">${fmt(skillMod(ab,p))}</span></button>${SKILL_INFO[n] ? `<button class="info" data-info="skill:${n}">i</button>` : ''}</div>`).join('')}</div>
+  </div>
+  <div class="panel">
+    <h2>Competenze e sensi</h2>
+    <dl class="kv">
+      <dt>Armature</dt><dd>Leggere</dd>
+      <dt>Armi</dt><dd>Semplici</dd>
+      <dt>Strumenti</dt><dd>Strumenti da falsario</dd>
+      <dt>Lingue</dt><dd>Comune, Infernale, Elfico</dd>
+      <dt>Sensi</dt><dd>Scurovisione 18 m, Percezione passiva ${PASSIVE}</dd>
+      <dt>Resistenze</dt><dd>Fuoco</dd>
+      <dt>Taglia</dt><dd>Media, 9 m di velocità</dd>
+    </dl>
+    <p class="muted">Punteggi: array standard (15, 14, 13, 12, 10, 8) con +2 Carisma e +1 Destrezza dal background Ciarlatano.</p>
+  </div>`;
+}
+function spellRow(sp){
+  const open = openSpell === sp.id;
+  const lvl = sp.l === 0 ? 'trucchetto' : sp.free ? (sp.ritual ? 'rituale' : 'a volontà') : `${sp.l}° • slot di 2°`;
+  const badges = `<span class="badge${sp.src==='f'?' red':sp.src==='t'?' ivy':''}">${SRC_LBL[sp.src]}</span>${sp.c ? '<span class="badge">C</span>' : ''}`;
+  let body = '';
+  if (open){
+    const b = [];
+    if (sp.atk) b.push(`<button class="btn sm primary" data-a="spatk" data-id="${sp.id}">Colpire ${fmt(SATK)}</button>`);
+    if (sp.dmg){
+      const L = SLOT_LVL;
+      const ex = sp.rebuke ? null : sp.dmg(L) + (sp.hexable && S.hexOn ? '+1d6' : '');
+      if (ex) b.push(`<button class="btn sm" data-a="spdmg" data-id="${sp.id}">Danni ${ex}</button>`);
+    }
+    if (sp.l > 0 && !sp.free && !sp.rebuke) b.push(`<button class="btn sm primary" data-a="cast" data-id="${sp.id}"${S.slots >= SLOT_MAX ? ' disabled' : ''}>Lancia (slot di 2°)</button>`);
+    if (sp.rebuke){
+      b.push(`<button class="btn sm" data-a="rebukefree"${S.rebuke ? ' disabled' : ''}>Gratis 2d10</button>`);
+      b.push(`<button class="btn sm primary" data-a="rebukeslot"${S.slots >= SLOT_MAX ? ' disabled' : ''}>Con slot 3d10</button>`);
+    }
+    if (sp.l === 0 && sp.c) b.push(`<button class="btn sm" data-a="concset" data-id="${sp.id}">Inizia concentrazione</button>`);
+    if (sp.free && sp.c) b.push(`<button class="btn sm" data-a="concset" data-id="${sp.id}">Inizia concentrazione</button>`);
+    body = `<div class="body"><div class="muted">${esc(sp.t)}</div><div>${esc(sp.full[0])}</div><div class="btns">${b.join('')}<button class="info" data-info="sp:${sp.id}">i</button></div></div>`;
+  }
+  return `<div class="spell"><div class="sphead"><button class="open" data-a="spopen" data-id="${sp.id}"><span><span class="nm">${sp.n}</span>${badges}</span><span class="lv">${lvl}</span></button></div>${body}</div>`;
+}
+function renderSpells(){
+  const el = document.getElementById('tab-spells');
+  const grp = (title, list, sub='') => `<div class="panel"><h2>${title}${sub ? ` <small>${sub}</small>` : ''}</h2>${list.map(spellRow).join('')}</div>`;
+  el.innerHTML = `
+  <div class="panel span2">
+    <h2>Magia del Patto <small>Carisma • CD ${DC} • attacco ${fmt(SATK)}</small></h2>
+    <div class="resline"><span class="rl"><b>Slot di 2° livello</b><span class="muted">${SLOT_MAX - S.slots}/${SLOT_MAX} • tutto torna col riposo breve</span></span><div class="pips">${pips(SLOT_MAX, S.slots, 'slot', 'slot big')}</div></div>
+    <p class="muted">Ogni incantesimo lanciato con uno slot è potenziato al 2° livello. Tocca un incantesimo per i pulsanti, la "i" per la descrizione completa.</p>
+  </div>
+  ${grp('Trucchetti', SPELLS.filter(s => s.l === 0), 'a volontà')}
+  ${grp('Incantesimi con slot', SPELLS.filter(s => s.l > 0 && !s.free), '4 preparati + 4 del patrono')}
+  ${grp('Senza slot', SPELLS.filter(s => s.free), 'Maschera e rituali del Libro')}`;
+}
+function renderFeat(){
+  const el = document.getElementById('tab-feat');
+  const groups = ['Warlock 1','Warlock 2','Supplica','Immondo 3','Tiefling','Talento d\'origine','Background'];
+  el.innerHTML = groups.map(g => `<div class="panel"><h2>${g}</h2>${FEATS.filter(f => f.g === g).map(f => `<div class="resline"><span><b>${f.n}</b><br><span class="muted">${esc(f.full[0])}</span></span><button class="info" data-info="feat:${f.id}">i</button></div>`).join('')}</div>`).join('') +
+  `<div class="panel span2"><h2>Il debito col Creditore <small>contatore narrativo</small></h2>
+    <div class="resline"><span><span class="debt">${S.debt}</span> <span class="muted">la cifra sull'ultimo foglio trovato in cucina</span></span>
+    <div class="stepper"><button class="btn sm" data-a="debt" data-d="-1">−</button><button class="btn sm" data-a="debt" data-d="1">+</button><button class="btn sm" data-a="debt" data-d="10">+10</button></div></div>
+    <p class="muted">Non ha effetti di regole: segnalo quando il master te lo chiede, o quando usi il potere in modo vistoso.</p></div>`;
+}
+function renderInv(){
+  document.getElementById('invcount').textContent = `${S.items.length} oggetti`;
+  document.getElementById('invlist').innerHTML = S.items.map(i => `<div class="item"><span class="nm">${esc(i.n)}</span>
+    <div class="stepper"><button class="btn sm" data-a="iq" data-id="${i.id}" data-d="-1">−</button><b>${i.q}</b><button class="btn sm" data-a="iq" data-id="${i.id}" data-d="1">+</button></div>
+    ${i.t ? `<span class="nt">${esc(i.t)}</span>` : ''}</div>`).join('');
+  const c = document.getElementById('coins');
+  if (!c.dataset.ok){
+    c.innerHTML = [['mr','Rame'],['ma','Argento'],['me','Electrum'],['mo','Oro'],['mp','Platino']].map(([k,n]) => `<label>${n}<input type="number" min="0" data-coin="${k}"></label>`).join('');
+    c.dataset.ok = 1;
+  }
+  c.querySelectorAll('input').forEach(inp => { if (document.activeElement !== inp) inp.value = S.coins[inp.dataset.coin] || 0; });
+}
+function renderLog(){
+  document.getElementById('logl').innerHTML = S.log.map(l => `<li><b>${l.total}</b><span>${esc(l.label)}<br><span style="opacity:.7">${esc(l.detail)}</span></span><time>${new Date(l.t).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}</time></li>`).join('');
+  document.getElementById('insp-n').textContent = S.insp;
+  document.getElementById('insp').setAttribute('aria-pressed', useInsp ? 'true' : 'false');
+}
+function render(){
+  renderHeader(); renderCombat(); renderSheet(); renderSpells(); renderFeat(); renderInv(); renderLog();
+  const n = document.getElementById('notes'); if (document.activeElement !== n) n.value = S.notes || '';
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab ? 'true' : 'false'));
+  document.querySelectorAll('main > section').forEach(s => s.hidden = s.id !== 'tab-' + tab);
+}
+
+// Modal
+function modal(html){
+  const m = document.getElementById('modal');
+  document.getElementById('modal-body').innerHTML = `<button class="btn sm close" data-a="close">Chiudi</button>${html}`;
+  m.hidden = false;
+}
+function infoHtml(key){
+  const [kind, id] = key.split(':');
+  if (kind === 'sp'){
+    const sp = SPELLS.find(s => s.id === id);
+    return `<h2>${sp.n}</h2><div class="meta"><div><b>Livello</b>${sp.l === 0 ? 'Trucchetto' : sp.l + '°'}</div><div><b>Scuola</b>${sp.s}</div><div><b>Lancio</b>${sp.ct}</div><div><b>Gittata</b>${sp.rg}</div><div><b>Componenti</b>${esc(sp.cp)}</div><div><b>Durata</b>${sp.du}</div><div><b>Fonte</b>${SRC_LBL[sp.src]}</div></div>
+      ${sp.full.map(p => `<p>${esc(p)}</p>`).join('')}${sp.tip ? `<div class="tip"><b>Per Kaean:</b> ${esc(sp.tip)}</div>` : ''}`;
+  }
+  if (kind === 'feat'){
+    const f = FEATS.find(x => x.id === id);
+    return `<h2>${f.n}</h2><p class="muted">${f.g}</p>${f.full.map(p => `<p>${esc(p)}</p>`).join('')}`;
+  }
+  if (kind === 'skill'){
+    const sk = SKILLS.find(s => s[0] === id);
+    return `<h2>${id}</h2><p class="muted">${ABBR[sk[1]]} ${fmt(skillMod(sk[1], sk[2]))}${SKILL_SRC[id] ? ' • competenza da ' + SKILL_SRC[id] : ''}</p><p>${esc(SKILL_INFO[id])}</p>`;
+  }
+  return '';
+}
+
+// Actions
+function castSpell(sp){
+  if (S.slots >= SLOT_MAX) return;
+  S.slots += 1;
+  let msg = 'slot di 2° speso';
+  if (sp.c){ const prev = S.conc; S.conc = sp.n; S.hexOn = !!sp.hex; if (prev && prev !== sp.n) msg += ` • ${prev} termina`; }
+  show(sp.n, '✦', msg); commit();
+}
+const ATK = {
+  eb:{n:'Deflagrazione Occulta', b:()=>SATK, d:()=>`1d10+${M.car}` + (S.hexOn ? '+1d6' : ''), t:'forza'},
+  fb:{n:'Dardo di Fuoco', b:()=>SATK, d:()=>'1d10', t:'fuoco'},
+  dag:{n:'Pugnale', b:()=>PB+M.des, d:()=>`1d4+${M.des}` + (S.hexOn ? '+1d6' : ''), t:'perforanti'},
+  sick:{n:'Falcetto', b:()=>PB+M.for, d:()=>`1d4${M.for}` + (S.hexOn ? '+1d6' : ''), t:'taglienti'}
+};
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-a],[data-info],[data-tab],[data-mode],[data-die]');
+  if (!t) { if (e.target.id === 'modal') document.getElementById('modal').hidden = true; return; }
+  if (t.dataset.tab){ tab = t.dataset.tab; render(); window.scrollTo({top:0}); return; }
+  if (t.dataset.mode){ rollMode = t.dataset.mode; document.querySelectorAll('#mode button').forEach(b => b.setAttribute('aria-pressed', b.dataset.mode === rollMode ? 'true':'false')); return; }
+  if (t.dataset.die){ const r = rollExpr('1d' + t.dataset.die); show('d' + t.dataset.die, r.total, r.text); commit(); return; }
+  if (t.dataset.info){ modal(infoHtml(t.dataset.info)); return; }
+  const a = t.dataset.a, val = () => parseInt(document.getElementById('hpin').value, 10);
+  switch (a){
+    case 'close': document.getElementById('modal').hidden = true; break;
+    case 'init': d20('Iniziativa', M.des); break;
+    case 'check': { const ab = ABIL.find(x => x.k === t.dataset.k); d20('Prova di ' + ab.n, M[ab.k]); break; }
+    case 'save': { const ab = ABIL.find(x => x.k === t.dataset.k); d20('TS ' + ab.n, M[ab.k] + (SAVES[ab.k]?PB:0)); break; }
+    case 'skill': { const sk = SKILLS.find(s => s[0] === t.dataset.n); d20(sk[0], skillMod(sk[1], sk[2])); break; }
+    case 'dmg': damage(val()); break;
+    case 'heal': heal(val()); break;
+    case 'temp': { const n = val(); if (n > 0){ S.hp.temp = Math.max(S.hp.temp, n); show('PF temporanei', n, 'non si sommano: tieni il valore più alto'); commit(); } break; }
+    case 'bless': S.hp.temp = Math.max(S.hp.temp, BLESS); show("Benedizione dell'Oscuro", BLESS, 'PF temporanei (non si sommano)'); commit(); break;
+    case 'cleartemp': S.hp.temp = 0; commit(); break;
+    case 'ds': S.death.s = +t.dataset.i < S.death.s ? +t.dataset.i : +t.dataset.i + 1; commit(); break;
+    case 'df': S.death.f = +t.dataset.i < S.death.f ? +t.dataset.i : +t.dataset.i + 1; commit(); break;
+    case 'deathroll': {
+      const k = rnd(20); let msg;
+      if (k === 20){ S.hp.cur = 1; S.death = {s:0,f:0}; msg = 'ti rialzi con 1 PF'; }
+      else if (k === 1){ S.death.f = Math.min(3, S.death.f + 2); msg = 'due fallimenti'; }
+      else if (k >= 10){ S.death.s = Math.min(3, S.death.s + 1); msg = S.death.s === 3 ? 'stabile' : 'successo'; }
+      else { S.death.f = Math.min(3, S.death.f + 1); msg = S.death.f === 3 ? 'morto' : 'fallimento'; }
+      show('Tiro contro la morte', k, msg, k >= 10 ? (k === 20 ? 'crit' : '') : 'fumble'); commit(); break;
+    }
+    case 'concsave': d20('TS concentrazione', M.cos); break;
+    case 'concend': S.conc = null; S.hexOn = false; commit(); break;
+    case 'concset': { const sp = SPELLS.find(s => s.id === t.dataset.id); const prev = S.conc; S.conc = sp.n; S.hexOn = false; show(sp.n, '✦', prev && prev !== sp.n ? prev + ' termina' : 'concentrazione'); commit(); break; }
+    case 'slot': { const i = +t.dataset.i, avail = SLOT_MAX - S.slots; S.slots = i < avail ? SLOT_MAX - i : SLOT_MAX - i - 1; S.slots = Math.max(0, Math.min(SLOT_MAX, S.slots)); commit(); break; }
+    case 'cunning': if (!S.cunning && S.slots){ S.cunning = true; S.slots = Math.max(0, S.slots - Math.ceil(SLOT_MAX/2)); show('Astuzia Magica', '✦', '1 slot recuperato'); commit(); } break;
+    case 'rebukefree': if (!S.rebuke){ S.rebuke = true; const r = rollExpr('2d10'); show('Rimprovero Infernale (gratis)', r.total, `${r.text} fuoco • TS Des CD ${DC}, metà se riesce`); commit(); } break;
+    case 'rebukeslot': if (S.slots < SLOT_MAX){ S.slots += 1; const r = rollExpr('3d10'); show('Rimprovero Infernale (slot)', r.total, `${r.text} fuoco • TS Des CD ${DC}, metà se riesce`); commit(); } break;
+    case 'hd': if (S.hd > 0){ S.hd -= 1; const r = rollExpr('1d8' + fmt(M.cos)); const n = Math.max(1, r.total); S.hp.cur = Math.min(BASE_HP, S.hp.cur + n); show('Dado vita', n, r.text); commit(); } break;
+    case 'hextoggle': S.hexOn = !S.hexOn; commit(); break;
+    case 'atk': { const k = ATK[t.dataset.k]; d20(k.n, k.b(), {attack:1}); break; }
+    case 'dmgroll': { const k = ATK[t.dataset.k]; rollDmg(k.n, k.d(), k.t + (S.hexOn && t.dataset.k !== 'fb' ? ' + necrotici' : '')); break; }
+    case 'spopen': openSpell = openSpell === t.dataset.id ? null : t.dataset.id; render(); break;
+    case 'spatk': { const sp = SPELLS.find(s => s.id === t.dataset.id); d20(sp.n + (sp.rays ? ' (un raggio)' : ''), SATK, {attack:1}); break; }
+    case 'spdmg': { const sp = SPELLS.find(s => s.id === t.dataset.id); rollDmg(sp.n, sp.dmg(SLOT_LVL) + (sp.hexable && S.hexOn ? '+1d6' : ''), sp.dt + (sp.save ? ` • TS ${sp.save} CD ${DC}${sp.half ? ', metà se riesce' : ''}` : '')); break; }
+    case 'cast': castSpell(SPELLS.find(s => s.id === t.dataset.id)); break;
+    case 'cond': { const c = t.dataset.c; S.conds = S.conds.includes(c) ? S.conds.filter(x => x !== c) : [...S.conds, c]; commit(); break; }
+    case 'iq': { const it = S.items.find(i => i.id === t.dataset.id); it.q += +t.dataset.d; if (it.q <= 0) S.items = S.items.filter(i => i !== it); commit(); break; }
+    case 'debt': S.debt = Math.max(0, S.debt + +t.dataset.d); commit(); break;
+    case 'short': if (needConfirm('short')){ S.slots = 0; show('Riposo breve', '✦', 'slot del patto recuperati • spendi i dadi vita dal riquadro'); commit(); } break;
+    case 'long': if (needConfirm('long')){
+      S.slots = 0; S.cunning = false; S.rebuke = false; S.hp.cur = BASE_HP; S.hp.temp = 0; S.hd = HD_MAX; S.death = {s:0,f:0}; S.conc = null; S.hexOn = false;
+      S.conds = S.conds.filter(c => c !== 'Svenuto'); show('Riposo lungo', '✦', 'PF, slot, dadi vita e risorse recuperati'); commit(); } break;
+  }
+});
+document.getElementById('dice').innerHTML = [4,6,8,10,12,20,100].map(n => `<button class="die" data-die="${n}">d${n}</button>`).join('');
+document.getElementById('exprform').addEventListener('submit', e => {
+  e.preventDefault(); const v = document.getElementById('expr').value; const r = rollExpr(v);
+  if (r){ show(v, r.total, r.text); commit(); }
+});
+document.getElementById('insp').addEventListener('click', () => { if (S.insp > 0){ useInsp = !useInsp; renderLog(); } });
+document.getElementById('inspadd').addEventListener('click', () => { S.insp += 1; commit(); });
+document.getElementById('insp').addEventListener('contextmenu', e => { e.preventDefault(); S.insp = Math.max(0, S.insp - 1); useInsp = false; commit(); });
+document.getElementById('logbtn').addEventListener('click', e => {
+  const l = document.getElementById('log'); l.hidden = !l.hidden; e.currentTarget.setAttribute('aria-expanded', !l.hidden);
+});
+document.getElementById('traytoggle').addEventListener('click', e => {
+  const tr = document.getElementById('tray'); tr.classList.toggle('open');
+  e.currentTarget.setAttribute('aria-expanded', tr.classList.contains('open'));
+  e.currentTarget.textContent = tr.classList.contains('open') ? 'Dadi ▾' : 'Dadi ▴';
+});
+let noteTimer = null;
+document.getElementById('notes').addEventListener('input', e => { clearTimeout(noteTimer); const v = e.target.value; noteTimer = setTimeout(() => { S.notes = v; commit(); }, 600); });
+document.getElementById('coins').addEventListener('input', e => { const k = e.target.dataset.coin; if (!k) return; S.coins[k] = Math.max(0, parseInt(e.target.value, 10) || 0); commit(); });
+document.getElementById('addform').addEventListener('submit', e => {
+  e.preventDefault();
+  const n = document.getElementById('add-name').value.trim(); if (!n) return;
+  S.items.push({id:uid(), n, q:Math.max(1, parseInt(document.getElementById('add-qty').value, 10) || 1), t:document.getElementById('add-note').value.trim()});
+  e.target.reset(); commit();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('modal').hidden = true; });
+render();
+initDb();
+})();
+</script>
+</body>
+</html>
