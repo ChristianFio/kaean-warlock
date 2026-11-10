@@ -194,8 +194,12 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
 .die:active{background:rgba(255,255,255,.12)}
 .insp{border:1px solid var(--ivy-l);color:#c7d9a4;background:transparent;border-radius:3px;padding:5px 10px;font-size:.9rem}
 .insp[aria-pressed="true"]{background:var(--ivy);color:#f0f5e4;box-shadow:0 0 12px rgba(135,153,90,.6)}
+.insp.luck{border-color:#b89544;color:#e6cf8f}
+.insp.luck[aria-pressed="true"]{background:#b89544;color:#1b1608;box-shadow:0 0 12px rgba(200,160,60,.6)}
+.pip.luck.on{background:radial-gradient(circle at 35% 30%,#ecd27a,#8a6414);border-color:#4d3608;box-shadow:0 0 6px rgba(200,160,60,.5)}
+.luckrow{grid-column:1/-1}
 .expr{display:flex;gap:6px}
-.expr input{width:120px;background:rgba(255,255,255,.08);border:1px solid rgba(236,220,184,.5);color:var(--frame-ink);border-radius:3px;padding:5px 8px}
+.expr input{width:96px;background:rgba(255,255,255,.08);border:1px solid rgba(236,220,184,.5);color:var(--frame-ink);border-radius:3px;padding:5px 8px}
 .log{max-height:38vh;overflow:auto;border-top:1px solid rgba(236,220,184,.25);grid-column:1/-1}
 .log ol{list-style:none;margin:0;padding:6px 0}
 .log li{display:grid;grid-template-columns:3.2em 1fr auto;gap:10px;padding:4px 0;border-bottom:1px dotted rgba(236,220,184,.18);font-size:.88rem}
@@ -267,7 +271,7 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
   <section id="tab-guide" class="grid" role="tabpanel" hidden>
     <div class="panel span2">
       <h2>Guida al combattimento <small>Kaean, warlock 3</small></h2>
-      <p>Kaean combatte <b>a distanza</b> e con la <b>parola</b>. Ha 24 PF e CA 15, ma con <b>Vigore Immondo</b> entra in ogni scontro con 12 PF temporanei: <b>36 PF effettivi</b>. Ha solo <b>2 slot</b>, sempre di 2° livello, e li recupera con ogni <b>riposo breve</b>: usali senza paura e chiedi una pausa al gruppo quando sono finiti.</p>
+      <p>Kaean combatte <b>a distanza</b> e con la <b>parola</b>. Ha 24 PF e CA 14, ma con <b>Vigore Immondo</b> entra in ogni scontro con 12 PF temporanei: <b>36 PF effettivi</b>. In più ha <b>2 punti fortuna</b> al giorno per i tiri che contano. Ha solo <b>2 slot</b>, sempre di 2° livello, e li recupera con ogni <b>riposo breve</b>: usali senza paura e chiedi una pausa al gruppo quando sono finiti.</p>
     </div>
     <div class="panel">
       <h2>Cosa hai in ogni turno</h2>
@@ -306,6 +310,8 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
       <p>Non richiede concentrazione, quindi lo usi con Maleficio attivo. Due nemici perdono il turno ("Fermo") oppure cadono proni davanti ai compagni in mischia ("A terra").</p>
       <h3>5. Scheggia e blocco</h3>
       <p><b>Scheggia Mentale</b> su un bersaglio, e nel turno dopo <b>Blocca Persone</b> o <b>Comando</b>: il suo tiro salvezza ha −1d4. Funziona anche per preparare un incantesimo del bardo.</p>
+      <h3>6. La fortuna al momento giusto</h3>
+      <p>Hai <b>2 punti fortuna</b> per riposo lungo. Con uno hai vantaggio su un tuo d20, oppure dai svantaggio a chi ti attacca. Tienili per i tiri che decidono lo scontro: il tiro salvezza contro un effetto che ti toglierebbe il turno, la concentrazione su Blocca Persone, la prova di Persuasione o Inganno che conta davvero.</p>
     </div>
     <div class="panel span2">
       <h2>La sequenza da fare quasi sempre</h2>
@@ -321,23 +327,23 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
     <div class="panel span2">
       <h2>Fuori dal combattimento</h2>
       <dl class="kv">
-        <dt>Convincere qualcuno</dt><dd>Persuasione +6 o Inganno +6, con Guida (+1d4) prima della prova. Se non basta: Suggestione.</dd>
+        <dt>Convincere qualcuno</dt><dd>Persuasione +6 o Inganno +6, con Guida (+1d4) prima della prova e un punto fortuna se è quella decisiva. Se non basta: Suggestione.</dd>
         <dt>Passare inosservato</dt><dd>Illusione Minore per distrarre, il costume del Ciarlatano per i travestimenti, Passo Velato per superare un ostacolo.</dd>
         <dt>Testi e lingue</dt><dd>Comprendere Linguaggi come rituale dal Libro delle Ombre (10 minuti in più, nessuno slot).</dd>
         <dt>Magia e sigilli</dt><dd>Individuazione del Magico come rituale: utile su contratti, registri e sigilli.</dd>
         <dt>Documenti falsi</dt><dd>Strumenti da falsario: un vecchio talento dell'Ufficio delle Adesioni.</dd>
-        <dt>Piante</dt><dd>Natura +2 con competenza: il suo pollice verde, senza magia.</dd>
+        <dt>Occhi aperti</dt><dd>Percezione +3, passiva 13: imboscate, porte nascoste, dettagli fuori posto.</dd>
       </dl>
     </div>
     <div class="panel span2">
       <h2>Errori da evitare</h2>
-      <p>• <b>Stare in prima linea:</b> la brina punisce chi ti colpisce, ma con 24 PF non sei un tank.<br>• <b>Sparare con un nemico adiacente:</b> la Deflagrazione ha svantaggio. Usa Passo Velato o allontanati.<br>• <b>Due slot nello stesso turno:</b> non si può. Azione bonus con slot e azione con slot vanno in turni diversi.<br>• <b>Lanciare un'altra concentrazione</b> mentre hai Maleficio o Blocca Persone attivi: perdi il primo.<br>• <b>Risparmiare gli slot:</b> tornano con il riposo breve, usali.<br>• <b>Dimenticare Vigore Immondo</b> dopo uno scontro: sono 12 PF regalati.</p>
+      <p>• <b>Stare in prima linea:</b> la brina punisce chi ti colpisce, ma con 24 PF e CA 14 non sei un tank.<br>• <b>Sparare con un nemico adiacente:</b> la Deflagrazione ha svantaggio. Usa Passo Velato o allontanati.<br>• <b>Due slot nello stesso turno:</b> non si può. Azione bonus con slot e azione con slot vanno in turni diversi.<br>• <b>Lanciare un'altra concentrazione</b> mentre hai Maleficio o Blocca Persone attivi: perdi il primo.<br>• <b>Risparmiare gli slot:</b> tornano con il riposo breve, usali.<br>• <b>Dimenticare Vigore Immondo</b> dopo uno scontro: sono 12 PF regalati.<br>• <b>Tenersi i punti fortuna:</b> tornano a ogni riposo lungo, non servono a niente se restano lì.</p>
     </div>
     <div class="panel span2">
       <h2>Piano di crescita</h2>
       <dl class="kv">
-        <dt>4° livello</dt><dd>Un talento con +1 al Carisma lo porta a 20: CD 15 e +7 a colpire. Consigliato <b>Incantatore da Guerra</b> (War Caster): vantaggio ai TS di concentrazione e Deflagrazione al posto dell'attacco di opportunità. In più: un trucchetto e un incantesimo preparato.</dd>
-        <dt>5° livello</dt><dd>Slot di 3° livello, Deflagrazione con 2 raggi, Palla di Fuoco dal patrono e Oscurità dal retaggio. Due suppliche nuove: <b>Deflagrazione Respingente</b> (ogni raggio spinge il bersaglio di 3 m) e una tra Mente Occulta, Vista del Diavolo e Lezioni dei Primi (talento Fortunato).</dd>
+        <dt>4° livello</dt><dd><b>+2 al Carisma</b>: arriva a 20, con CD 15 e +7 a colpire. È la scelta più forte. In alternativa <b>Incantatore da Guerra</b> (War Caster): +1 al Carisma, vantaggio ai TS di concentrazione e Deflagrazione al posto dell'attacco di opportunità. In più: un trucchetto e un incantesimo preparato.</dd>
+        <dt>5° livello</dt><dd>Slot di 3° livello, Deflagrazione con 2 raggi, Palla di Fuoco dal patrono e Oscurità dal retaggio. Due suppliche nuove: <b>Deflagrazione Respingente</b> (ogni raggio spinge il bersaglio di 3 m) e una tra Mente Occulta, Vista del Diavolo e Lezioni dei Primi (talento Robusto: +2 PF per livello). I punti fortuna diventano 3.</dd>
         <dt>7°-9° livello</dt><dd>Sostituisci Vigore Immondo: 12 PF temporanei a quel punto pesano poco.</dd>
       </dl>
     </div>
@@ -379,6 +385,7 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
         <button data-mode="adv" aria-pressed="false">Vant.</button>
       </div>
       <button class="insp" id="insp" aria-pressed="false">Ispirazione <span id="insp-n">0</span></button><button class="die" id="inspadd" aria-label="Aggiungi ispirazione">+</button>
+      <button class="insp luck" id="luck" aria-pressed="false">Fortuna <span id="luck-n">0</span></button>
       <div class="dice" id="dice"></div>
       <form class="expr" id="exprform"><input id="expr" placeholder="es. 1d10+3" aria-label="Espressione dadi"><button class="die" type="submit">Tira</button></form>
       <button class="logbtn" id="logbtn" aria-expanded="false">Storico</button>
@@ -392,11 +399,11 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
 'use strict';
 const KEY = 'kaean-warlock-v1';
 const FB_URL = 'https://kaean-scheda-default-rtdb.europe-west1.firebasedatabase.app/kaean-warlock.json';
-const LVL = 3, PB = 2, BASE_HP = 24, HD_MAX = 3, SLOT_MAX = 2, SLOT_LVL = 2, SPEED = '9 m', VER = 3;
+const LVL = 3, PB = 2, BASE_HP = 24, HD_MAX = 3, SLOT_MAX = 2, SLOT_LVL = 2, SPEED = '9 m', VER = 4, LUCK = PB;
 
 const ABIL = [
-  {k:'for',n:'Forza',s:7},{k:'des',n:'Destrezza',s:16},{k:'cos',n:'Costituzione',s:14},
-  {k:'int',n:'Intelligenza',s:10},{k:'sag',n:'Saggezza',s:13},{k:'car',n:'Carisma',s:19}
+  {k:'for',n:'Forza',s:8},{k:'des',n:'Destrezza',s:14},{k:'cos',n:'Costituzione',s:14},
+  {k:'int',n:'Intelligenza',s:10},{k:'sag',n:'Saggezza',s:12},{k:'car',n:'Carisma',s:18}
 ];
 const mod = s => Math.floor((s - 10) / 2);
 const M = Object.fromEntries(ABIL.map(a => [a.k, mod(a.s)]));
@@ -404,18 +411,18 @@ const SAVES = {for:0, des:0, cos:0, int:0, sag:1, car:1};
 const ABBR = {for:'For',des:'Des',cos:'Cos',int:'Int',sag:'Sag',car:'Car'};
 const SKILLS = [
   ['Acrobazia','des'],['Addestrare Animali','sag'],['Arcano','int',1],['Atletica','for'],['Furtività','des'],
-  ['Indagare','int'],['Inganno','car',1],['Intimidire','car',1],['Intrattenere','car'],['Intuizione','sag',1],
-  ['Medicina','sag'],['Natura','int',1],['Percezione','sag'],['Persuasione','car',1],['Rapidità di Mano','des',1],
+  ['Indagare','int'],['Inganno','car',1],['Intimidire','car'],['Intrattenere','car'],['Intuizione','sag'],
+  ['Medicina','sag'],['Natura','int'],['Percezione','sag',1],['Persuasione','car',1],['Rapidità di Mano','des'],
   ['Religione','int'],['Sopravvivenza','sag'],['Storia','int']
 ];
-const SKILL_SRC = {'Arcano':'Warlock','Inganno':'Ciarlatano','Intimidire':'Warlock','Intuizione':'Talento Abile','Natura':'Talento Abile','Persuasione':'Talento Abile','Rapidità di Mano':'Ciarlatano'};
+const SKILL_SRC = {'Arcano':'Warlock','Inganno':'Warlock','Percezione':'background','Persuasione':'background'};
 const DC = 8 + PB + M.car, SATK = PB + M.car;
 const BLESS = Math.max(1, M.car + LVL);
 const CONDS = ['Accecato','Affascinato','Afferrato','Assordato','Avvelenato','Incapacitato','Invisibile','Paralizzato','Pietrificato','Prono','Spaventato','Stordito','Svenuto','Trattenuto'];
 const fmt = n => (n >= 0 ? '+' : '−') + Math.abs(n);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const skillMod = (ab, p) => M[ab] + (p ? PB : 0);
-const PASSIVE = 10 + skillMod('sag', 0);
+const PASSIVE = 10 + skillMod('sag', 1);
 const AC = 12 + M.des, VIGOR = 12, AOA = 5 * SLOT_LVL;
 
 // src: w=warlock, f=patrono, t=tomo, r=retaggio, m=supplica
@@ -512,12 +519,13 @@ const FEATS = [
   {id:'dark',n:'Scurovisione',g:'Tiefling',full:['Vedi nella penombra entro 18 m come in luce intensa, e al buio come in penombra (solo in bianco e nero).']},
   {id:'legacy',n:'Retaggio Infernale',g:'Tiefling',full:['Resistenza ai danni da fuoco.','Conosci Dardo di Fuoco. Dal 3° livello Rimprovero Infernale, dal 5° Oscurità: ognuno una volta per riposo lungo senza slot, oppure con gli slot.','Usano il Carisma.']},
   {id:'presence',n:'Presenza Ultraterrena',g:'Tiefling',full:['Conosci il trucchetto Taumaturgia, con il Carisma.']},
-  {id:'skilled',n:'Abile',g:'Talento d\'origine',full:['Competenza in tre abilità: Persuasione, Intuizione e Natura.']},
-  {id:'scores',n:'Punteggi tirati',g:'Background',full:['Tirati con 4d6, scartando il dado più basso: 17, 15, 14, 13, 10, 7.','Ciarlatano: +2 al Carisma e +1 alla Destrezza (17→19, 15→16). La Costituzione resta 14.','I modificatori sono gli stessi di una distribuzione 18/16/15, ma al 4° livello basta un talento con +1 al Carisma per arrivare a 20, e in più ottieni il beneficio del talento.']},
-  {id:'charl',n:'Ciarlatano',g:'Background',full:['Competenze: Inganno, Rapidità di Mano, Strumenti da falsario.','Il background dell\'Ufficio delle Adesioni: documenti, firme e moduli non hanno segreti per lui.']}
+  {id:'lucky',n:'Fortunato',g:'Talento d\'origine',full:[`Hai ${LUCK} punti fortuna, pari al bonus di competenza. Tornano tutti con un riposo lungo.`,'Vantaggio: quando tiri un d20 per una prova, un attacco o un tiro salvezza, spendi 1 punto per avere vantaggio.','Svantaggio: quando una creatura tira per colpirti, spendi 1 punto per darle svantaggio.','Si decide al momento del tiro, non dopo aver visto il risultato.','Tienili per i tiri che contano: un tiro salvezza che ti toglierebbe il turno, la concentrazione su Blocca Persone, la prova sociale decisiva.']},
+  {id:'scores',n:'Punteggi',g:'Background',full:['Serie di partenza: 16, 14, 13, 12, 10, 8. È il risultato medio del metodo 4d6 scartando il dado più basso: niente punteggi fuori scala.','Background: +2 al Carisma e +1 alla Costituzione (16→18, 13→14).','Se tirate i dadi al tavolo, questi numeri vanno sostituiti con i tiri veri.','Al 4° livello: +2 al Carisma (20), oppure un talento con +1.']},
+  {id:'charl',n:'Ciarlatano (personalizzato)',g:'Background',full:['Costruito con le regole della Guida del Dungeon Master 2024: tre caratteristiche, un talento d\'origine, due abilità, uno strumento ed equipaggiamento per 50 mo.','Caratteristiche: Destrezza, Costituzione, Carisma. Talento: Fortunato. Abilità: Persuasione e Percezione. Strumento: Strumenti da falsario.','È il Ciarlatano del manuale con Fortunato al posto di Abile: serve il sì della master.','Se preferisce i background del manuale, il Mercante dà Fortunato e gli stessi bonus (+2 Carisma, +1 Costituzione), con Persuasione e Addestrare Animali.','Il background dell\'Ufficio delle Adesioni: documenti, firme e moduli non hanno segreti per lui.']}
 ];
 const SKILL_INFO = {
   'Persuasione':'Convincere con onestà e buone maniere. Il suo talento naturale.',
+  'Percezione':'Accorgersi di imboscate, porte nascoste e dettagli fuori posto. È la prova più richiesta al tavolo.',
   'Inganno':'Mentire in modo credibile, travestirsi, sviare. Il Metodo Kaeraldo.',
   'Intimidire':'Minacciare. Con le piante funziona benissimo.',
   'Intuizione':'Capire se qualcuno mente o cosa vuole davvero. Utile con Morgana.',
@@ -527,7 +535,7 @@ const SKILL_INFO = {
 };
 
 const INIT_ITEMS = [
-  {n:'Armatura di cuoio borchiato',q:1,t:'CA 12 + Des = 15. Comprata: 45 mo.'},
+  {n:'Armatura di cuoio borchiato',q:1,t:`CA 12 + Des = ${AC}. Comprata: 45 mo.`},
   {n:'Pugnale',q:2,t:'1d4 perforanti, accurato, leggero, da lancio (6/18 m). Comprati: 2 mo l\'uno.'},
   {n:'Falcetto',q:1,t:'1d4 taglienti, leggero. Lo usa per potare, non per combattere. Comprato: 1 mo.'},
   {n:'Libro delle Ombre',q:1,t:'Il registro nero del Patto del Tomo. È anche il focus da incantatore.'},
@@ -546,17 +554,26 @@ const INIT_ITEMS = [
 const OLD_ITEMS = ['Armatura di cuoio','Focus arcano (sfera)','Libro (sapere occulto)','Dotazione da studioso','Abiti pregiati neri','Mele','Cesoie e attrezzi da giardino'];
 const uid = () => Math.random().toString(36).slice(2, 9);
 const fresh = () => ({
-  ver:VER, aoa:false, hp:{cur:BASE_HP, temp:0}, slots:0, cunning:false, rebuke:false, hd:HD_MAX,
+  ver:VER, aoa:false, luck:0, hp:{cur:BASE_HP, temp:0}, slots:0, cunning:false, rebuke:false, hd:HD_MAX,
   death:{s:0,f:0}, conds:[], conc:null, hexOn:false, insp:0, debt:0,
   items:INIT_ITEMS.map(i => ({id:uid(), ...i})), coins:{mr:0,ma:3,me:0,mo:9,mp:0},
   notes:'', log:[], updatedAt:0
 });
 function migrate(st){
   if (st.ver === VER) return false;
-  const f = fresh(), names = INIT_ITEMS.map(i => i.n);
-  const mine = (Array.isArray(st.items) ? st.items : []).filter(i => i && !names.includes(i.n) && !OLD_ITEMS.includes(i.n));
-  if ((st.ver || 1) < 2) st.hp = {cur:BASE_HP, temp:0};
-  st.ver = VER; delete st.mage; st.aoa = false; st.items = f.items.concat(mine); st.coins = f.coins;
+  const v = st.ver || 1;
+  if (v < 2) st.hp = {cur:BASE_HP, temp:0};
+  if (v < 3){
+    const f = fresh(), names = INIT_ITEMS.map(i => i.n);
+    const mine = (Array.isArray(st.items) ? st.items : []).filter(i => i && !names.includes(i.n) && !OLD_ITEMS.includes(i.n));
+    delete st.mage; st.aoa = false; st.items = f.items.concat(mine); st.coins = f.coins;
+  }
+  if (v < 4){
+    st.luck = 0;
+    const arm = (Array.isArray(st.items) ? st.items : []).find(i => i && i.n === INIT_ITEMS[0].n);
+    if (arm && /^CA 12 \+ Des = \d+\./.test(arm.t || '')) arm.t = INIT_ITEMS[0].t;
+  }
+  st.ver = VER;
   return true;
 }
 function hydrate(o){ const st = Object.assign(fresh(), o); st.ver = o.ver; return st; }
@@ -565,7 +582,7 @@ function load(){
   return fresh();
 }
 let S = load();
-let tab = 'combat', rollMode = 'norm', useInsp = false, openSpell = null;
+let tab = 'combat', rollMode = 'norm', useInsp = false, useLuck = false, openSpell = null;
 let docRef = null, syncState = 'local', saving = false, saveAgain = false, saveTimer = null;
 let pendingConfirm = null, confirmTimer = null;
 
@@ -658,6 +675,8 @@ function d20(label, m, opts = {}){
   let bonus = 0, bonusTxt = '';
   let mode = adv && !dis ? 'adv' : dis && !adv ? 'dis' : 'norm';
   if (useInsp && S.insp > 0){ S.insp -= 1; useInsp = false; mode = mode === 'dis' ? 'norm' : 'adv'; bonus = rnd(6); bonusTxt = ` • ispirazione +1d6[${bonus}]`; }
+  if (useLuck && S.luck < LUCK){ S.luck += 1; mode = mode === 'dis' ? 'norm' : 'adv'; bonusTxt += ' • punto fortuna'; }
+  useLuck = false;
   const a = rnd(20), b = rnd(20);
   const k = mode === 'adv' ? Math.max(a,b) : mode === 'dis' ? Math.min(a,b) : a;
   const total = k + m + bonus;
@@ -761,6 +780,8 @@ function renderCombat(){
     <div class="resline"><span class="rl"><b>Astuzia Magica</b> <button class="info" data-info="feat:cunning">i</button><span class="muted">1 minuto, recupera 1 slot</span></span>${S.cunning ? '<span class="muted">usata</span>' : '<button class="btn sm" data-a="cunning"' + (S.slots ? '' : ' disabled') + '>Usa</button>'}</div>
     <div class="resline"><span class="rl"><b>Rimprovero Infernale</b> <button class="info" data-info="sp:rebuke">i</button><span class="muted">gratis 1/riposo lungo</span></span>${S.rebuke ? '<span class="muted">usato</span>' : '<button class="btn sm" data-a="rebukefree">Lancia</button>'}</div>
     <div class="resline"><span class="rl"><b>Dadi vita</b> <span class="muted">${S.hd}/${HD_MAX} d8</span></span><button class="btn sm" data-a="hd"${S.hd && !down ? '' : ' disabled'}>Spendi 1d8${fmt(M.cos)}</button></div>
+    <div class="resline"><span class="rl"><b>Fortunato</b> <button class="info" data-info="feat:lucky">i</button><span class="muted">${LUCK - S.luck}/${LUCK} punti fortuna, tornano col riposo lungo</span></span><div class="pips">${pips(LUCK, S.luck, 'luckpip', 'luck')}</div>
+      <div class="btns luckrow"><button class="btn sm${useLuck ? ' primary' : ''}" data-a="luckadv"${S.luck < LUCK ? '' : ' disabled'}>${useLuck ? 'Pronto: vantaggio al prossimo d20' : 'Vantaggio al prossimo d20'}</button><button class="btn sm" data-a="luckdis"${S.luck < LUCK ? '' : ' disabled'}>Svantaggio a chi ti attacca</button></div></div>
     <div class="resline"><span class="rl"><b>Armatura di Agathys</b> <button class="info" data-info="sp:aoa">i</button><span class="muted">${AOA} freddo a chi ti colpisce in mischia</span></span><button class="btn sm" data-a="aoatoggle">${S.aoa ? 'Attiva' : 'Spenta'}</button></div>
     <div class="resline"><span class="rl"><b>Maleficio attivo</b><span class="muted">+1d6 necrotici a colpo</span></span><button class="btn sm" data-a="hextoggle">${S.hexOn ? 'Sì' : 'No'}</button></div>
   </div>
@@ -802,7 +823,7 @@ function renderSheet(){
       <dt>Resistenze</dt><dd>Fuoco</dd>
       <dt>Taglia</dt><dd>Media, 9 m di velocità</dd>
     </dl>
-    <p class="muted">Punteggi tirati con 4d6 (scartando il più basso): 17, 15, 14, 13, 10, 7. Il Ciarlatano dà +2 al Carisma e +1 alla Destrezza.</p>
+    <p class="muted">Serie di partenza 16, 14, 13, 12, 10, 8: la media del metodo 4d6. Il background dà +2 al Carisma e +1 alla Costituzione.</p>
   </div>`;
 }
 function spellRow(sp){
@@ -868,6 +889,8 @@ function renderLog(){
   document.getElementById('logl').innerHTML = S.log.map(l => `<li><b>${l.total}</b><span>${esc(l.label)}<br><span style="opacity:.7">${esc(l.detail)}</span></span><time>${new Date(l.t).toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'})}</time></li>`).join('');
   document.getElementById('insp-n').textContent = S.insp;
   document.getElementById('insp').setAttribute('aria-pressed', useInsp ? 'true' : 'false');
+  document.getElementById('luck-n').textContent = LUCK - S.luck;
+  document.getElementById('luck').setAttribute('aria-pressed', useLuck ? 'true' : 'false');
 }
 function render(){
   renderHeader(); renderCombat(); renderSheet(); renderSpells(); renderFeat(); renderInv(); renderLog();
@@ -895,7 +918,7 @@ function infoHtml(key){
   }
   if (kind === 'skill'){
     const sk = SKILLS.find(s => s[0] === id);
-    return `<h2>${id}</h2><p class="muted">${ABBR[sk[1]]} ${fmt(skillMod(sk[1], sk[2]))}${SKILL_SRC[id] ? ' • competenza da ' + SKILL_SRC[id] : ''}</p><p>${esc(SKILL_INFO[id])}</p>`;
+    return `<h2>${id}</h2><p class="muted">${ABBR[sk[1]]} ${fmt(skillMod(sk[1], sk[2]))}${SKILL_SRC[id] ? ' • competenza: ' + SKILL_SRC[id] : ''}</p><p>${esc(SKILL_INFO[id])}</p>`;
   }
   return '';
 }
@@ -936,15 +959,20 @@ document.addEventListener('click', e => {
     case 'cleartemp': S.hp.temp = 0; S.aoa = false; commit(); break;
     case 'vigor': S.hp.temp = Math.max(S.hp.temp, VIGOR); show('Vigore Immondo', VIGOR, 'PF temporanei: non si sommano, tieni il valore più alto' + (S.aoa ? ' • la brina di Agathys resta attiva' : '')); commit(); break;
     case 'aoatoggle': S.aoa = !S.aoa; commit(); break;
+    case 'luckpip': { const i = +t.dataset.i, avail = LUCK - S.luck; S.luck = Math.max(0, Math.min(LUCK, i < avail ? LUCK - i : LUCK - i - 1)); if (S.luck >= LUCK) useLuck = false; commit(); break; }
+    case 'luckadv': if (S.luck < LUCK){ useLuck = !useLuck; render(); } break;
+    case 'luckdis': if (S.luck < LUCK){ S.luck += 1; if (S.luck >= LUCK) useLuck = false; show('Fortunato', '✦', `svantaggio al tiro per colpire contro di te • punti rimasti: ${LUCK - S.luck}`); commit(); } break;
     case 'ds': S.death.s = +t.dataset.i < S.death.s ? +t.dataset.i : +t.dataset.i + 1; commit(); break;
     case 'df': S.death.f = +t.dataset.i < S.death.f ? +t.dataset.i : +t.dataset.i + 1; commit(); break;
     case 'deathroll': {
-      const k = rnd(20); let msg;
+      let k = rnd(20), msg, lt = '';
+      if (useLuck && S.luck < LUCK){ S.luck += 1; const k2 = rnd(20); lt = ` • punto fortuna d20[${k},${k2}]`; k = Math.max(k, k2); }
+      useLuck = false;
       if (k === 20){ S.hp.cur = 1; S.death = {s:0,f:0}; msg = 'ti rialzi con 1 PF'; }
       else if (k === 1){ S.death.f = Math.min(3, S.death.f + 2); msg = 'due fallimenti'; }
       else if (k >= 10){ S.death.s = Math.min(3, S.death.s + 1); msg = S.death.s === 3 ? 'stabile' : 'successo'; }
       else { S.death.f = Math.min(3, S.death.f + 1); msg = S.death.f === 3 ? 'morto' : 'fallimento'; }
-      show('Tiro contro la morte', k, msg, k >= 10 ? (k === 20 ? 'crit' : '') : 'fumble'); commit(); break;
+      show('Tiro contro la morte', k, msg + lt, k >= 10 ? (k === 20 ? 'crit' : '') : 'fumble'); commit(); break;
     }
     case 'concsave': d20('TS concentrazione', M.cos); break;
     case 'concend': S.conc = null; S.hexOn = false; commit(); break;
@@ -966,8 +994,8 @@ document.addEventListener('click', e => {
     case 'debt': S.debt = Math.max(0, S.debt + +t.dataset.d); commit(); break;
     case 'short': if (needConfirm('short')){ S.slots = 0; S.aoa = false; show('Riposo breve', '✦', 'slot recuperati • puoi cambiare trucchetti e rituali del Libro • rilancia Vigore Immondo'); commit(); } break;
     case 'long': if (needConfirm('long')){
-      S.slots = 0; S.cunning = false; S.rebuke = false; S.hp.cur = BASE_HP; S.hp.temp = 0; S.hd = HD_MAX; S.death = {s:0,f:0}; S.conc = null; S.hexOn = false; S.aoa = false;
-      S.conds = S.conds.filter(c => c !== 'Svenuto'); show('Riposo lungo', '✦', 'PF, slot, dadi vita e risorse recuperati'); commit(); } break;
+      S.slots = 0; S.cunning = false; S.rebuke = false; S.hp.cur = BASE_HP; S.hp.temp = 0; S.hd = HD_MAX; S.death = {s:0,f:0}; S.conc = null; S.hexOn = false; S.aoa = false; S.luck = 0; useLuck = false;
+      S.conds = S.conds.filter(c => c !== 'Svenuto'); show('Riposo lungo', '✦', 'PF, slot, dadi vita, punti fortuna e risorse recuperati'); commit(); } break;
   }
 });
 document.getElementById('dice').innerHTML = [4,6,8,10,12,20,100].map(n => `<button class="die" data-die="${n}">d${n}</button>`).join('');
@@ -977,6 +1005,7 @@ document.getElementById('exprform').addEventListener('submit', e => {
 });
 document.getElementById('insp').addEventListener('click', () => { if (S.insp > 0){ useInsp = !useInsp; renderLog(); } });
 document.getElementById('inspadd').addEventListener('click', () => { S.insp += 1; commit(); });
+document.getElementById('luck').addEventListener('click', () => { if (S.luck < LUCK){ useLuck = !useLuck; render(); } });
 document.getElementById('insp').addEventListener('contextmenu', e => { e.preventDefault(); S.insp = Math.max(0, S.insp - 1); useInsp = false; commit(); });
 document.getElementById('logbtn').addEventListener('click', e => {
   const l = document.getElementById('log'); l.hidden = !l.hidden; e.currentTarget.setAttribute('aria-expanded', !l.hidden);
