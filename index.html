@@ -890,7 +890,7 @@ function renderCombat(){
   <div class="panel">
     <h2>Slot del patto <small>${SLOT_LVL}° livello</small></h2>
     <div class="sealrow"><div class="seals">${seals()}</div><div><b>${left} su ${SLOT_MAX}</b><div class="muted">Tornano con un riposo breve</div></div></div>
-    <div class="resline"><div class="rl"><div class="rt"><b>Astuzia Magica</b>${info('feat:cunning')}</div><div class="muted">1 minuto, recupera 1 slot</div></div>${S.cunning ? '<span class="muted">usata</span>' : `<button class="btn sm" data-a="cunning"${S.slots ? '' : ' disabled'}>Usa</button>`}</div>
+    <div class="resline"><div class="rl"><div class="rt"><b>Astuzia Magica</b>${info('feat:cunning')}</div><div class="muted">${S.cunning ? 'Torna con un riposo lungo' : S.slots ? '1 minuto, recupera 1 slot' : 'Si accende quando hai speso uno slot'}</div></div>${S.cunning ? '<span class="muted">usata</span>' : `<button class="btn sm" data-a="cunning"${S.slots ? '' : ' disabled'}>Usa</button>`}</div>
     <div class="resline"><div class="rl"><div class="rt"><b>Rimprovero Infernale</b>${info('sp:rebuke')}</div><div class="muted">Reazione, gratis una volta per riposo lungo</div></div>${S.rebuke ? '<span class="muted">usato</span>' : '<button class="btn sm" data-a="rebukefree">Lancia 2d10</button>'}</div>
   </div>
   <div class="panel">
