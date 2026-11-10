@@ -498,8 +498,8 @@ const FB_URL = 'https://kaean-scheda-default-rtdb.europe-west1.firebasedatabase.
 const LVL = 3, PB = 2, BASE_HP = 24, HD_MAX = 3, SLOT_MAX = 2, SLOT_LVL = 2, SPEED = '9 m', VER = 4, LUCK = PB;
 
 const ABIL = [
-  {k:'for',n:'Forza',s:10},{k:'des',n:'Destrezza',s:15},{k:'cos',n:'Costituzione',s:14},
-  {k:'int',n:'Intelligenza',s:13},{k:'sag',n:'Saggezza',s:11},{k:'car',n:'Carisma',s:18}
+  {k:'for',n:'Forza',s:10},{k:'des',n:'Destrezza',s:14},{k:'cos',n:'Costituzione',s:14},
+  {k:'int',n:'Intelligenza',s:14},{k:'sag',n:'Saggezza',s:11},{k:'car',n:'Carisma',s:18}
 ];
 const mod = s => Math.floor((s - 10) / 2);
 const M = Object.fromEntries(ABIL.map(a => [a.k, mod(a.s)]));
@@ -616,8 +616,8 @@ const FEATS = [
   {id:'legacy',n:'Retaggio Infernale',g:'Tiefling',full:['Resistenza ai danni da fuoco.','Conosci Dardo di Fuoco. Dal 3° livello Rimprovero Infernale, dal 5° Oscurità: ognuno una volta per riposo lungo senza slot, oppure con gli slot.','Usano il Carisma.']},
   {id:'presence',n:'Presenza Ultraterrena',g:'Tiefling',full:['Conosci il trucchetto Taumaturgia, con il Carisma.']},
   {id:'lucky',n:'Fortunato',g:'Talento d\'origine',full:[`Hai ${LUCK} punti fortuna, pari al bonus di competenza. Tornano tutti con un riposo lungo.`,'Vantaggio: quando tiri un d20 per una prova, un attacco o un tiro salvezza, spendi 1 punto per avere vantaggio.','Svantaggio: quando una creatura tira per colpirti, spendi 1 punto per darle svantaggio.','Si decide al momento del tiro, non dopo aver visto il risultato.','Tienili per i tiri che contano: un tiro salvezza che ti toglierebbe il turno, la concentrazione su Blocca Persone, la prova sociale decisiva.']},
-  {id:'scores',n:'Punteggi',g:'Background',full:['Tirati con 4d6 scartando il dado più basso: 17, 14, 13, 13, 11, 10 (totale 78).','Background: +1 a Carisma, Destrezza e Costituzione (17→18, 14→15, 13→14). Il Carisma resta a 18.','L\'Intelligenza a 13 si addice all\'ex impiegato dell\'Ufficio delle Adesioni.','Al 4° livello: +2 al Carisma (20), oppure un talento con +1 alla Destrezza, che arriva a 16.']},
-  {id:'charl',n:'Ciarlatano (personalizzato)',g:'Background',full:['Costruito con le regole della Guida del Dungeon Master 2024: tre caratteristiche, un talento d\'origine, due abilità, uno strumento ed equipaggiamento per 50 mo.','Caratteristiche: Destrezza, Costituzione, Carisma. Talento: Fortunato. Abilità: Persuasione e Percezione. Strumento: Strumenti da falsario.','È il Ciarlatano del manuale con Fortunato al posto di Abile: serve il sì della master.','Se preferisce i background del manuale, il Mercante dà Fortunato e +1 a Costituzione, Intelligenza e Carisma (Destrezza 14, Intelligenza 14), con Persuasione e Addestrare Animali.','Il background dell\'Ufficio delle Adesioni: documenti, firme e moduli non hanno segreti per lui.']}
+  {id:'scores',n:'Punteggi',g:'Background',full:['Tirati con 4d6 scartando il dado più basso: 17, 14, 13, 13, 11, 10 (totale 78).','Background: +1 a Carisma, Intelligenza e Costituzione (17→18, 13→14, 13→14). Il Carisma resta a 18.','L\'Intelligenza a 14 si addice all\'ex impiegato dell\'Ufficio delle Adesioni: sigilli, contratti e registri.','Al 4° livello: +2 al Carisma (20), oppure Incantatore da Guerra con +1 al Carisma.']},
+  {id:'charl',n:'Ciarlatano (personalizzato)',g:'Background',full:['Costruito con le regole della Guida del Dungeon Master 2024: tre caratteristiche, un talento d\'origine, due abilità, uno strumento ed equipaggiamento per 50 mo.','Caratteristiche: Intelligenza, Costituzione, Carisma. Talento: Fortunato. Abilità: Persuasione e Percezione. Strumento: Strumenti da falsario.','È il Ciarlatano del manuale con Fortunato al posto di Abile: serve il sì della master.','Se preferisce i background del manuale, il Mercante dà Fortunato e le stesse caratteristiche (Costituzione, Intelligenza, Carisma), con Persuasione e Addestrare Animali.','Il background dell\'Ufficio delle Adesioni: documenti, firme e moduli non hanno segreti per lui.']}
 ];
 const SKILL_INFO = {
   'Persuasione':'Convincere con onestà e buone maniere. Il suo talento naturale.',
@@ -941,7 +941,7 @@ function renderSheet(){
       <dt>Resistenze</dt><dd>Fuoco</dd>
       <dt>Taglia</dt><dd>Media, 9 m di velocità</dd>
     </dl>
-    <p class="muted">Tirati con 4d6: 17, 14, 13, 13, 11, 10. Il background dà +1 a Carisma, Destrezza e Costituzione.</p>
+    <p class="muted">Tirati con 4d6: 17, 14, 13, 13, 11, 10. Il background dà +1 a Carisma, Intelligenza e Costituzione.</p>
   </div>`;
 }
 function spellRow(sp){
