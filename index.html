@@ -64,7 +64,7 @@ button.chip{border-color:rgba(236,220,184,.55)}
 .hpbar i.temp{background:#c9a24f;opacity:.85}
 .hptags{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .tag{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:1px 6px;border-radius:3px;background:var(--blood);color:#f6e7c8}
-.tag.gold{background:var(--gold)}.tag.ivy{background:var(--ivy)}
+.tag.gold{background:var(--gold)}.tag.ivy{background:var(--ivy)}.tag.frost{background:#3b6a8a}
 .sync{font-size:.72rem;opacity:.7}
 .rests{grid-column:1/-1;display:flex;gap:6px;justify-content:flex-end}
 .btn.rest{background:rgba(8,10,7,.55);border-color:rgba(176,138,62,.6);color:var(--frame-ink);font-size:.82rem;padding:4px 10px}
@@ -267,55 +267,79 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
   <section id="tab-guide" class="grid" role="tabpanel" hidden>
     <div class="panel span2">
       <h2>Guida al combattimento <small>Kaean, warlock 3</small></h2>
-      <p>Kaean combatte <b>a distanza</b> e con la <b>parola</b>. Ha pochi PF (24) e una CA media (16 con Armatura delle Ombre): deve restare indietro, dietro copertura, e lasciare la prima linea agli altri. Ha solo <b>2 slot</b>, sempre di 2° livello, ma li recupera con ogni <b>riposo breve</b>: usali senza paura e chiedi una pausa al gruppo quando sono finiti.</p>
+      <p>Kaean combatte <b>a distanza</b> e con la <b>parola</b>. Ha 24 PF e CA 15, ma con <b>Vigore Immondo</b> entra in ogni scontro con 12 PF temporanei: <b>36 PF effettivi</b>. Ha solo <b>2 slot</b>, sempre di 2° livello, e li recupera con ogni <b>riposo breve</b>: usali senza paura e chiedi una pausa al gruppo quando sono finiti.</p>
     </div>
     <div class="panel">
       <h2>Cosa hai in ogni turno</h2>
       <dl class="kv">
-        <dt>Azione</dt><dd>Deflagrazione Occulta, un incantesimo o un attacco col pugnale</dd>
-        <dt>Azione bonus</dt><dd>Maleficio (o spostarlo su un nuovo bersaglio)</dd>
+        <dt>Azione</dt><dd>Deflagrazione Occulta, un incantesimo, oppure Vigore Immondo per rifarti i 12 PF temporanei</dd>
+        <dt>Azione bonus</dt><dd>Maleficio (o spostarlo), Armatura di Agathys, Passo Velato, bere una pozione</dd>
         <dt>Movimento</dt><dd>9 m: allontanati dai nemici e cerca copertura</dd>
         <dt>Reazione</dt><dd>Rimprovero Infernale quando un nemico ti ferisce (1 volta gratis per riposo lungo)</dd>
       </dl>
-      <h3>Due regole da non dimenticare</h3>
-      <p><b>Una sola concentrazione.</b> Maleficio, Blocca Persone, Invisibilità, Suggestione e Amicizia richiedono concentrazione: se ne lanci un altro, il primo finisce. Quando subisci danni fai un TS di Costituzione (+2) con CD 10 o metà dei danni: la scheda te lo ricorda.</p>
-      <p><b>Benedizione dell'Oscuro.</b> Quando un nemico va a 0 PF per mano tua, o entro 3 m da te, ottieni 7 PF temporanei. Premi il pulsante nel riquadro dei PF.</p>
+      <h3>Tre regole da non dimenticare</h3>
+      <p><b>Un solo slot per turno.</b> Nello stesso turno non puoi lanciare due incantesimi che usano uno slot: per esempio Maleficio e Comando. I trucchetti e Vigore Immondo non contano.</p>
+      <p><b>Una sola concentrazione.</b> Maleficio, Blocca Persone, Suggestione e Guida richiedono concentrazione: se ne lanci un altro, il primo finisce. Quando subisci danni fai un TS di Costituzione (+2) con CD 10 o metà dei danni: la scheda te lo ricorda.</p>
+      <p><b>I PF temporanei non si sommano.</b> Vigore Immondo ne dà 12, Agathys 10, la Benedizione dell'Oscuro 7: tieni sempre il valore più alto.</p>
     </div>
     <div class="panel">
       <h2>Le tue armi</h2>
       <dl class="kv">
         <dt>Deflagrazione Occulta</dt><dd>+6 a colpire, 36 m, 1d10+4 forza. Con Maleficio +1d6 necrotici. Il tuo attacco di ogni turno.</dd>
-        <dt>Blocca Persone</dt><dd>Paralizza un umanoide (TS Sag CD 14). Gli attacchi in mischia contro di lui sono critici automatici.</dd>
-        <dt>Comando</dt><dd>Due bersagli (slot di 2°): "Fuggi", "A terra", "Lascia". Nessuna concentrazione.</dd>
-        <dt>Raggio Rovente</dt><dd>3 raggi da 2d6 fuoco, ognuno con il suo tiro per colpire.</dd>
-        <dt>Armatura di Agathys</dt><dd>10 PF temporanei e 10 danni da freddo a chi ti colpisce in mischia, per 1 ora. Senza concentrazione.</dd>
+        <dt>Comando</dt><dd>Due bersagli di qualsiasi tipo (TS Sag CD 14): "Fermo", "A terra", "Lascia", "Fuggi". Nessuna concentrazione.</dd>
+        <dt>Blocca Persone</dt><dd>Paralizza un umanoide (TS Sag CD 14). I colpi in mischia contro di lui sono critici automatici.</dd>
+        <dt>Armatura di Agathys</dt><dd>Azione bonus. Per 1 ora, chi ti colpisce in mischia subisce 10 danni da freddo.</dd>
+        <dt>Raggio Rovente</dt><dd>3 raggi da 2d6 fuoco, ognuno con il suo tiro per colpire. Con Maleficio attivo, +1d6 a raggio.</dd>
         <dt>Mani Brucianti</dt><dd>Cono di 4,5 m, 4d6 fuoco (TS Des). Per i gruppi vicini, ma ti espone.</dd>
+        <dt>Scheggia Mentale</dt><dd>1d6 psichici (TS Int) e −1d4 al prossimo tiro salvezza del bersaglio.</dd>
       </dl>
+    </div>
+    <div class="panel span2">
+      <h2>Le combinazioni forti</h2>
+      <h3>1. La riserva di vigore</h3>
+      <p>Fuori dal combattimento lancia <b>Vigore Immondo</b> ogni volta che i PF temporanei scendono sotto 12: è gratis e a volontà. Ogni scontro comincia con 36 PF invece di 24.</p>
+      <h3>2. Brina e fiamme</h3>
+      <p><b>Armatura di Agathys</b> (azione bonus) e <b>Deflagrazione</b> nello stesso turno. Chi ti colpisce in mischia subisce 10 danni da freddo, e con la reazione aggiungi il <b>Rimprovero Infernale</b> (2d10 fuoco gratis, 3d10 con uno slot). Per le regole 2024 la brina dura finché hai PF temporanei: rifalli con Vigore Immondo (azione) o con la Benedizione dell'Oscuro. <span class="muted">È una lettura discussa: chiedi conferma alla master.</span></p>
+      <h3>3. Il Maleficio che non scade</h3>
+      <p>Con uno slot di 2° dura 4 ore. Se a fine scontro è ancora attivo, mantieni la concentrazione durante il riposo breve: riparti con <b>2 slot pieni e il Maleficio già lanciato</b>.</p>
+      <h3>4. Comando doppio</h3>
+      <p>Non richiede concentrazione, quindi lo usi con Maleficio attivo. Due nemici perdono il turno ("Fermo") oppure cadono proni davanti ai compagni in mischia ("A terra").</p>
+      <h3>5. Scheggia e blocco</h3>
+      <p><b>Scheggia Mentale</b> su un bersaglio, e nel turno dopo <b>Blocca Persone</b> o <b>Comando</b>: il suo tiro salvezza ha −1d4. Funziona anche per preparare un incantesimo del bardo.</p>
     </div>
     <div class="panel span2">
       <h2>La sequenza da fare quasi sempre</h2>
       <h3>Prima dello scontro</h3>
-      <p>• Al mattino: <b>Armatura delle Ombre</b> (CA 16 per 8 ore, gratis).<br>• Se sai che arriva uno scontro: <b>Armatura di Agathys</b> con il primo slot (10 PF temporanei per 1 ora). Poi chiedi un riposo breve per riavere lo slot.</p>
+      <p>• <b>Vigore Immondo</b>: 12 PF temporanei, sempre.<br>• Controlla se il <b>Maleficio</b> dello scontro precedente è ancora attivo.</p>
       <h3>Turno 1</h3>
-      <p>• <b>Azione bonus: Maleficio</b> sul nemico più resistente (usa uno slot, dura 4 ore e passa al bersaglio successivo).<br>• <b>Azione: Deflagrazione Occulta</b> sullo stesso bersaglio.<br>• Contro un umanoide pericoloso, invece: <b>Blocca Persone</b> e lascia che i compagni in mischia lo finiscano.</p>
+      <p>• <b>Azione bonus: Maleficio</b> sul nemico più resistente, poi <b>Deflagrazione Occulta</b> sullo stesso bersaglio.<br>• Se i nemici ti arrivano addosso, invece: <b>Armatura di Agathys</b> come azione bonus, poi Deflagrazione.<br>• Contro un umanoide pericoloso: <b>Blocca Persone</b>, e lascia che i compagni in mischia lo finiscano.</p>
       <h3>Dal turno 2 in poi</h3>
-      <p>• <b>Azione: Deflagrazione Occulta</b> ogni turno (1d10+4, più 1d6 con Maleficio).<br>• <b>Azione bonus:</b> se il bersaglio di Maleficio è caduto, sposta la maledizione.<br>• Tieni il secondo slot per un'emergenza: Comando, Invisibilità per fuggire, Armatura di Agathys o Rimprovero Infernale potenziato.</p>
+      <p>• <b>Azione: Deflagrazione Occulta</b> ogni turno (1d10+4, più 1d6 con Maleficio).<br>• <b>Azione bonus:</b> se il bersaglio di Maleficio è caduto, sposta la maledizione.<br>• Il secondo slot è per il momento giusto: <b>Comando</b> su due nemici, <b>Passo Velato</b> per uscire dalla mischia, o il Rimprovero Infernale potenziato.</p>
       <h3>Dopo lo scontro</h3>
-      <p>• Chiedi un <b>riposo breve</b> (1 ora): ritornano tutti gli slot.<br>• Se non c'è tempo: <b>Astuzia Magica</b> (1 minuto, una volta per riposo lungo) ti ridà 1 slot.</p>
+      <p>• <b>Vigore Immondo</b> di nuovo.<br>• Chiedi un <b>riposo breve</b> (1 ora): ritornano tutti gli slot, e puoi riscrivere trucchetti e rituali del Libro delle Ombre.<br>• Se non c'è tempo: <b>Astuzia Magica</b> (1 minuto, una volta per riposo lungo) ti ridà 1 slot.</p>
     </div>
     <div class="panel span2">
       <h2>Fuori dal combattimento</h2>
       <dl class="kv">
-        <dt>Convincere qualcuno</dt><dd>Persuasione +6 o Inganno +6. Se non basta: Amicizia (poi capisce di essere stato affascinato) o Suggestione.</dd>
-        <dt>Passare inosservato</dt><dd>Invisibilità, o un'Illusione Minore per distrarre. Il costume del Ciarlatano per i travestimenti.</dd>
-        <dt>Testi e lingue</dt><dd>Comprendere Linguaggi come rituale dal Libro delle Ombre (10 minuti, nessuno slot).</dd>
+        <dt>Convincere qualcuno</dt><dd>Persuasione +6 o Inganno +6, con Guida (+1d4) prima della prova. Se non basta: Suggestione.</dd>
+        <dt>Passare inosservato</dt><dd>Illusione Minore per distrarre, il costume del Ciarlatano per i travestimenti, Passo Velato per superare un ostacolo.</dd>
+        <dt>Testi e lingue</dt><dd>Comprendere Linguaggi come rituale dal Libro delle Ombre (10 minuti in più, nessuno slot).</dd>
+        <dt>Magia e sigilli</dt><dd>Individuazione del Magico come rituale: utile su contratti, registri e sigilli.</dd>
         <dt>Documenti falsi</dt><dd>Strumenti da falsario: un vecchio talento dell'Ufficio delle Adesioni.</dd>
         <dt>Piante</dt><dd>Natura +2 con competenza: il suo pollice verde, senza magia.</dd>
       </dl>
     </div>
     <div class="panel span2">
       <h2>Errori da evitare</h2>
-      <p>• <b>Stare in prima linea:</b> con 24 PF cadi in pochi colpi.<br>• <b>Dimenticare l'Armatura delle Ombre:</b> senza, la CA scende da 16 a 14.<br>• <b>Lanciare un'altra concentrazione</b> mentre hai Maleficio o Blocca Persone attivi: perdi il primo.<br>• <b>Risparmiare gli slot:</b> tornano con il riposo breve, usali.<br>• <b>Usare l'Amicizia su chi ti serve dopo:</b> quando finisce, capisce di essere stato manipolato.<br>• <b>Invisibilità e attacchi:</b> l'invisibilità finisce appena attacchi o lanci un incantesimo.</p>
+      <p>• <b>Stare in prima linea:</b> la brina punisce chi ti colpisce, ma con 24 PF non sei un tank.<br>• <b>Sparare con un nemico adiacente:</b> la Deflagrazione ha svantaggio. Usa Passo Velato o allontanati.<br>• <b>Due slot nello stesso turno:</b> non si può. Azione bonus con slot e azione con slot vanno in turni diversi.<br>• <b>Lanciare un'altra concentrazione</b> mentre hai Maleficio o Blocca Persone attivi: perdi il primo.<br>• <b>Risparmiare gli slot:</b> tornano con il riposo breve, usali.<br>• <b>Dimenticare Vigore Immondo</b> dopo uno scontro: sono 12 PF regalati.</p>
+    </div>
+    <div class="panel span2">
+      <h2>Piano di crescita</h2>
+      <dl class="kv">
+        <dt>4° livello</dt><dd>Un talento con +1 al Carisma lo porta a 20: CD 15 e +7 a colpire. Consigliato <b>Incantatore da Guerra</b> (War Caster): vantaggio ai TS di concentrazione e Deflagrazione al posto dell'attacco di opportunità. In più: un trucchetto e un incantesimo preparato.</dd>
+        <dt>5° livello</dt><dd>Slot di 3° livello, Deflagrazione con 2 raggi, Palla di Fuoco dal patrono e Oscurità dal retaggio. Due suppliche nuove: <b>Deflagrazione Respingente</b> (ogni raggio spinge il bersaglio di 3 m) e una tra Mente Occulta, Vista del Diavolo e Lezioni dei Primi (talento Fortunato).</dd>
+        <dt>7°-9° livello</dt><dd>Sostituisci Vigore Immondo: 12 PF temporanei a quel punto pesano poco.</dd>
+      </dl>
     </div>
   </section>
   <section id="tab-notes" class="grid" role="tabpanel" hidden>
@@ -354,7 +378,7 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
         <button data-mode="norm" aria-pressed="true">Normale</button>
         <button data-mode="adv" aria-pressed="false">Vant.</button>
       </div>
-      <button class="insp" id="insp" aria-pressed="false">Ispirazione <span id="insp-n">0</span></button>
+      <button class="insp" id="insp" aria-pressed="false">Ispirazione <span id="insp-n">0</span></button><button class="die" id="inspadd" aria-label="Aggiungi ispirazione">+</button>
       <div class="dice" id="dice"></div>
       <form class="expr" id="exprform"><input id="expr" placeholder="es. 1d10+3" aria-label="Espressione dadi"><button class="die" type="submit">Tira</button></form>
       <button class="logbtn" id="logbtn" aria-expanded="false">Storico</button>
@@ -368,11 +392,11 @@ textarea{width:100%;min-height:280px;border:1px solid var(--rule);background:#fb
 'use strict';
 const KEY = 'kaean-warlock-v1';
 const FB_URL = 'https://kaean-scheda-default-rtdb.europe-west1.firebasedatabase.app/kaean-warlock.json';
-const LVL = 3, PB = 2, BASE_HP = 24, HD_MAX = 3, SLOT_MAX = 2, SLOT_LVL = 2, SPEED = '9 m', VER = 2;
+const LVL = 3, PB = 2, BASE_HP = 24, HD_MAX = 3, SLOT_MAX = 2, SLOT_LVL = 2, SPEED = '9 m', VER = 3;
 
 const ABIL = [
-  {k:'for',n:'Forza',s:7},{k:'des',n:'Destrezza',s:16},{k:'cos',n:'Costituzione',s:15},
-  {k:'int',n:'Intelligenza',s:10},{k:'sag',n:'Saggezza',s:13},{k:'car',n:'Carisma',s:18}
+  {k:'for',n:'Forza',s:7},{k:'des',n:'Destrezza',s:16},{k:'cos',n:'Costituzione',s:14},
+  {k:'int',n:'Intelligenza',s:10},{k:'sag',n:'Saggezza',s:13},{k:'car',n:'Carisma',s:19}
 ];
 const mod = s => Math.floor((s - 10) / 2);
 const M = Object.fromEntries(ABIL.map(a => [a.k, mod(a.s)]));
@@ -392,15 +416,14 @@ const fmt = n => (n >= 0 ? '+' : '−') + Math.abs(n);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const skillMod = (ab, p) => M[ab] + (p ? PB : 0);
 const PASSIVE = 10 + skillMod('sag', 0);
-const AC_ARMOR = 11 + M.des, AC_MAGE = 13 + M.des;
-const acNow = () => S.mage ? AC_MAGE : AC_ARMOR;
+const AC = 12 + M.des, VIGOR = 12, AOA = 5 * SLOT_LVL;
 
-// src: w=warlock, f=patrono, t=tomo, r=retaggio, m=maschera
+// src: w=warlock, f=patrono, t=tomo, r=retaggio, m=supplica
 const SPELLS = [
   {id:'eb',n:'Deflagrazione Occulta',l:0,src:'w',t:'Azione • 36 m',atk:1,dmg:()=>`1d10+${M.car}`,dt:'forza',hexable:1,
     s:'Invocazione',ct:'Azione',rg:'36 m',cp:'V, S',du:'Istantanea',
-    full:['Un raggio di energia crepitante colpisce una creatura entro gittata: tiro per colpire con incantesimo a distanza.','Se colpisce, il bersaglio subisce 1d10 danni da forza. Con Deflagrazione Agonizzante aggiungi il Carisma (+3).','Al 5° livello spari 2 raggi, all\'11° 3 raggi, al 17° 4 raggi, anche su bersagli diversi.'],
-    tip:'Il tuo attacco di ogni turno. Con Maleficio sul bersaglio aggiungi 1d6 necrotici a ogni raggio che colpisce.'},
+    full:['Un raggio di energia crepitante colpisce una creatura entro gittata: tiro per colpire con incantesimo a distanza.',`Se colpisce, il bersaglio subisce 1d10 danni da forza. Con Deflagrazione Agonizzante aggiungi il Carisma (${fmt(M.car)}).`,'Al 5° livello spari 2 raggi, all\'11° 3 raggi, al 17° 4 raggi, anche su bersagli diversi.'],
+    tip:'Il tuo attacco di ogni turno. Con Maleficio sul bersaglio aggiungi 1d6 necrotici a ogni raggio che colpisce. Se hai un nemico adiacente tiri con svantaggio: allontanati o usa Passo Velato prima di sparare.'},
   {id:'fb',n:'Dardo di Fuoco',l:0,src:'r',t:'Azione • 36 m',atk:1,dmg:()=>'1d10',dt:'fuoco',
     s:'Invocazione',ct:'Azione',rg:'36 m',cp:'V, S',du:'Istantanea',
     full:['Scagli un dardo di fuoco: tiro per colpire con incantesimo a distanza.','Se colpisce: 1d10 danni da fuoco. Un oggetto infiammabile non indossato o trasportato prende fuoco.'],
@@ -417,27 +440,27 @@ const SPELLS = [
     s:'Trasmutazione',ct:'Azione',rg:'36 m',cp:'S, M (un filo di rame)',du:'1 round',
     full:['Sussurri un messaggio a una creatura entro gittata; solo lei lo sente e può rispondere con un sussurro.','Puoi lanciarlo attraverso gli oggetti se conosci il bersaglio e sai che è dall\'altra parte.'],
     tip:'Dal Libro delle Ombre. Perfetto per coordinarsi con Lucerys senza farsi sentire.'},
-  {id:'ami',n:'Amicizia',l:0,src:'t',t:'Azione • 3 m • conc. 1 minuto',c:1,
-    s:'Ammaliamento',ct:'Azione',rg:'3 m',cp:'S, M (un po\' di trucco)',du:'Concentrazione, fino a 1 minuto',
-    full:['Una creatura che vedi entro 3 m fa un TS di Saggezza: se fallisce è Affascinata da te per la durata.',`CD ${DC}. Riesce automaticamente se non è umanoide, se state combattendo o se l\'hai già bersagliata nelle ultime 24 ore.`,'Finisce se il bersaglio subisce danni o se tu attacchi, fai danni o imponi un TS a qualcuno. Quando finisce, la creatura sa di essere stata affascinata.'],
-    tip:'Usalo su chi non rivedrai: quando finisce, capisce tutto.'},
+  {id:'sliver',n:'Scheggia Mentale',l:0,src:'t',t:'Azione • 18 m',save:'Int',dmg:()=>'1d6',dt:'psichici',
+    s:'Ammaliamento',ct:'Azione',rg:'18 m',cp:'V',du:'1 round',
+    full:[`Una scheggia di energia psichica colpisce la mente di una creatura che vedi: TS di Intelligenza CD ${DC}.`,'Se fallisce subisce 1d6 danni psichici e sottrae 1d4 al prossimo tiro salvezza che fa prima della fine del tuo prossimo turno.'],
+    tip:'Dal Libro delle Ombre. Usala il turno prima di Blocca Persone o Comando, o prima di un incantesimo importante del bardo: il bersaglio ha in media 2,5 in meno al tiro salvezza. Quasi tutti i mostri hanno Intelligenza bassa.'},
   {id:'gui',n:'Guida',l:0,src:'t',t:'Azione • contatto • conc. 1 minuto',c:1,
     s:'Divinazione',ct:'Azione',rg:'Contatto',cp:'V, S',du:'Concentrazione, fino a 1 minuto',
     full:['Tocchi una creatura consenziente e scegli un\'abilità.','Finché dura, aggiunge 1d4 alle prove di caratteristica con quell\'abilità.'],
-    tip:'Dal Libro delle Ombre. Lancialo su un compagno prima di una prova importante.'},
+    tip:'Dal Libro delle Ombre. Lancialo su di te o su un compagno prima di una prova importante: +1d4 è come avere due punti e mezzo in più.'},
 
   {id:'hex',n:'Maleficio',l:1,src:'w',t:'Azione bonus • 27 m • conc. 4 ore',c:1,hex:1,
     s:'Ammaliamento',ct:'Azione bonus',rg:'27 m',cp:'V, S, M (l\'occhio pietrificato di un tritone)',du:'Concentrazione, fino a 4 ore (slot di 2°)',
     full:['Maledici una creatura che vedi. Quando la colpisci con un attacco, le infliggi 1d6 danni necrotici in più.','Scegli una caratteristica: il bersaglio ha svantaggio alle prove con quella caratteristica.','Se il bersaglio scende a 0 PF prima della fine, nei turni successivi puoi spostare la maledizione su un\'altra creatura con un\'azione bonus.'],
-    tip:'Il compagno perfetto della Deflagrazione. Con uno slot di 2° dura 4 ore: si sposta da un nemico all\'altro per tutto lo scontro.'},
-  {id:'aoa',n:'Armatura di Agathys',l:1,src:'w',t:'Azione • personale • 1 ora',aoa:1,
-    s:'Abiurazione',ct:'Azione',rg:'Personale',cp:'V, S, M (una tazza d\'acqua)',du:'1 ora',
-    full:['Una brina spettrale ti ricopre: ottieni 5 PF temporanei per livello dello slot, quindi 10 con uno slot di 2°.','Finché hai questi PF temporanei, ogni creatura che ti colpisce con un attacco in mischia subisce 5 danni da freddo per livello dello slot: 10 con uno slot di 2°.','Finisce quando perdi i PF temporanei o dopo 1 ora. Nessuna concentrazione.'],
-    tip:'Lancialo prima dello scontro con il primo slot: 10 PF in più e chi ti colpisce in mischia si congela. Non richiede concentrazione, quindi si somma a Maleficio. I PF temporanei non si sommano alla Benedizione dell\'Oscuro: tieni il valore più alto.'},
+    tip:'Il compagno perfetto della Deflagrazione. Con uno slot di 2° dura 4 ore: se a fine scontro è ancora attivo, mantieni la concentrazione durante il riposo breve e riparti con 2 slot pieni e il Maleficio già lanciato.'},
+  {id:'aoa',n:'Armatura di Agathys',l:1,src:'w',t:'Azione bonus • personale • 1 ora',aoa:1,
+    s:'Abiurazione',ct:'Azione bonus',rg:'Personale',cp:'V, S, M (una scheggia di vetro blu)',du:'1 ora',
+    full:[`Una brina magica ti ricopre: ottieni 5 PF temporanei per livello dello slot, quindi ${AOA} con uno slot di 2°.`,`Se una creatura ti colpisce con un attacco in mischia prima che l\'incantesimo finisca, subisce ${AOA} danni da freddo (5 per livello dello slot).`,'Dura 1 ora e finisce prima solo se resti senza PF temporanei. Nessuna concentrazione.'],
+    tip:'È un\'azione bonus: la lanci e nello stesso turno usi la Deflagrazione. Per le regole 2024 la brina resta finché hai PF temporanei, anche se li rifai con Vigore Immondo o con la Benedizione dell\'Oscuro: chi ti colpisce in mischia continua a subire 10 danni da freddo. È una lettura discussa: chiedi conferma alla master.'},
   {id:'cmd',n:'Comando',l:1,src:'f',t:'Azione • 18 m',
     s:'Ammaliamento',ct:'Azione',rg:'18 m',cp:'V',du:'Istantanea',
-    full:[`Pronunci un ordine di una parola a una creatura che vedi: TS di Saggezza CD ${DC}, se fallisce obbedisce nel suo turno successivo.`,'Avvicinati, Lascia (l\'oggetto che tiene), Fuggi, A terra (cade prona), Fermo (non si muove e non agisce).','Con uno slot di 2° bersagli 2 creature entro 9 m l\'una dall\'altra.'],
-    tip:'Sempre preparato (patrono). "Lascia" disarma, "A terra" dà vantaggio ai compagni in mischia, "Fuggi" allontana un nemico da te.'},
+    full:[`Pronunci un ordine di una parola a una creatura che vedi: TS di Saggezza CD ${DC}, se fallisce obbedisce nel suo turno successivo.`,'Avvicinati, Lascia (l\'oggetto che tiene), Fuggi, A terra (cade prona), Fermo (non si muove e non agisce).','Funziona su qualsiasi creatura. Con uno slot di 2° bersagli 2 creature.'],
+    tip:'Sempre preparato (patrono). Non richiede concentrazione, quindi lo usi con Maleficio attivo. "Fermo" fa perdere il turno, "A terra" dà vantaggio ai compagni in mischia, "Lascia" disarma, "Fuggi" allontana un nemico da te.'},
   {id:'burn',n:'Mani Brucianti',l:1,src:'f',t:'Azione • cono 4,5 m',save:'Des',dmg:L=>`${L+2}d6`,dt:'fuoco',half:1,
     s:'Invocazione',ct:'Azione',rg:'Cono di 4,5 m',cp:'V, S',du:'Istantanea',
     full:[`Un ventaglio di fiamme: ogni creatura nel cono fa un TS di Destrezza (CD ${DC}).`,'Se fallisce subisce 3d6 danni da fuoco, metà se riesce. Con uno slot di 2°: 4d6.','Gli oggetti infiammabili non trasportati prendono fuoco.'],
@@ -446,26 +469,26 @@ const SPELLS = [
     s:'Invocazione',ct:'Reazione, quando una creatura entro 18 m ti infligge danni',rg:'18 m',cp:'V, S',du:'Istantanea',
     full:[`La creatura che ti ha ferito è avvolta dalle fiamme: TS di Destrezza CD ${DC}.`,'Se fallisce subisce 2d10 danni da fuoco, metà se riesce. Con uno slot di 2°: 3d10.','Retaggio Infernale: una volta per riposo lungo lo lanci gratis (al 1° livello); poi anche con uno slot.'],
     tip:'Danno ottimo per una reazione. Usa prima la versione gratuita.'},
-  {id:'inv',n:'Invisibilità',l:2,src:'w',t:'Azione • contatto • conc. 1 ora',c:1,
-    s:'Illusione',ct:'Azione',rg:'Contatto',cp:'V, S, M (un ciglio nella gomma arabica)',du:'Concentrazione, fino a 1 ora',
-    full:['Una creatura che tocchi ottiene la condizione Invisibile.','Finisce subito dopo che il bersaglio fa un tiro per colpire, infligge danni o lancia un incantesimo.'],
-    tip:'Per fuggire, infiltrarsi o salvare un compagno in difficoltà. Non per attaccare.'},
+  {id:'misty',n:'Passo Velato',l:2,src:'w',t:'Azione bonus • 9 m',
+    s:'Evocazione',ct:'Azione bonus',rg:'Personale',cp:'V',du:'Istantanea',
+    full:['Avvolto per un istante da una nebbia argentea, ti teletrasporti fino a 9 m in uno spazio libero che vedi.'],
+    tip:'La tua via di fuga: esci da una mischia o da una presa senza subire attacchi di opportunità, e nello stesso turno usi la Deflagrazione senza svantaggio. Non richiede concentrazione, quindi Maleficio resta attivo.'},
   {id:'hold',n:'Blocca Persone',l:2,src:'w',t:'Azione • 18 m • conc. 1 minuto',c:1,
     s:'Ammaliamento',ct:'Azione',rg:'18 m',cp:'V, S, M (un pezzetto di ferro dritto)',du:'Concentrazione, fino a 1 minuto',
     full:[`Un umanoide che vedi fa un TS di Saggezza (CD ${DC}): se fallisce è Paralizzato.`,'Alla fine di ogni suo turno ripete il TS: se riesce, l\'incantesimo finisce.','Contro un Paralizzato gli attacchi hanno vantaggio, e i colpi entro 1,5 m sono critici automatici.'],
     tip:'Il tuo incantesimo più forte contro un umanoide pericoloso. Avvisa i compagni in mischia: ogni loro colpo è un critico.'},
-  {id:'ray',n:'Raggio Rovente',l:2,src:'f',t:'Azione • 36 m',atk:1,dmg:()=>'2d6',dt:'fuoco',rays:3,
+  {id:'ray',n:'Raggio Rovente',l:2,src:'f',t:'Azione • 36 m',atk:1,dmg:()=>'2d6',dt:'fuoco',rays:3,hexable:1,
     s:'Invocazione',ct:'Azione',rg:'36 m',cp:'V, S',du:'Istantanea',
     full:['Crei tre raggi di fuoco e li scagli su uno o più bersagli entro gittata.','Fai un tiro per colpire con incantesimo a distanza per ogni raggio. Ogni raggio che colpisce infligge 2d6 danni da fuoco.'],
-    tip:'Sempre preparato (patrono). Fino a 6d6 su un bersaglio: buono per finire un nemico. Maleficio non si somma (è un solo incantesimo, ma ogni raggio è un attacco: chiedi al master).'},
+    tip:'Sempre preparato (patrono). Fino a 6d6 su un bersaglio. Con Maleficio già attivo, ogni raggio che colpisce il bersaglio maledetto fa +1d6 necrotici: è il tuo colpo più forte su un nemico solo.'},
   {id:'sugg',n:'Suggestione',l:2,src:'f',t:'Azione • 9 m • conc. 8 ore',c:1,
     s:'Ammaliamento',ct:'Azione',rg:'9 m',cp:'V, M (una goccia di miele)',du:'Concentrazione, fino a 8 ore',
     full:[`Suggerisci una linea d\'azione (massimo 25 parole) a una creatura che vedi e ti sente: TS di Saggezza CD ${DC}.`,'Se fallisce è Affascinata e segue il suggerimento al meglio delle sue possibilità.','Il suggerimento deve sembrare ragionevole e non può spingerla a farsi del male in modo evidente. Finisce se tu o i tuoi alleati la danneggiate.'],
     tip:'Sempre preparato (patrono). L\'arma perfetta di un ex funzionario: "Sarebbe meglio controllare il magazzino a nord, no?"'},
-  {id:'mage',n:'Armatura Magica',l:1,src:'m',t:'Azione • personale • 8 ore',free:1,mage:1,
-    s:'Abiurazione',ct:'Azione',rg:'Personale',cp:'V, S',du:'8 ore',
-    full:['Un\'energia magica ti protegge: se non indossi armature, la tua CA diventa 13 + Destrezza.',`Per Kaean: CA ${13 + M.des} invece di ${11 + M.des} con l\'armatura di cuoio.`,'Con Armatura delle Ombre la lanci su te stesso a volontà, senza slot.'],
-    tip:'Lanciala ogni mattina e dopo ogni riposo lungo: dura 8 ore e non costa nulla. Togliti l\'armatura di cuoio.'},
+  {id:'vigor',n:'Vita Falsata',l:1,src:'m',t:'Azione • personale',free:1,vigor:1,
+    s:'Necromanzia',ct:'Azione',rg:'Personale',cp:'V, S, M (una goccia d\'alcol)',du:'Istantanea',
+    full:[`Con Vigore Immondo la lanci su te stesso a volontà, senza slot, e ottieni sempre il massimo: ${VIGOR} PF temporanei.`,'I PF temporanei non si sommano ad altri: tieni il valore più alto. Restano finché non li perdi o fino al prossimo riposo lungo.'],
+    tip:`Lanciala dopo ogni scontro e ogni volta che scendi sotto i ${VIGOR} PF temporanei: entri in ogni combattimento con ${BASE_HP + VIGOR} PF effettivi invece di ${BASE_HP}.`},
   {id:'comp',n:'Comprendere Linguaggi',l:1,src:'t',t:'Rituale • 1 ora',ritual:1,free:1,
     s:'Divinazione',ct:'Azione o rituale (10 minuti in più)',rg:'Personale',cp:'V, S, M (un pizzico di fuliggine e sale)',du:'1 ora',
     full:['Capisci il significato letterale di qualunque lingua parlata che senti, e di qualunque testo scritto che tocchi (1 minuto per pagina).','Non decifra codici segreti né messaggi in simboli magici.'],
@@ -479,10 +502,10 @@ const SRC_LBL = {w:'Warlock',f:'Patrono',t:'Libro delle Ombre',r:'Retaggio infer
 
 const FEATS = [
   {id:'pact',n:'Magia del Patto',g:'Warlock 1',full:['Hai 2 slot incantesimo, e sono sempre di 2° livello: ogni incantesimo che lanci con uno slot è potenziato al 2°.','Recuperi tutti gli slot con un riposo breve o lungo.',`Caratteristica da incantatore: Carisma. CD ${DC}, attacco ${fmt(SATK)}. Focus: il Libro delle Ombre.`]},
-  {id:'invoc',n:'Suppliche Occulte',g:'Warlock 1',full:['Ne conosci 3: Patto del Tomo, Deflagrazione Agonizzante e Armatura delle Ombre.','Ogni volta che sali di livello warlock puoi sostituirne una.']},
-  {id:'tome',n:'Patto del Tomo',g:'Supplica',full:['Il tuo Libro delle Ombre: un registro nero dalla copertina sobria, che a volte sembra scritto con lo stesso inchiostro della firma sul polso.','Contiene 3 trucchetti (Messaggio, Amicizia, Guida) e 2 rituali di 1° livello (Comprendere Linguaggi, Individuazione del Magico), sempre preparati.','Puoi usarlo come focus. Se lo perdi, con un rituale di 1 ora ne crei uno nuovo durante un riposo.']},
+  {id:'invoc',n:'Suppliche Occulte',g:'Warlock 1',full:['Ne conosci 3: Deflagrazione Agonizzante, Vigore Immondo e Patto del Tomo.','Ogni volta che sali di livello da warlock puoi sostituirne una. Al 5° livello ne ottieni altre due.']},
+  {id:'tome',n:'Patto del Tomo',g:'Supplica',full:['Il tuo Libro delle Ombre: un registro nero dalla copertina sobria, che a volte sembra scritto con lo stesso inchiostro della firma sul polso.','Contiene 3 trucchetti presi da qualsiasi classe (Guida, Messaggio, Scheggia Mentale) e 2 rituali di 1° livello (Comprendere Linguaggi, Individuazione del Magico), sempre preparati.','Il libro riappare alla fine di ogni riposo breve o lungo, e ogni volta puoi scegliere trucchetti e rituali diversi: per esempio Mano Magica, Beffa Crudele, Allarme o Servitore Inosservato.','Puoi usarlo come focus da incantatore.']},
   {id:'agon',n:'Deflagrazione Agonizzante',g:'Supplica',full:[`Aggiungi il Carisma (${fmt(M.car)}) ai danni di Deflagrazione Occulta.`]},
-  {id:'shadow',n:'Armatura delle Ombre',g:'Supplica',full:[`Lanci Armatura Magica su te stesso a volontà, senza slot: CA ${13 + M.des}.`,'Al 5° livello puoi sostituirla, per esempio con Maschera dai Molti Volti.']},
+  {id:'vigor',n:'Vigore Immondo',g:'Supplica',full:[`Lanci Vita Falsata su te stesso a volontà, senza slot, e ottieni sempre il massimo: ${VIGOR} PF temporanei.`,'Usalo dopo ogni scontro: è la tua riserva di PF, e tiene viva la brina dell\'Armatura di Agathys.','Ai livelli alti dà pochi PF in proporzione: verso il 7°-9° livello conviene sostituirlo.']},
   {id:'cunning',n:'Astuzia Magica',g:'Warlock 2',full:['Con un rito di 1 minuto recuperi slot del patto spesi fino a metà del massimo (arrotondato per eccesso): con 2 slot, ne recuperi 1.','Una volta per riposo lungo.']},
   {id:'bless',n:'Benedizione dell\'Oscuro',g:'Immondo 3',full:[`Quando riduci un nemico a 0 PF, ottieni ${BLESS} PF temporanei (Carisma + livello da warlock).`,'Li ottieni anche se qualcun altro riduce a 0 PF un nemico entro 3 m da te.']},
   {id:'fiendspells',n:'Incantesimi dell\'Immondo',g:'Immondo 3',full:['Sempre preparati, non contano nel limite: Mani Brucianti, Comando, Raggio Rovente, Suggestione.']},
@@ -490,7 +513,7 @@ const FEATS = [
   {id:'legacy',n:'Retaggio Infernale',g:'Tiefling',full:['Resistenza ai danni da fuoco.','Conosci Dardo di Fuoco. Dal 3° livello Rimprovero Infernale, dal 5° Oscurità: ognuno una volta per riposo lungo senza slot, oppure con gli slot.','Usano il Carisma.']},
   {id:'presence',n:'Presenza Ultraterrena',g:'Tiefling',full:['Conosci il trucchetto Taumaturgia, con il Carisma.']},
   {id:'skilled',n:'Abile',g:'Talento d\'origine',full:['Competenza in tre abilità: Persuasione, Intuizione e Natura.']},
-  {id:'scores',n:'Punteggi tirati',g:'Background',full:['Tirati con 4d6, scartando il dado più basso: 17, 15, 14, 13, 10, 7.','Ciarlatano: +1 a Carisma, Destrezza e Costituzione (17→18, 15→16, 14→15).','Al 4° livello, con l\'Aumento dei Punteggi, il Carisma può salire a 20.']},
+  {id:'scores',n:'Punteggi tirati',g:'Background',full:['Tirati con 4d6, scartando il dado più basso: 17, 15, 14, 13, 10, 7.','Ciarlatano: +2 al Carisma e +1 alla Destrezza (17→19, 15→16). La Costituzione resta 14.','I modificatori sono gli stessi di una distribuzione 18/16/15, ma al 4° livello basta un talento con +1 al Carisma per arrivare a 20, e in più ottieni il beneficio del talento.']},
   {id:'charl',n:'Ciarlatano',g:'Background',full:['Competenze: Inganno, Rapidità di Mano, Strumenti da falsario.','Il background dell\'Ufficio delle Adesioni: documenti, firme e moduli non hanno segreti per lui.']}
 ];
 const SKILL_INFO = {
@@ -504,36 +527,41 @@ const SKILL_INFO = {
 };
 
 const INIT_ITEMS = [
-  {n:'Armatura di cuoio',q:1,t:'CA 11 + Des. Di solito resta nello zaino: con Armatura delle Ombre la CA è più alta.'},
-  {n:'Pugnale',q:2,t:'1d4 perforanti, accurato, leggero, da lancio (6/18 m).'},
-  {n:'Falcetto',q:1,t:'1d4 taglienti, leggero. Lo usa per potare, non per combattere.'},
-  {n:'Focus arcano (sfera)',q:1,t:'Equipaggiamento da warlock. Di vetro nero, con una venatura rossa.'},
-  {n:'Libro (sapere occulto)',q:1,t:'Equipaggiamento da warlock.'},
-  {n:'Libro delle Ombre',q:1,t:'Il registro nero del Patto del Tomo. Anche focus da incantatore.'},
-  {n:'Dotazione da studioso',q:1,t:'Libro, inchiostro, pennino, pergamene, sacchetto di sabbia, coltellino.'},
+  {n:'Armatura di cuoio borchiato',q:1,t:'CA 12 + Des = 15. Comprata: 45 mo.'},
+  {n:'Pugnale',q:2,t:'1d4 perforanti, accurato, leggero, da lancio (6/18 m). Comprati: 2 mo l\'uno.'},
+  {n:'Falcetto',q:1,t:'1d4 taglienti, leggero. Lo usa per potare, non per combattere. Comprato: 1 mo.'},
+  {n:'Libro delle Ombre',q:1,t:'Il registro nero del Patto del Tomo. È anche il focus da incantatore.'},
+  {n:'Pozione di guarigione',q:2,t:'Azione bonus: cura 2d4+2. Una comprata (50 mo), una come oggetto magico comune del 3° livello.'},
+  {n:'Zaino',q:1,t:'Comprato: 2 mo.'},
+  {n:'Giaciglio',q:1,t:'Comprato: 1 mo.'},
+  {n:'Razioni',q:5,t:'Comprate: 5 ma l\'una.'},
+  {n:'Otre',q:1,t:'Comprato: 2 ma.'},
   {n:'Strumenti da falsario',q:1,t:'Dal Ciarlatano. Inchiostri, penne, sigilli di cera, carta di vari tipi.'},
   {n:'Costume',q:1,t:'Dal Ciarlatano.'},
   {n:'Abiti pregiati',q:1,t:'Dal Ciarlatano. Neri: farsetto elegante, stivali lucidi, polsini abbottonati.'},
-  {n:'Pozione di guarigione',q:1,t:'Oggetto magico comune del 3° livello. Azione bonus: cura 2d4+2.'},
   {n:'Occhiali dalle lenti scure',q:1,t:'Oggetto personale, senza valore di gioco.'},
   {n:'Registro dell\'Ufficio',q:1,t:'Oggetto personale. Il secondo registro, nascosto nella carrozza. Mai riletto.'},
   {n:'Lettere di Elena',q:1,t:'Oggetto personale. Molte ancora chiuse.'}
 ];
+const OLD_ITEMS = ['Armatura di cuoio','Focus arcano (sfera)','Libro (sapere occulto)','Dotazione da studioso','Abiti pregiati neri','Mele','Cesoie e attrezzi da giardino'];
 const uid = () => Math.random().toString(36).slice(2, 9);
 const fresh = () => ({
-  ver:VER, mage:true, hp:{cur:BASE_HP, temp:0}, slots:0, cunning:false, rebuke:false, hd:HD_MAX,
+  ver:VER, aoa:false, hp:{cur:BASE_HP, temp:0}, slots:0, cunning:false, rebuke:false, hd:HD_MAX,
   death:{s:0,f:0}, conds:[], conc:null, hexOn:false, insp:0, debt:0,
-  items:INIT_ITEMS.map(i => ({id:uid(), ...i})), coins:{mr:0,ma:0,me:0,mo:30,mp:0},
+  items:INIT_ITEMS.map(i => ({id:uid(), ...i})), coins:{mr:0,ma:3,me:0,mo:9,mp:0},
   notes:'', log:[], updatedAt:0
 });
 function migrate(st){
   if (st.ver === VER) return false;
-  const f = fresh();
-  st.ver = VER; st.mage = true; st.items = f.items; st.hp = {cur:BASE_HP, temp:0}; st.coins = f.coins;
+  const f = fresh(), names = INIT_ITEMS.map(i => i.n);
+  const mine = (Array.isArray(st.items) ? st.items : []).filter(i => i && !names.includes(i.n) && !OLD_ITEMS.includes(i.n));
+  if ((st.ver || 1) < 2) st.hp = {cur:BASE_HP, temp:0};
+  st.ver = VER; delete st.mage; st.aoa = false; st.items = f.items.concat(mine); st.coins = f.coins;
   return true;
 }
+function hydrate(o){ const st = Object.assign(fresh(), o); st.ver = o.ver; return st; }
 function load(){
-  try { const raw = localStorage.getItem(KEY); if (raw){ const st = Object.assign(fresh(), JSON.parse(raw)); migrate(st); return st; } } catch (e) {}
+  try { const raw = localStorage.getItem(KEY); if (raw){ const st = hydrate(JSON.parse(raw)); migrate(st); return st; } } catch (e) {}
   return fresh();
 }
 let S = load();
@@ -583,14 +611,14 @@ function initDb(){
     if (snap.exists){
       const remote = snap.data();
       if ((remote.updatedAt||0) > (S.updatedAt||0) && !saving){
-        S = Object.assign(fresh(), JSON.parse(JSON.stringify(remote)));
+        S = hydrate(JSON.parse(JSON.stringify(remote)));
         if (!Array.isArray(S.conds)) S.conds = [];
         if (!Array.isArray(S.items)) S.items = [];
         if (!Array.isArray(S.log)) S.log = [];
         if (migrate(S)){ S.updatedAt = Date.now(); queueSave(); }
         try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
         render();
-      } else if (first && (S.updatedAt||0) > (remote.updatedAt||0)) flush();
+      } else if (first && ((S.updatedAt||0) > (remote.updatedAt||0) || remote.ver !== VER)) flush();
     } else if (first) flush();
     first = false;
     if (!saving){ syncState = 'synced'; renderSync(); }
@@ -650,6 +678,7 @@ function rollDmg(label, expr, dt){
 function damage(n){
   if (!(n > 0)) return;
   let rest = n;
+  const hadAoa = S.aoa;
   const t = Math.min(S.hp.temp, rest); S.hp.temp -= t; rest -= t;
   const wasUp = S.hp.cur > 0;
   S.hp.cur = Math.max(0, S.hp.cur - rest);
@@ -657,6 +686,10 @@ function damage(n){
   if (S.hp.cur === 0 && wasUp){ msg += ' • a 0 PF: tiri contro la morte'; if (S.conc){ S.conc = null; S.hexOn = false; } }
   else if (S.hp.cur === 0 && !wasUp && rest > 0){ S.death.f = Math.min(3, S.death.f + 1); msg += ' • un fallimento contro la morte'; }
   else if (S.conc){ msg += ` • TS Cos CD ${Math.max(10, Math.floor(n/2))} per ${S.conc}`; }
+  if (hadAoa){
+    msg += ` • Agathys: ${AOA} freddo all'attaccante, se era un colpo in mischia`;
+    if (S.hp.temp === 0){ S.aoa = false; msg += ' • la brina svanisce'; }
+  }
   show('Danni subiti', n, msg, 'fumble'); commit();
 }
 function heal(n){
@@ -681,7 +714,7 @@ function renderSync(){
 function renderHeader(){
   const ini = M.des;
   document.getElementById('vitals').innerHTML = [
-    ['CA', acNow()], ['Iniz.', fmt(ini), 'init'], ['Vel.', SPEED], ['CD', DC], ['Att. inc.', fmt(SATK)], ['Comp.', fmt(PB)], ['Perc. pass.', PASSIVE]
+    ['CA', AC], ['Iniz.', fmt(ini), 'init'], ['Vel.', SPEED], ['CD', DC], ['Att. inc.', fmt(SATK)], ['Comp.', fmt(PB)], ['Perc. pass.', PASSIVE]
   ].map(([l,v,a]) => a ? `<button class="chip" data-a="${a}"><b>${v}</b><span>${l}</span></button>` : `<div class="chip"><b>${v}</b><span>${l}</span></div>`).join('');
   const pct = Math.round(100 * S.hp.cur / BASE_HP), tp = Math.min(100, Math.round(100 * S.hp.temp / BASE_HP));
   const tags = [];
@@ -689,6 +722,7 @@ function renderHeader(){
   else if (S.hp.cur <= BASE_HP / 2) tags.push('<span class="tag">Sanguinante</span>');
   if (S.conc) tags.push(`<span class="tag gold">Conc.: ${esc(S.conc)}</span>`);
   if (S.hexOn) tags.push('<span class="tag ivy">Maleficio</span>');
+  if (S.aoa) tags.push('<span class="tag frost">Agathys</span>');
   document.getElementById('hpbox').innerHTML = `
     <div class="hpnum">${S.hp.cur}<small>/${BASE_HP}</small>${S.hp.temp ? ` <small>+${S.hp.temp}</small>` : ''}</div>
     <div class="hptags">${tags.join('')}</div>
@@ -713,7 +747,7 @@ function renderCombat(){
     <div class="hpctl">
       <div class="entry"><input id="hpin" type="number" inputmode="numeric" min="0" placeholder="0" aria-label="Quantità">
         <button class="btn primary" data-a="dmg">Danni</button><button class="btn heal" data-a="heal">Cura</button><button class="btn" data-a="temp">PF temp.</button></div>
-      <div class="btns"><button class="btn sm" data-a="bless">Benedizione dell'Oscuro +${BLESS}</button>${S.hp.temp ? '<button class="btn sm" data-a="cleartemp">Azzera temp.</button>' : ''}</div>
+      <div class="btns"><button class="btn sm" data-a="vigor">Vigore Immondo ${VIGOR}</button><button class="btn sm" data-a="bless">Benedizione dell'Oscuro ${BLESS}</button>${S.hp.temp ? '<button class="btn sm" data-a="cleartemp">Azzera temp.</button>' : ''}</div>
     </div>
     ${down ? `<h3>Tiri contro la morte</h3><div class="resline"><span>Successi</span><div class="pips">${[0,1,2].map(i=>`<button class="pip ok ${i<S.death.s?'on':''}" data-a="ds" data-i="${i}"></button>`).join('')}</div></div>
     <div class="resline"><span>Fallimenti</span><div class="pips">${[0,1,2].map(i=>`<button class="pip ${i<S.death.f?'on':''}" data-a="df" data-i="${i}"></button>`).join('')}</div></div>
@@ -727,7 +761,7 @@ function renderCombat(){
     <div class="resline"><span class="rl"><b>Astuzia Magica</b> <button class="info" data-info="feat:cunning">i</button><span class="muted">1 minuto, recupera 1 slot</span></span>${S.cunning ? '<span class="muted">usata</span>' : '<button class="btn sm" data-a="cunning"' + (S.slots ? '' : ' disabled') + '>Usa</button>'}</div>
     <div class="resline"><span class="rl"><b>Rimprovero Infernale</b> <button class="info" data-info="sp:rebuke">i</button><span class="muted">gratis 1/riposo lungo</span></span>${S.rebuke ? '<span class="muted">usato</span>' : '<button class="btn sm" data-a="rebukefree">Lancia</button>'}</div>
     <div class="resline"><span class="rl"><b>Dadi vita</b> <span class="muted">${S.hd}/${HD_MAX} d8</span></span><button class="btn sm" data-a="hd"${S.hd && !down ? '' : ' disabled'}>Spendi 1d8${fmt(M.cos)}</button></div>
-    <div class="resline"><span class="rl"><b>Armatura delle Ombre</b> <button class="info" data-info="sp:mage">i</button><span class="muted">CA ${acNow()}</span></span><button class="btn sm" data-a="magetoggle">${S.mage ? 'Attiva' : 'Spenta'}</button></div>
+    <div class="resline"><span class="rl"><b>Armatura di Agathys</b> <button class="info" data-info="sp:aoa">i</button><span class="muted">${AOA} freddo a chi ti colpisce in mischia</span></span><button class="btn sm" data-a="aoatoggle">${S.aoa ? 'Attiva' : 'Spenta'}</button></div>
     <div class="resline"><span class="rl"><b>Maleficio attivo</b><span class="muted">+1d6 necrotici a colpo</span></span><button class="btn sm" data-a="hextoggle">${S.hexOn ? 'Sì' : 'No'}</button></div>
   </div>
   <div class="panel span2">
@@ -760,7 +794,7 @@ function renderSheet(){
   <div class="panel">
     <h2>Competenze e sensi</h2>
     <dl class="kv">
-      <dt>Armature</dt><dd>Leggere</dd>
+      <dt>Armature</dt><dd>Leggere (indossa cuoio borchiato)</dd>
       <dt>Armi</dt><dd>Semplici</dd>
       <dt>Strumenti</dt><dd>Strumenti da falsario</dd>
       <dt>Lingue</dt><dd>Comune, Infernale, Elfico</dd>
@@ -768,7 +802,7 @@ function renderSheet(){
       <dt>Resistenze</dt><dd>Fuoco</dd>
       <dt>Taglia</dt><dd>Media, 9 m di velocità</dd>
     </dl>
-    <p class="muted">Punteggi tirati con 4d6 (scartando il più basso): 17, 15, 14, 13, 10, 7. Il Ciarlatano dà +1 a Carisma, Destrezza e Costituzione.</p>
+    <p class="muted">Punteggi tirati con 4d6 (scartando il più basso): 17, 15, 14, 13, 10, 7. Il Ciarlatano dà +2 al Carisma e +1 alla Destrezza.</p>
   </div>`;
 }
 function spellRow(sp){
@@ -790,7 +824,7 @@ function spellRow(sp){
       b.push(`<button class="btn sm primary" data-a="rebukeslot"${S.slots >= SLOT_MAX ? ' disabled' : ''}>Con slot 3d10</button>`);
     }
     if (sp.l === 0 && sp.c) b.push(`<button class="btn sm" data-a="concset" data-id="${sp.id}">Inizia concentrazione</button>`);
-    if (sp.mage) b.push(`<button class="btn sm primary" data-a="magetoggle">${S.mage ? 'Attiva (CA ' + AC_MAGE + ')' : 'Lancia'}</button>`);
+    if (sp.vigor) b.push(`<button class="btn sm primary" data-a="vigor">Lancia: ${VIGOR} PF temporanei</button>`);
     if (sp.free && sp.c) b.push(`<button class="btn sm" data-a="concset" data-id="${sp.id}">Inizia concentrazione</button>`);
     body = `<div class="body"><div class="muted">${esc(sp.t)}</div><div>${esc(sp.full[0])}</div><div class="btns">${b.join('')}<button class="info" data-info="sp:${sp.id}">i</button></div></div>`;
   }
@@ -807,7 +841,7 @@ function renderSpells(){
   </div>
   ${grp('Trucchetti', SPELLS.filter(s => s.l === 0), 'a volontà')}
   ${grp('Incantesimi con slot', SPELLS.filter(s => s.l > 0 && !s.free), '4 preparati + 4 del patrono')}
-  ${grp('Senza slot', SPELLS.filter(s => s.free), 'Armatura delle Ombre e rituali del Libro')}`;
+  ${grp('Senza slot', SPELLS.filter(s => s.free), 'Vigore Immondo e rituali del Libro')}`;
 }
 function renderFeat(){
   const el = document.getElementById('tab-feat');
@@ -871,7 +905,7 @@ function castSpell(sp){
   if (S.slots >= SLOT_MAX) return;
   S.slots += 1;
   let msg = 'slot di 2° speso';
-  if (sp.aoa){ S.hp.temp = Math.max(S.hp.temp, 5 * SLOT_LVL); msg += ` • ${5 * SLOT_LVL} PF temporanei, ${5 * SLOT_LVL} freddo a chi ti colpisce in mischia`; }
+  if (sp.aoa){ S.hp.temp = Math.max(S.hp.temp, AOA); S.aoa = true; msg += ` • brina attiva per 1 ora: ${AOA} freddo a chi ti colpisce in mischia`; }
   if (sp.c){ const prev = S.conc; S.conc = sp.n; S.hexOn = !!sp.hex; if (prev && prev !== sp.n) msg += ` • ${prev} termina`; }
   show(sp.n, '✦', msg); commit();
 }
@@ -899,7 +933,9 @@ document.addEventListener('click', e => {
     case 'heal': heal(val()); break;
     case 'temp': { const n = val(); if (n > 0){ S.hp.temp = Math.max(S.hp.temp, n); show('PF temporanei', n, 'non si sommano: tieni il valore più alto'); commit(); } break; }
     case 'bless': S.hp.temp = Math.max(S.hp.temp, BLESS); show("Benedizione dell'Oscuro", BLESS, 'PF temporanei (non si sommano)'); commit(); break;
-    case 'cleartemp': S.hp.temp = 0; commit(); break;
+    case 'cleartemp': S.hp.temp = 0; S.aoa = false; commit(); break;
+    case 'vigor': S.hp.temp = Math.max(S.hp.temp, VIGOR); show('Vigore Immondo', VIGOR, 'PF temporanei: non si sommano, tieni il valore più alto' + (S.aoa ? ' • la brina di Agathys resta attiva' : '')); commit(); break;
+    case 'aoatoggle': S.aoa = !S.aoa; commit(); break;
     case 'ds': S.death.s = +t.dataset.i < S.death.s ? +t.dataset.i : +t.dataset.i + 1; commit(); break;
     case 'df': S.death.f = +t.dataset.i < S.death.f ? +t.dataset.i : +t.dataset.i + 1; commit(); break;
     case 'deathroll': {
@@ -919,7 +955,6 @@ document.addEventListener('click', e => {
     case 'rebukeslot': if (S.slots < SLOT_MAX){ S.slots += 1; const r = rollExpr('3d10'); show('Rimprovero Infernale (slot)', r.total, `${r.text} fuoco • TS Des CD ${DC}, metà se riesce`); commit(); } break;
     case 'hd': if (S.hd > 0){ S.hd -= 1; const r = rollExpr('1d8' + fmt(M.cos)); const n = Math.max(1, r.total); S.hp.cur = Math.min(BASE_HP, S.hp.cur + n); show('Dado vita', n, r.text); commit(); } break;
     case 'hextoggle': S.hexOn = !S.hexOn; commit(); break;
-    case 'magetoggle': S.mage = !S.mage; show('Armatura delle Ombre', acNow(), S.mage ? 'CA con Armatura Magica' : 'CA con armatura di cuoio'); commit(); break;
     case 'atk': { const k = ATK[t.dataset.k]; d20(k.n, k.b(), {attack:1}); break; }
     case 'dmgroll': { const k = ATK[t.dataset.k]; rollDmg(k.n, k.d(), k.t + (S.hexOn && t.dataset.k !== 'fb' ? ' + necrotici' : '')); break; }
     case 'spopen': openSpell = openSpell === t.dataset.id ? null : t.dataset.id; render(); break;
@@ -929,9 +964,9 @@ document.addEventListener('click', e => {
     case 'cond': { const c = t.dataset.c; S.conds = S.conds.includes(c) ? S.conds.filter(x => x !== c) : [...S.conds, c]; commit(); break; }
     case 'iq': { const it = S.items.find(i => i.id === t.dataset.id); it.q += +t.dataset.d; if (it.q <= 0) S.items = S.items.filter(i => i !== it); commit(); break; }
     case 'debt': S.debt = Math.max(0, S.debt + +t.dataset.d); commit(); break;
-    case 'short': if (needConfirm('short')){ S.slots = 0; show('Riposo breve', '✦', 'slot del patto recuperati • spendi i dadi vita dal riquadro'); commit(); } break;
+    case 'short': if (needConfirm('short')){ S.slots = 0; S.aoa = false; show('Riposo breve', '✦', 'slot recuperati • puoi cambiare trucchetti e rituali del Libro • rilancia Vigore Immondo'); commit(); } break;
     case 'long': if (needConfirm('long')){
-      S.slots = 0; S.cunning = false; S.rebuke = false; S.hp.cur = BASE_HP; S.hp.temp = 0; S.hd = HD_MAX; S.death = {s:0,f:0}; S.conc = null; S.hexOn = false;
+      S.slots = 0; S.cunning = false; S.rebuke = false; S.hp.cur = BASE_HP; S.hp.temp = 0; S.hd = HD_MAX; S.death = {s:0,f:0}; S.conc = null; S.hexOn = false; S.aoa = false;
       S.conds = S.conds.filter(c => c !== 'Svenuto'); show('Riposo lungo', '✦', 'PF, slot, dadi vita e risorse recuperati'); commit(); } break;
   }
 });
@@ -940,10 +975,8 @@ document.getElementById('exprform').addEventListener('submit', e => {
   e.preventDefault(); const v = document.getElementById('expr').value; const r = rollExpr(v);
   if (r){ show(v, r.total, r.text); commit(); }
 });
-document.getElementById('insp').addEventListener('click', e => {
-  if (S.insp === 0 || e.detail === 0 && false){ S.insp += 1; commit(); return; }
-  useInsp = !useInsp; renderLog();
-});
+document.getElementById('insp').addEventListener('click', () => { if (S.insp > 0){ useInsp = !useInsp; renderLog(); } });
+document.getElementById('inspadd').addEventListener('click', () => { S.insp += 1; commit(); });
 document.getElementById('insp').addEventListener('contextmenu', e => { e.preventDefault(); S.insp = Math.max(0, S.insp - 1); useInsp = false; commit(); });
 document.getElementById('logbtn').addEventListener('click', e => {
   const l = document.getElementById('log'); l.hidden = !l.hidden; e.currentTarget.setAttribute('aria-expanded', !l.hidden);
