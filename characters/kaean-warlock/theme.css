@@ -1,10 +1,9 @@
-/* Kaean: the Creditor's ledger. Oxblood ink, brass fittings, ruled paper with a red double margin,
-   and the name signed by hand next to the seal that shows the current letter on his wrist. */
+/* Kaean: the Creditor's ledger. Oxblood ink, brass fittings, plain paper, and the name signed by hand next to the seal that shows the current letter on his wrist. */
 :root{
   --cloth:#150b0c; --cloth-rgb:21,11,12; --nav-1:#21110f; --nav-2:#0c0607; --bone:#efe3cb;
   --paper:#f2e8d2; --ink:#1f1512; --ink-2:#5b4337; --rule:#b49a72;
   --wax:#7d1820; --wax-hi:#ad2a30; --gilt:#a8834a; --gilt-hi:#dfc07e;
-  --ivy:#3f5d3a; --frost:#3d6585; --ledger:rgba(70,104,130,.13); --margin:rgba(173,42,48,.55);
+  --ivy:#3f5d3a; --frost:#3d6585;
   --deco:"Pinyon Script",cursive;
   --display:"Cormorant SC","Cormorant Garamond",Georgia,serif;
   --body:"Alegreya",Georgia,"Times New Roman",serif;
@@ -25,11 +24,7 @@ nav.tabs{border-top-color:rgba(168,131,74,.6)}
 nav.tabs button{font-family:var(--display);font-weight:600;font-size:.86rem;letter-spacing:.02em}
 .tag.ivy{background:#5b1a1f}
 
-/* Ledger paper: faint ruling and a red double margin on every page of the register */
-main,.panel,.sheet,.result{background-image:var(--img-noise),repeating-linear-gradient(180deg,transparent 0 31px,var(--ledger) 31px 32px)}
-.panel::after{content:"";position:absolute;top:0;bottom:0;left:7px;width:4px;border-left:1px solid var(--margin);border-right:1px solid var(--margin);pointer-events:none}
-.panel{padding-left:calc(var(--gut) + 8px)}
-.spell.is-open{margin-left:calc(-1 * var(--gut) - 8px);padding-left:calc(var(--gut) + 8px)}
+/* Plain paper, clause headings */
 .panel h2,.sheet h2{font-family:var(--display);font-weight:600;font-size:1.22rem;letter-spacing:.02em;text-transform:none;border-bottom:1px solid rgba(125,24,32,.5);box-shadow:0 2px 0 -1px var(--paper),0 3px 0 -1px rgba(125,24,32,.35)}
 .panel > h2::before,.panel > summary > h2::before{content:"§";margin-right:-2px;font-family:var(--body);font-weight:400;color:var(--wax)}
 .panel > h2,.panel > summary > h2{justify-content:flex-start}
@@ -45,15 +40,5 @@ h3{font-family:var(--display);font-style:normal;font-weight:600;font-size:1.12re
 /* Wide screens: the register lies open on a dark lacquered desk */
 @media (min-width:900px){
   body{background-image:radial-gradient(ellipse at 50% -10%,rgba(125,24,32,.42),transparent 55%),radial-gradient(ellipse at 100% 100%,rgba(168,131,74,.12),transparent 60%)}
-  main{background-image:none}
   .brand h1{font-size:2.1rem;padding:0 18px 0 2px}
-  .panel,.panel + .panel{padding-left:30px;background-image:var(--img-noise),repeating-linear-gradient(180deg,transparent 0 31px,var(--ledger) 31px 32px),radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(110,70,40,.22) 100%)}
-  .panel::after{left:11px}
-  .spell.is-open{margin-left:-30px;padding-left:30px}
-}
-@media (min-width:600px) and (max-width:899px){
-  main{background-image:none}
-  .panel,.panel + .panel{padding-left:30px}
-  .panel::after{left:11px}
-  .spell.is-open{margin-left:-30px;padding-left:30px}
 }
