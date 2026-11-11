@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Pinyon+Script&family=Cinzel:wght@500;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap">
 <style>
 :root{
   --cloth:#0d110c; --bone:#ecdfc2;
@@ -295,6 +295,25 @@ details.fold[open] > summary{margin-bottom:12px}
 @media (max-width:359px){.hpn .hpl{display:none}.kact .btn{font-size:.92rem}}
 @media (max-height:640px){.keys button{min-height:44px}.kdisp{font-size:2rem}}
 
+/* Pact: the letter on the wrist */
+.markcur{display:flex;align-items:center;gap:16px;margin:4px 0 12px}
+.markl{flex:0 0 auto;display:grid;place-items:center;width:84px;height:84px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#fbf4e3,#e3d2ab);box-shadow:inset 0 0 0 1px var(--rule),inset 0 0 14px rgba(92,70,48,.25);font-family:"Pinyon Script",cursive;font-size:3.6rem;line-height:1;color:#2a1810;padding-top:6px}
+.markl.sm{width:50px;height:50px;font-size:2.1rem;padding-top:4px}
+.markform{display:grid;grid-template-columns:96px 1fr;gap:8px}
+.markform label{display:grid;gap:3px;font-size:.88rem;color:var(--ink-2)}
+.markform .full{grid-column:1/-1}
+.markform input{width:100%;min-width:0;min-height:46px;border:1px solid var(--rule);background:#fbf4e3;border-radius:6px;padding:6px 8px;color:var(--ink)}
+#mark-l{font-family:"Pinyon Script",cursive;font-size:1.8rem;text-align:center;padding:2px}
+.mrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px 0;border-bottom:1px dotted var(--rule)}
+.mrow:last-child{border-bottom:0}
+.mrow .btn{min-width:46px}
+/* Background chapters */
+.bgch p{max-width:68ch;line-height:1.55}
+.bgch mark{background:none;color:#3a160c;font-style:italic;font-weight:700}
+.bgch b{color:var(--wax)}
+.bgch .lead{font-style:italic;color:var(--ink-2)}
+.bgch .dc{float:left;font-family:var(--deco);font-size:3.3rem;line-height:.8;margin:6px 8px 0 0;color:var(--wax)}
+
 /* Fullscreen button */
 .fsbtn{position:absolute;top:calc(6px + env(safe-area-inset-top,0px));right:4px;z-index:3;display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;background:none;color:rgba(236,223,194,.8)}
 .fsbtn svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
@@ -417,7 +436,21 @@ details.fold[open] > summary{margin-bottom:12px}
     </div>
   </section>
   <section id="tab-notes" class="grid" hidden>
-    <div class="panel"><h2>Note di sessione</h2><textarea id="notes" placeholder="PNG, indizi, luoghi, firme, debiti..." aria-label="Note di sessione"></textarea></div>
+    <div class="panel span2"><h2>Note di sessione</h2><textarea id="notes" placeholder="PNG, indizi, luoghi, firme, debiti..." aria-label="Note di sessione"></textarea></div>
+  </section>
+  <section id="tab-pact" class="grid" hidden>
+    <div class="panel" id="markbox">
+      <h2>Il segno sul polso</h2>
+      <div class="markcur"><span class="markl" id="markl"></span><div><b id="markwhen"></b><div class="muted" id="markage"></div></div></div>
+      <p class="muted">Una lettera in corsivo elegante. A volte resta uguale per giorni, a volte cambia tre volte nella stessa giornata.</p>
+      <form class="markform" id="markform">
+        <label>Nuova lettera<input id="mark-l" maxlength="1" autocomplete="off" autocapitalize="characters" spellcheck="false" required></label>
+        <label>Quando<input id="mark-t" type="datetime-local"></label>
+        <label class="full">Cosa stava succedendo<input id="mark-n" placeholder="Facoltativo" autocomplete="off"></label>
+        <button class="btn primary full" type="submit">Annota il cambio</button>
+      </form>
+    </div>
+    <div class="panel"><h2>Registro delle lettere <small id="markcount"></small></h2><div id="marklist"></div></div>
     <div class="panel" id="debtbox"></div>
   </section>
   <section id="tab-guide" class="grid" hidden>
@@ -504,7 +537,7 @@ details.fold[open] > summary{margin-bottom:12px}
     <div class="panel story span2">
       <h2>Kaean <small>registrato come Kaeraldo</small></h2>
       <p>Tiefling nato ad Aurena, città di teatri della Congregazione dell'Ispirazione di Simpoh, in una famiglia di comparse. Da bambino impara a nascondere i suoi occhi da serpente dietro lenti scure, e scopre di saper convincere chiunque. La sorella maggiore <b>Elena</b> è una cantante di talento: lui la adora e la invidia.</p>
-      <p>Fallisce l'audizione all'Accademia, ma <b>Morgana Voss</b> lo nota e lo porta all'<b>Ufficio delle Adesioni</b>, che convince le comunità indipendenti ad aderire a Simpoh. A diciotto anni firma con lei l'<b>Accordo Privato</b>: il <b>Creditore</b>, un diavolo dei contratti, gli presta potere in cambio di firme. Il segno è una firma d'inchiostro sul polso sinistro.</p>
+      <p>Fallisce l'audizione all'Accademia, ma <b>Morgana Voss</b> lo nota e lo porta all'<b>Ufficio delle Adesioni</b>, che convince le comunità indipendenti ad aderire a Simpoh. A diciotto anni firma con lei l'<b>Accordo Privato</b>: il <b>Creditore</b>, un diavolo dei contratti, gli presta potere in cambio di firme. Il segno è una lettera in corsivo sul polso sinistro, che cambia senza preavviso.</p>
       <p>Morgana affama gli indipendenti per costringerli a firmare. Kaean finge di eseguire gli ordini, ma li sabota in segreto e aiuta le vittime, usando proprio il potere del Creditore: il suo debito cresce ogni anno. A Pietrafonda conosce <b>Lucerys</b> e stringe con lui l'Accordo, l'unico contratto senza inchiostro della sua vita.</p>
       <p>A Valdoro vede il mugnaio colpito dalla <b>Collera</b> e la figlia <b>Mirta</b>. Scopre che le copie dei suoi registri vanno a qualcuno con un sigillo sconosciuto (non quello del Creditore). Morgana minaccia Elena. Kaean parte per una "missione prolungata", perde un registro in una locanda e si stabilisce a <b>Ivacuus</b>, dove vive da quasi undici mesi tra piante, la cavalla <b>Notturna</b>, <b>Nonna Pruna</b> e Lucerys.</p>
       <dl class="kv">
@@ -516,7 +549,118 @@ details.fold[open] > summary{margin-bottom:12px}
         <dt>Paura</dt><dd>Le campane: tre colpi lunghi e due brevi erano la sua convocazione ad Aurena.</dd>
       </dl>
       <h3>Al tavolo</h3>
-      <ul class="muted"><li>Non si toglie mai gli occhiali scuri in pubblico, e tiene i polsini abbottonati.</li><li>Minaccia le piante ad alta voce, poi le cura con pazienza.</li><li>Aiuta di nascosto e nega tutto: "Si è riparato da solo".</li><li>Ha sempre una mela in tasca per Notturna.</li><li>Quando suonano le campane cerca con lo sguardo l'uscita.</li></ul>
+      <ul class="muted"><li>Non si toglie mai gli occhiali scuri in pubblico, e tiene i polsini abbottonati.</li><li>Minaccia le piante ad alta voce, poi le cura con pazienza.</li><li>Aiuta di nascosto e nega tutto: "Si è riparato da solo".</li><li>Ha sempre una mela in tasca per Notturna.</li><li>Quando suonano le campane cerca con lo sguardo l'uscita.</li><li>Ogni tanto controlla il polso e annota la lettera nel suo registro.</li></ul>
+    </div>
+    <div class="panel bgch span2">
+      <h2>Chi è</h2>
+<p><em class="lead">All'anagrafe risulta come Kaeraldo. È un funzionario della Congregazione dell'Ispirazione di Simpoh e, sulla carta, è ancora in missione.</em></p>
+<p>Kaean è un tiefling alto e magro, con la pelle color ambra, i capelli rossi e due corna corte e scure, piegate all'indietro. In pubblico porta sempre occhiali dalle lenti scure. Chi riesce a guardarci dietro vede occhi gialli con la pupilla verticale, come quelli di un serpente.</p>
+<p>Veste sempre di nero, con abiti eleganti e stivali lucidi. Si muove in modo morbido e sinuoso, quasi da serpente, e quando si siede sembra sciogliersi sulla sedia. Parla a voce bassa e con molta ironia, tanto che spesso chi lo ascolta non capisce se è stato appena insultato.</p>
+<p>Ci tiene ad avere una cattiva reputazione, ma i piccoli dettagli lo tradiscono. Sotto le unghie curate ha spesso un po' di terra, che nasconde in fretta. In tasca ha sempre una mela per la sua cavalla, e giura che ci è finita per caso. Tiene sempre i polsini abbottonati, anche d'estate, per nascondere quello che ha sul polso sinistro: una lettera d'inchiostro scuro, in un corsivo elegantissimo, che nessun sapone è mai riuscito a togliere. E che non è sempre la stessa. La sua coda sottile, che dice di controllare alla perfezione, batte nervosa sul pavimento ogni volta che un amico è in ritardo per cena.</p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>I. Il bambino con gli occhi sbagliati</h2>
+<p><span class="dc">A</span>urena è la città della Congregazione dell'Ispirazione, quella del drago Simpoh. È una città costruita per lo spettacolo: piena di teatri uno sopra l'altro, piazze fatte apposta perché le voci si sentano bene, balconi pensati per essere guardati. Lì tutti devono avere un talento, e chi non ce l'ha viene gentilmente invitato a trovarsene uno.</p>
+<p>Kaean nacque in una famiglia di comparse, cioè di attori secondari. Suo padre da trent'anni recitava la parte del "secondo soldato", sua madre quella della "dama che sviene al terzo atto". Erano devoti a Simpoh, orgogliosi del loro lavoro e felici di restare sullo sfondo. Il figlio, invece, aveva occhi da serpente, gialli e impossibili da ignorare. Quando il pubblico li notava, smetteva di guardare il protagonista, e ad Aurena questa era quasi una colpa.</p>
+<p>Per il suo sesto compleanno, la madre gli regalò un paio di occhiali con le lenti scure. «Così non distrai nessuno», gli disse con dolcezza. Voleva proteggerlo, ma Kaean capì un'altra cosa: per essere accettato doveva nascondersi. <mark>Da quel giorno non si è più tolto gli occhiali in pubblico.</mark></p>
+<p><mark>In compenso scoprì di saper convincere la gente.</mark> A otto anni convinse il figlio del fornaio a dargli una settimana di dolci in cambio di una pietra "portafortuna", e il bambino lo ringraziò per mesi. A dieci anni un'intera classe saltò le prove per andare a vedere i draghi di carta al porto. L'idea non era stata sua, ma davanti al maestro Kaean se ne prese tutta la colpa, inventandosi perfino di aver corrotto qualcuno. Preferiva essere considerato una cattiva influenza piuttosto che essere compatito per i suoi occhi.</p>
+<p>L'unica creatura che non riusciva a convincere era un geranio sul davanzale, comprato al mercato per pochi soldi e dimenticato da tutti. Kaean lo minacciava di buttarlo nel canale al primo petalo storto, ma poi controllava la terra, gli cambiava il vaso e lo spostava al sole. Il geranio fioriva splendidamente, e Kaean diceva che era merito delle minacce. <mark>Era l'unica cosa che sapesse far crescere senza chiedere niente in cambio</mark>, e per molto tempo lo sarebbe rimasta.</p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>II. La sorella che brillava</h2>
+<p><b><span class="dc">E</span>lena</b>, la sorella maggiore, aveva tutto quello che Aurena apprezzava. Era una tiefling come lui, ma se Kaean sembrava fatto per l'ombra, lei sembrava fatta per la luce. Aveva lunghi capelli rossi e ondulati, legati con nastri dorati, corna sottili decorate con anellini d'argento e occhi color ambra, del tutto normali, cosa che i genitori consideravano una fortuna. Era alta, stava sempre dritta come una cantante, rideva di cuore e parlava gesticolando. A dodici anni cantava già nei cori della Congregazione, e la sua voce commuoveva perfino gli insegnanti.</p>
+<p>Kaean la adorava e la invidiava allo stesso tempo. Lei invece era convinta che il fratello fosse il più intelligente della famiglia, e ogni volta che qualcuno la lodava, trovava il modo di parlare bene di lui. Per il suo primo coro, Kaean le regalò un ciondolo d'argento a forma di nota musicale, comprato con mesi di risparmi. <b>Elena</b> non se l'è mai più tolto. Lui non le ha mai perdonato del tutto di essere così buona, ma non ha mai smesso di esserle grato.</p>
+<p>Quando arrivò il momento della sua audizione per l'Accademia di Simpoh, Kaean salì sul palco e si bloccò. Dietro le quinte sapeva mettere a suo agio chiunque, ma sotto le luci riusciva solo a pensare che tutti stessero cercando di vedere i suoi occhi dietro le lenti. L'esibizione fu breve e mediocre. Almeno la commissione recuperò un po' di tempo.</p>
+<p>Prima di salire sul palco, però, aveva chiacchierato con tre candidati molto agitati. Dopo averci parlato, tutti e tre avevano deciso di ritirarsi: uno voleva fare il cartografo, uno sposarsi, uno tornare dalla nonna. Se ne andarono sollevati. Tra gli esaminatori, una giovane funzionaria aveva visto tutto e si annotò il suo nome. Si chiamava <b>Morgana Voss</b>: voce gentile, calligrafia perfetta e una memoria che non dimenticava nulla. <mark>Accanto al nome di Kaean scrisse una sola parola, che lui avrebbe scoperto solo anni dopo: <em>idoneo</em>.</mark></p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>III. L'Accordo Privato</h2>
+<p><b><span class="dc">M</span>organa</b> lo fece entrare nell'Ufficio delle Adesioni. È il ramo della Congregazione che si occupa di convincere le comunità indipendenti ad aderire a Simpoh. Kaean rispondeva a lei, lei rispondeva ai suoi superiori, e in cima alla catena c'erano il secondo in carica e infine il drago. All'inizio il lavoro sembrava innocuo: visitava i villaggi indipendenti, spiegava i vantaggi della protezione di Simpoh e compilava censimenti con nomi, mestieri, bisogni e motivi per accettare o rifiutare.</p>
+<p>Poco dopo il suo diciottesimo compleanno, <b>Morgana</b> lo convocò dopo l'orario di lavoro, in una stanza che non compariva sulle mappe dell'edificio. Gli spiegò che i funzionari più promettenti potevano ottenere un <b>Accordo Privato</b>: un privilegio per pochi, che lo avrebbe reso più convincente e gli avrebbe fatto fare carriera molto in fretta. Kaean sapeva che <b>Morgana</b> aveva fatto carriera in metà del tempo di chiunque altro. Non chiese come.</p>
+<p>Nella stanza c'era una terza persona. Era seduta dietro una scrivania di legno nero, con guanti grigi, una penna d'oro e un registro enorme, così spesso da sembrare contenere tutte le promesse mai fatte ad Aurena. Il suo volto era sfocato: Kaean non riusciva a ricordarlo nemmeno mentre lo guardava. La voce invece era impossibile da dimenticare: cortese, paziente, come quella di un notaio che legge un contratto. Si presentò come <b>il Creditore</b>, e precisò che era un titolo, non un nome.</p>
+<p>Il contratto era scritto con un inchiostro che si muoveva leggermente sulla pagina. Il Creditore gli offriva una parte del suo potere: parole più convincenti, illusioni, piccoli aiuti nei momenti giusti. <mark>In cambio voleva una sola cosa, la stessa che voleva l'Ufficio: <b>firme</b>.</mark> Ogni nuova adesione ottenuta da Kaean sarebbe stata segnata anche nel suo registro. Il potere ricevuto era un anticipo, da ripagare con il lavoro. «È solo una questione di saldo», disse il Creditore. «Non si preoccupi. Io sono molto paziente, e gli interessi sono bassi».</p>
+<p>Kaean aveva diciotto anni, una famiglia di comparse e due occhi che nessuno voleva guardare. Per la prima volta qualcuno gli offriva un posto in prima fila. Firmò. <mark>L'inchiostro risalì dalla pagina fino al suo polso, come un insetto, e si fermò lì, sotto forma di una lettera in corsivo, elegante come la firma di un notaio.</mark> Non era la sua iniziale. <b>Morgana</b> gli strinse la mano: «Adesso sei uno dei nostri».</p>
+<p>Gli ci vollero anni per capire davvero che cosa aveva firmato.</p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>IV. L'Ufficio delle Adesioni</h2>
+<p><span class="dc">U</span>n giorno il rappresentante di un villaggio venne a protestare: gli uomini di <b>Morgana</b> stavano bloccando un carico di farina, e nel suo villaggio i bambini mangiavano una volta al giorno. <b>Morgana</b> gli fece ripetere quel dettaglio, come se le piacesse sentirlo. Poi gli mise davanti un modulo di adesione: «Allora sarebbe da irresponsabili farli aspettare per una questione di principio». Kaean propose di liberare il carico e riparlarne dopo, ma lei non spostò il modulo di un centimetro. Più tardi gli disse: «<mark>Non devono stare meglio, Kaeraldo. Devono avere bisogno di noi</mark>».</p>
+<p>Quella sera Kaean fece arrivare al villaggio un altro carico di farina, pagandolo di nascosto tramite un mercante che non faceva domande. A <b>Morgana</b> raccontò invece che la popolazione era "messa alle strette come previsto". Quella notte, per la prima volta, sognò la scrivania nera. Il Creditore sfogliava il registro senza alzare gli occhi: «Nessuna firma, oggi. Ne prendo nota». Non sembrava arrabbiato. Era peggio: sembrava interessato.</p>
+<p>Da lì in poi gli ordini diventarono chiari. Doveva bloccare i rifornimenti, rovinare gli accordi commerciali, colpire le famiglie che resistevano. <b>Morgana</b> voleva persone affamate e spaventate, abbastanza disperate da firmare. Dava gli ordini solo a voce e voleva rapporti senza dettagli compromettenti. In pubblico parlava di armonia e di protezione, e Kaean non sapeva se il drago fosse al corrente di tutto questo, né se qualcuno sopra di lei conoscesse l'Accordo Privato. Sapeva bene, però, che cosa voleva lei.</p>
+<p>Così inventò il suo metodo, che in ufficio chiamavano "Metodo Kaeraldo". Davanti a <b>Morgana</b> sorrideva, accettava gli ordini e lasciava intendere di avere idee ancora peggiori. Ma una volta sul posto non danneggiava nessuno: cercava invece le cose che erano già andate storte da sole, e nei rapporti se ne prendeva il merito. Una festa rovinata dalla pioggia diventava "un'azione mirata per abbattere il morale". Un ponte crollato da mesi diventava "un problema di collegamenti opportunamente aggravato". Due consiglieri che litigavano da vent'anni diventavano "discordia seminata con effetti duraturi". Non aveva fatto niente di tutto questo. Sapeva solo scrivere molto bene.</p>
+<p>Il potere del Creditore però lo usava, ed era questa la cosa che lo tormentava di più. Una parola più convincente per far credere a una guardia di <b>Morgana</b> di aver già controllato un magazzino. Un'illusione per far sembrare vuoto un granaio pieno. Un volto falso per passare inosservato in un villaggio che avrebbe dovuto rovinare. <mark>Ogni incantesimo che usava per aiutare qualcuno veniva dalla stessa fonte che voleva quelle persone in ginocchio.</mark> Kaean si diceva che era come rubare dalla cassa del nemico. Il Creditore, nei sogni, la chiamava "un prestito", e segnava tutto.</p>
+<p>Quando i villaggi stavano troppo bene per i suoi rapporti, Kaean scriveva che c'era "una crisi in preparazione" e chiedeva più tempo. Intanto faceva arrivare i rifornimenti per un'altra strada, aiutava a riparare i ponti e avvisava le famiglie in pericolo. Nei rapporti descriveva con cura come stavano le cose al suo arrivo, e non diceva nulla di quello che aveva sistemato. <b>Morgana</b> voleva risultati veloci e pochi dettagli, quindi il trucco funzionava. Ma sarebbe bastata una sola ispezione per scoprirlo. Per questo Kaean chiedeva a tutti di stare zitti: «Se qualcuno chiede chi ha riparato il ponte, si è riparato da solo. Se insiste, dite che sono una persona orribile. E non ringraziatemi per strada, mi rovinate il lavoro». Scherzava solo in parte.</p>
+<p>Per tenere buono il Creditore, ogni tanto doveva portare a casa qualche firma vera. Le sceglieva con attenzione: solo villaggi che volevano davvero aderire, famiglie che avevano bisogno della protezione di Simpoh e la chiedevano senza ricatti. Erano firme oneste, eppure finivano anche nel registro nero, e Kaean non ha mai saputo che cosa il Creditore ne facesse. <mark>In ogni caso il suo debito restava in rosso, e ogni anno cresceva.</mark></p>
+<p>Col tempo smise di scrivere dettagli sulle famiglie e riempì i rapporti di problemi inventati. Ma i primi censimenti, quelli scritti quando non sapeva ancora per chi lavorava, contenevano nomi e indirizzi veri. Quelle copie erano già state consegnate e non poteva più riprenderle. <b>Morgana</b> le conservava e continuava a chiedere notizie su chi aveva rifiutato l'adesione. Quando lei diventò Maestra del Protocollo, il suo potere crebbe, e con lui la paura di Kaean di essere convocato.</p>
+<p>Ad Aurena le convocazioni arrivavano dal <b>Campanile del Protocollo</b>, una torre stretta che si alzava sopra gli uffici della Congregazione. Ogni funzionario aveva una sua sequenza di rintocchi, e quando suonava la tua dovevi presentarti subito, qualunque cosa stessi facendo. <mark>Quella di Kaean era: tre colpi lunghi e due brevi.</mark> Per anni la sentì nei sogni, subito prima di ritrovarsi davanti alla scrivania nera.</p>
+<p>In quel periodo cominciò a farsi chiamare Kaean. "Kaeraldo" gli sembrava il nome di un modulo da compilare in tre copie. L'anagrafe rifiutò il cambio di nome, e per questo il nome nuovo gli piacque ancora di più. Il Creditore, ovviamente, continuò a chiamarlo Kaeraldo.</p>
+<p>Con il primo stipendio decente pagò l'anticipo per una carrozza nera laccata, indebitandosi per diversi stipendi futuri. Aveva già un debito molto più grande, e almeno questo aveva le ruote. A trainarla c'era <b>Notturna</b>, una cavalla nera, velocissima e con un pessimo carattere. La carrozza aveva sedili di velluto, finestrini scuri e uno scomparto segreto sotto il posto del cocchiere. Kaean imparò a riconoscere ogni suo scricchiolio, e <b>Notturna</b> imparò quali locande avevano le mele migliori. Nessuno dei due pensava di essere stato addestrato dall'altro. Se qualcuno gli diceva di andare più piano, Kaean rispondeva che alla cavalla non sarebbe piaciuto. La cavalla, saggiamente, non commentava.</p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>V. L'Accordo</h2>
+<p><span class="dc">L</span>a sua prima missione importante fu a Pietrafonda, un villaggio di confine sulla strada del nord. Doveva convincere il consiglio del villaggio ad aderire a Simpoh. Il primo giorno <b>Notturna</b> si spaventò per un cane, ruppe le cinghie e scappò attraverso il mercato. Kaean la inseguì per mezzo paese, perdendo il cappello e buona parte della sua dignità. La ritrovò ferma vicino alla bancarella di due venditori del nord: un halfling di nome <b>Ferron</b> e un giovane aasimar con gli occhi d'argento, che le accarezzava il collo mentre lei, incredibilmente, gli mangiava una mela dalla mano. Si chiamava <b>Lucerys</b>. Era un giovane membro della Congregazione dell'Adattabilità di Rovin, alla sua prima missione importante: convincere Pietrafonda che la protezione di Rovin avrebbe tenuto lontane le bestie e le malattie.</p>
+<p><b>Lucerys</b> era tutto quello che Kaean non era: paziente, prudente, onesto anche quando non conveniva, e orgoglioso in un modo silenzioso che Kaean trovò subito irritante. Fu anche la prima persona, dopo molti anni, su cui Kaean non volle usare il potere del Creditore. Ci pensò una volta sola, per abitudine, e la firma sul polso gli sembrò improvvisamente sporca. Di giorno si facevano concorrenza davanti al consiglio. La sera <b>Lucerys</b> aiutava i pastori con le greggi, e Kaean distribuiva di nascosto il fieno che aveva appena comprato. Intanto <b>Notturna</b> aveva deciso di obbedire solo a uno dei due, e non a quello che le dava da mangiare.</p>
+<p>Una sera di pioggia si ritrovarono sotto la stessa tettoia. <b>Lucerys</b> confessò di aver regalato a una famiglia di profughi un giovane cane da caccia che la sua Congregazione gli aveva affidato da addestrare. La famiglia doveva attraversare le terre dei lupi. «Con lui avranno una possibilità. Io me la caverò», disse. Kaean rise fino alle lacrime, poi gli offrì da bere e gli pagò la cena. Quando <b>Lucerys</b> ammise di non sapere come spiegarlo ai suoi superiori, Kaean gli scrisse il rapporto: "animale affidato in addestramento sul campo presso una famiglia del luogo". <b>Lucerys</b> lo rilesse tre volte cercando la bugia, e non la trovò. Lo firmò con la faccia di chi ha appena mangiato qualcosa di andato a male.</p>
+<p><mark>Quella notte nacque il loro Accordo: l'unico contratto della vita di Kaean scritto senza inchiostro.</mark> <b>Lucerys</b> non avrebbe mai mentito, e Kaean non glielo chiese mai. Scriveva lui i rapporti di entrambi, usando frasi vere ma ingannevoli, e <b>Lucerys</b> accettava di non correggerle. Nei villaggi che non volevano aderire a nessuno, i rapporti di Kaean dicevano che un inviato di Rovin aveva ostacolato il lavoro di Simpoh. Quelli di <b>Lucerys</b> dicevano che c'erano problemi locali che Simpoh non era riuscito a sfruttare. Nessuno veniva costretto ad aderire, nessuno soffriva, e intanto il nome di <b>Lucerys</b> cominciava a essere rispettato nella sua Congregazione. Lui ne era felice, e se ne vergognava esattamente nella stessa misura.</p>
+<p>Negli anni si rividero ogni volta che le missioni lo permettevano. Tra un incontro e l'altro si scrivevano lettere che sembravano parlare di strade, ma in realtà parlavano delle locande dove avrebbero cenato insieme. <b>Lucerys</b> era convinto che Kaean fosse una brava persona. «Ritira subito quello che hai detto», rispondeva Kaean, «ho una reputazione da difendere». Quando <b>Lucerys</b> dimenticava di mangiare per vegliare un animale ferito, gli compariva accanto un piatto caldo. Kaean diceva di aver sbagliato ordinazione, e lo diceva così spesso che la scusa non reggeva più.</p>
+<p><mark>Del Creditore non gli parlò mai.</mark> Una volta <b>Lucerys</b> vide la lettera sul suo polso, mentre Kaean si tirava su le maniche per aiutarlo con un puledro, e gli chiese che cosa fosse. «Un notaio troppo zelante», rispose lui, riabbottonando il polsino. <b>Lucerys</b> non insistette. Ma da allora lo guarda come guarda gli animali feriti che non si lasciano avvicinare: con pazienza, aspettando che siano loro a fare il primo passo.</p>
+<p>«Se ti cacciano», gli disse una volta Kaean, «dovrò trovarmi un altro avversario, e magari quello vorrà lavorare sul serio. E poi <b>Notturna</b> non me lo perdonerebbe mai».</p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>VI. La Collera</h2>
+<p><span class="dc">P</span>oi arrivò un problema che nessuno dei due poteva risolvere con un rapporto ben scritto.</p>
+<p>Kaean tornò a Valdoro, un villaggio che aveva visitato qualche mese prima. <b>Il mugnaio</b>, un uomo gentile che aveva rifiutato l'adesione offrendogli del pane caldo, era stato chiuso in una stalla e legato, perché non ferisse nessuno. Era stato colpito dalla Collera e si dibatteva in una rabbia senza fine. Sua figlia <b>Mirta</b> era una bambina umana di circa dieci anni, magra e piena di lentiggini, con una treccia castana sempre spettinata e le mani e il grembiule sempre bianchi di farina. Portava lo scialle del padre, troppo grande per lei, e gli passava l'acqua tra le sbarre con una tazza di legno scheggiata. Gli parlava piano anche quando lui non la riconosceva. Con gli adulti era seria come un piccolo notaio, ma quando era sola canticchiava le canzoni che le aveva insegnato il padre.</p>
+<p>Kaean lasciò dei soldi alla famiglia e trovò qualcuno che mandasse avanti il mulino. A <b>Mirta</b> disse che lo faceva solo per proteggere un suo credito, anche se il mugnaio non gli doveva niente. Quella notte, per la prima volta, fu lui a cercare la scrivania nera. Chiese al Creditore se poteva aiutare il mugnaio, a qualunque prezzo. Il Creditore sfogliò il registro con calma, poi lo chiuse: «<mark>La malattia non è un contratto, Kaeraldo. Non tratto merce che non so a chi appartenga</mark>». Kaean non ha mai capito se fosse una risposta sincera o un modo elegante per non rispondere. Quando <b>Mirta</b> gli chiese se sarebbe tornato, lui le promise che ci avrebbe provato. Poi rimase sulla porta molto più del necessario.</p>
+<p>Quella stessa notte riaprì i suoi vecchi rapporti. Tra le comunità colpite dalla Collera di cui aveva notizia, ne riconobbe alcune che avevano rifiutato l'adesione. Non era una prova di niente: la Collera era contagiosa, nessuno sapeva da dove venisse, e già si sapeva che colpiva soprattutto le comunità indipendenti. Lui poi aveva solo elenchi incompleti e voci di seconda mano. Forse aveva notato quei nomi solo perché li conosceva.</p>
+<p>Tornato ad Aurena, scoprì che alcune copie dei suoi registri non restavano nell'archivio. Venivano mandate più in alto, chiuse con un sigillo che non aveva mai visto. <mark>La prima cosa che fece fu confrontarlo con la firma sul suo polso: non si somigliavano per niente.</mark> Non era il segno del Creditore. Poteva essere una normale procedura, un ordine dei superiori di Simpoh o qualcuno che Kaean non conosceva affatto. Volle saperlo comunque. Quando chiese a <b>Morgana</b> chi ricevesse quei documenti, lei gli versò del vino e gli chiese con chi altro ne avesse parlato. Poi aggiunse che <b>Elena</b> aveva una voce splendida, e che sarebbe stato un peccato rovinarle la carriera per colpa di un parente imprudente. <mark>E con la stessa dolcezza disse che una ragazza così talentuosa sarebbe stata perfetta per l'Accordo Privato.</mark></p>
+<p>Kaean conosceva abbastanza bene la gentilezza di <b>Morgana</b> da capire che era una minaccia. Posò il bicchiere senza bere e riuscì perfino a ringraziarla per l'interessamento. Gli tremava una mano, per fortuna sotto il tavolo. Sotto il polsino, la firma era diventata tiepida, come se qualcuno l'avesse appena ripassata con la penna.</p>
+<p>Della crudeltà di <b>Morgana</b> aveva le prove. Su chi leggesse quei registri, e su un loro possibile legame con la Collera, aveva solo domande. Ma i nomi raccolti all'inizio, quando ancora non sapeva per chi lavorava, ormai erano in mani che non poteva raggiungere, e nessun rapporto falso li avrebbe riportati indietro. Per proteggere quelle persone non bastava più cambiare l'ultimo paragrafo di un rapporto. E per proteggere <b>Elena</b> non bastava più restare.</p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>VII. La fuga, se così si può chiamare</h2>
+<p><span class="dc">N</span>on sfidò <b>Morgana</b>, non diede fuoco agli archivi e non fece discorsi. Per allontanarsi da lei e scoprire cosa gli stessero nascondendo, compilò una richiesta di "missione prolungata di osservazione sul campo" e partì prima che qualcuno la leggesse. Non aveva mai giurato fedeltà a Simpoh: aveva solo firmato dei moduli, che purtroppo sono quasi altrettanto difficili da cancellare. Quanto all'altro contratto, sapeva bene che nessuna missione sarebbe stata abbastanza lunga da sfuggirgli.</p>
+<p>La prima notte di viaggio, in una locanda qualunque, sognò di nuovo la scrivania nera. Il Creditore non lo rimproverò. Gli mostrò solo una pagina del registro, con una colonna di numeri che scendeva fino in fondo al foglio, e sotto una parola sottolineata due volte: <em>saldo</em>. «<mark>Il nostro accordo vale ovunque, Kaeraldo</mark>», disse. «Vada pure dove vuole. Io aspetterò. Sono molto paziente». Kaean si svegliò con il polso ancora caldo, e la lettera era cambiata, e con la certezza che prima o poi qualcuno sarebbe venuto a riscuotere.</p>
+<p>Si era portato via due registri. <mark>Uno lo perse in una locanda lungo la strada, dopo una notte passata a bere per dimenticare Valdoro</mark>: il tipo di soluzione che rende il mattino dopo molto peggiore. Quel registro conteneva nomi, percorsi, date e appunti su chi aveva rifiutato l'adesione, mescolati alle sue false imprese. Kaean non sa se gliel'abbiano rubato, se qualcuno l'abbia scambiato per un libro dei conti o se sia finito sotto un letto. Sa solo che deve ritrovarlo. L'altro registro lo nascose nello scomparto segreto della carrozza, e da allora non ha avuto il coraggio di rileggerlo. Ha paura per le persone che ci sono scritte e, in secondo luogo, per la qualità di alcune sue metafore.</p>
+<p>Prima di lasciare Aurena era passato sotto le finestre di <b>Elena</b>, che stava provando una canzone nuova. Rimase ad ascoltare fino all'ultima nota, poi se ne andò senza bussare. Le scrisse solo durante il viaggio: stava bene, aveva bisogno di allontanarsi, avrebbe trovato un modo per ricevere le sue lettere. In fondo aggiunse una frase che lei non avrebbe capito: «<mark>Se qualcuno ti offre un privilegio riservato a pochi, rifiuta. Fidati di me, almeno su questo</mark>».</p>
+<p>Ai genitori non scrisse niente del suo lavoro né dei suoi sospetti. Erano rimasti persone affettuose e devote a Simpoh, convinte che con una spiegazione sincera si risolva qualsiasi malinteso. Kaean non sapeva come dirgli che era proprio quella loro fiducia a spaventarlo. Né come spiegargli che il figlio con gli occhi sbagliati aveva venduto un pezzo di sé pur di smettere di sentirsi una comparsa.</p>
+<p>Durante il viaggio scrisse invece a <b>Lucerys</b>: «Vado a Ivacuus. Non chiedere». Aggiunse però il nome di una locanda, rovinando del tutto il senso del messaggio. In un poscritto, scritto con finta distrazione, faceva notare che a Ivacuus giravano più notizie sulla Collera che in qualunque archivio, nel caso al nord interessasse.</p>
+<p>Il suono delle campane delle convocazioni gli era sempre stato fastidioso, o almeno così diceva. Durante il viaggio scoprì che bastavano le campane di un villaggio sconosciuto, appena il ritmo ricordava i suoi tre colpi lunghi e due brevi, per fargli cercare con lo sguardo l'uscita. Era paura. E averlo capito non la rendeva più sopportabile.</p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>VIII. I tre giorni di Ivacuus</h2>
+<p><span class="dc">A</span>rrivò a Ivacuus con l'idea di restarci tre giorni. Nessun drago comandava sulla città, che accoglieva ogni tipo di creatura, e per una volta il suo aspetto non sembrava richiedere spiegazioni. Lì un ordine di <b>Morgana</b> non aveva lo stesso peso che ad Aurena. Questo non voleva dire essere introvabile, ma poter chiudere la porta di casa senza sentirsi già in ritardo per qualcosa. Per il Creditore, purtroppo, le porte non sono mai state un ostacolo.</p>
+<p><b>Lucerys</b>, ovviamente, chiese. Qualche mese dopo arrivò in città al posto di suo padre adottivo <b>Jeris</b>, ufficialmente per scambiare informazioni sulla Collera. Kaean non gli ha mai chiesto quanto avesse insistito per partire, e <b>Lucerys</b> non gliel'ha mai detto.</p>
+<p><b>Lucerys</b> si sistemò vicino alle stalle pubbliche, e in poche settimane mezza città gli portava cavalli impossibili, muli testardi e cani che nessuno riusciva a tenere. Kaean giurò che non avrebbe mai messo piede in una stalla. Poi una notte un temporale spaventò un intero recinto di cavalli, e lui era lì: ne aveva già legati metà e aveva coperto il fieno con il telo della sua carrozza. «È per la muffa», spiegò. «Non ho intenzione di sentirti parlare di muffa per i prossimi vent'anni». <b>Lucerys</b> non disse niente su quei "vent'anni". Da allora <b>Notturna</b> passa più tempo nel recinto di <b>Lucerys</b> che nel cortile di Kaean. Lui sostiene che sia colpa delle mele, ma le mele escono dalle sue tasche.</p>
+<p>Kaean raccontò a <b>Lucerys</b> della stalla di Valdoro, dei registri e del sigillo. Non gli parlò della scrivania nera. <b>Lucerys</b> non aveva risposte, ma portava notizie dal nord, dove la Collera arrivava ancora raramente, e gliele diede senza chiedere niente in cambio. Era la prima volta, dopo tanti anni, che qualcuno gli dava qualcosa senza segnarlo da nessuna parte. «Non fare quella faccia», gli disse Kaean. «Non ti ho appena confessato di essere diventato più buono. Ti ho confessato che non so più chi stia leggendo i miei rapporti». <b>Lucerys</b> gli versò da bere senza commentare nessuna delle due cose.</p>
+<p>Fu <b>Lucerys</b> a organizzare il passaggio della posta, insieme alle sue lettere per <b>Jeris</b> e per la sciamana <b>Veria</b>, senza dare alla famiglia di Kaean l'indirizzo di casa sua. <b>Elena</b> scrive ogni mese. Nelle prime lettere raccontava i successi del coro e chiedeva quando sarebbe tornato. Le lettere più recenti sono ancora chiuse in un cassetto. Ogni tanto Kaean risponde a quelle che ha letto, con poche righe, giusto per farle sapere che è vivo. Dalle lettere aperte ha anche notizie dei genitori. Le conserva tutte, anche quelle che non ha ancora il coraggio di aprire. Ha paura di trovarci scritto che qualcuno le ha offerto un privilegio.</p>
+<p>Nel frattempo, una vicina di casa, l'anziana halfling che tutti chiamano <b>Nonna Pruna</b>, gli aveva lasciato davanti alla porta un basilico quasi morto, con un biglietto: «Mi hanno detto che hai il pollice verde». Kaean non conosceva ancora nessuno in città, quindi nessuno poteva averglielo detto. Minacciò il basilico, lo rinvasò e lo salvò. Poi arrivarono altri vasi, una rosa, un limone e così tanti problemi di giardinaggio che diventò difficile continuare a dire di essere solo di passaggio.</p>
+<p>Oggi tutto il quartiere gli porta le piante morenti. Lui protesta, controlla le radici e trova posto per tutte. <mark>È l'unica cosa che fa senza usare il potere del Creditore</mark>, e ci tiene più di quanto ammetterebbe mai: ogni pianta che rinasce sul suo davanzale è merito suo, e di nessun altro. Nessun registro ne terrà mai conto. <b>Nonna Pruna</b> dice a tutti che è un uomo buono, e lo dice ad alta voce, preferibilmente davanti alle stalle. «Abbassa la voce, Nonna», la prega lui, «ho una reputazione». «Lo so, caro», risponde lei, «ci sto lavorando». Vicino al recinto, <b>Lucerys</b> le dà ragione senza smettere di spazzolare <b>Notturna</b>. Ogni settimana Kaean porta a <b>Nonna Pruna</b> i pomodori migliori, scelti uno per uno, e giura che sono quelli di scarto.</p>
+<p>Sono passati quasi undici mesi. Ci sono piante su tutte le finestre, una carrozza lucidata con amore, una cavalla che ormai obbedisce a qualcun altro e una panca vicino al recinto dove nessuno osa sedersi. La tranquillità di Ivacuus rende i pomeriggi più lunghi e gli fa perdere il conto delle settimane. Il mondo è fatto di vino decente, pane caldo e di una persona capace di parlare per un'ora del carattere di un cavallo. Kaean trova assurdo che qualcuno voglia renderlo migliore dandogli ordini, e vorrebbe restare. Ma ogni tanto ripensa a <b>Mirta</b>, e alla risposta che le deve.</p>
+<p>E ogni tanto, la mattina, trova sul tavolo della cucina un foglio piegato in due, scritto con un inchiostro che si muove ancora un po'. Non c'è nessuna minaccia. <mark>C'è solo un numero, ogni volta un po' più alto del precedente.</mark></p>
+<p>Anche la lettera sul polso non sta mai ferma a lungo. Certe volte resta la stessa per giorni, altre cambia tre volte nella stessa giornata, senza nessun motivo apparente. <mark>Kaean ne tiene un registro: data, ora, lettera e che cosa stava succedendo in quel momento.</mark> È il suo modo di trattare il patto come una pratica da sbrigare. Finora non ha trovato nessuno schema, e questo lo irrita più di qualsiasi minaccia.</p>
+<p>Vuole ritrovare il registro perduto, capire che fine abbiano fatto i nomi che ha consegnato e impedire a <b>Morgana</b> di ricattare le persone. Lui la chiama "una divergenza di opinioni professionali". Vuole tenere <b>Elena</b> lontana dall'Accordo Privato, a qualunque costo. E prima o poi dovrà trovare un modo per chiudere il conto con il Creditore, senza pagarlo con qualcosa, o qualcuno, a cui non è disposto a rinunciare. Per farlo dovrà ripartire, cercare informazioni e accettare dei compagni di viaggio. Dirà che gli servono come copertura, come braccia in più e come persone a cui lasciare i lavori peggiori. Intanto terrà per loro un posto in carrozza, imparerà come ognuno preferisce il vino e si accorgerà subito se qualcuno manca. Correrà i loro rischi chiamandoli "imprevisti personali". Ma accetterà molto meno volentieri che gli altri facciano lo stesso per lui.</p>
+<p>A chi glielo chiede, dice di essere in congedo. Per la Congregazione, a quanto ne sa, è ancora in missione. Questa differenza lo preoccupa soprattutto quando suonano le campane.</p>
+    </div>
+    <div class="panel bgch span2">
+      <h2>Risposte alle domande</h2>
+<h3>1. Per quale abilità particolare è conosciuto a Ivacuus?</h3>
+<p>Sa salvare piante che tutti considerano morte. Il quartiere gli porta vasi malandati, ortaggi appassiti e alberelli malati. Kaean li minaccia ad alta voce, poi li cura con pazienza e competenza, e dice sempre che il merito è delle minacce. La sua fama è nata dall'aiuto dato ai vicini, a cominciare dal basilico di <b>Nonna Pruna</b>. Non c'è niente di magico, ed è proprio per questo che ci tiene tanto: è l'unico talento che non deve a nessuno.</p>
+<h3>2. Qual è il suo obiettivo a lungo termine?</h3>
+<p>Ritrovare il registro perduto, scoprire chi riceveva le copie dei suoi rapporti e proteggere le persone schedate nei primi censimenti. Vuole impedire a <b>Morgana</b> di ricattare le comunità, capire fin dove arrivano i suoi contatti e tenere <b>Elena</b> lontana dall'Accordo Privato. Gli ordini crudeli non li ha mai eseguiti: li ha coperti con rapporti falsi e aiuti segreti. Il legame tra i registri e la Collera resta solo un sospetto, senza prove. Vuole anche aiutare Valdoro e <b>Mirta</b>, e prima o poi chiudere il suo debito con il Creditore senza sacrificare nessuno a cui vuole bene.</p>
+<h3>3. Ha mantenuto i contatti con qualcuno di prima della partenza? Con chi?</h3>
+<p>Sì, con <b>Lucerys</b>, membro della Congregazione dell'Adattabilità di Rovin, conosciuto durante le missioni. Kaean lo ha avvisato prima di arrivare a Ivacuus, e <b>Lucerys</b> lo ha raggiunto per raccogliere notizie sulla Collera. È lui a fargli arrivare le lettere di <b>Elena</b>, che scrive ogni mese. Kaean risponde ogni tanto, senza raccontarle i suoi sospetti e senza darle il suo indirizzo. Dalle lettere aperte ha notizie anche dei genitori, mentre le più recenti sono ancora chiuse. Il Creditore, purtroppo, non ha bisogno di un indirizzo per farsi sentire.</p>
+<h3>4. Che rapporto ha con la famiglia?</h3>
+<p>Vuole bene ai genitori, ma la loro devozione alla Congregazione e la difficoltà di parlarsi li hanno allontanati. Non pensa che siano cattivi, ma si porta ancora dietro la sensazione di essere stato accettato solo quando nascondeva gli occhi. Adora <b>Elena</b>, con un misto di affetto, invidia e gratitudine. La tiene lontana perché ha paura di metterla in pericolo, e perché si vergogna. Sa però che anche il suo silenzio la può ferire. Nessuno in famiglia sa del patto.</p>
+<h3>5. Che cosa lo spaventa?</h3>
+<p>Ha paura che i nomi veri dei primi censimenti mettano in pericolo persone innocenti, e che <b>Morgana</b> scopra gli ordini disobbediti e gli aiuti segreti. Ha paura per la sua famiglia, per <b>Lucerys</b> e per chiunque si fidi di lui. Sa che <b>Morgana</b> è disposta a colpire le persone care per ottenere obbedienza: ha già minacciato la carriera di <b>Elena</b> e le ha fatto intravedere l'Accordo Privato. Teme il giorno in cui il Creditore verrà a riscuotere, e soprattutto teme di scoprire che cosa accetterà come pagamento. Il suono delle campane, soprattutto se ricorda i suoi tre colpi lunghi e due brevi, lo mette in allarme in modo esagerato, anche quando sa benissimo che nessuno lo sta chiamando.</p>
+<h3>6. Com'è la sua città natale?</h3>
+<p>Aurena è una città di teatri, cori e cerimonie, legata alla Congregazione dell'Ispirazione di Simpoh. Chi ha talento sul palco ottiene prestigio, mentre chi lavora dietro le quinte permette allo spettacolo di andare avanti. Sopra gli uffici della Congregazione si alza il Campanile del Protocollo, che convoca i funzionari con i loro rintocchi personali. Kaean ricorda la bellezza della città, ma anche il peso delle aspettative e l'abitudine di giudicare tutti dal ruolo che sanno recitare. Sa anche che, in alcune stanze che non compaiono sulle mappe, si firmano contratti di cui nessuno parla.</p>
+<h3>7. Che cosa lo spinge a viaggiare con altri avventurieri?</h3>
+<p>Per ritrovare il registro e verificare i suoi sospetti deve lasciare Ivacuus, raccogliere informazioni e andare in posti dove preferirebbe non essere riconosciuto. Al gruppo offre la conoscenza delle strade, la capacità di trattare con chiunque, una carrozza, una magia di cui preferisce non spiegare l'origine e molta più attenzione per gli altri di quanta ammetta. Aiuta i compagni nei loro obiettivi perché si affeziona alle persone e non riesce a lasciarle nei guai. Presenta il gruppo come un accordo conveniente per tutti: ammettere di avere bisogno di qualcuno gli costa molto più che mentire a un superiore.</p>
+<h3>8. A cosa dà valore? Qual è il suo codice morale?</h3>
+<p>Dà valore alla libertà di scelta, agli affetti e ai piccoli piaceri di tutti i giorni. Rispetta chi pensa con la propria testa e chi aiuta senza chiedere devozione, né firme. Davanti a <b>Morgana</b> fingeva di essere un esecutore soddisfatto, mentre di nascosto impediva i danni, aiutava le vittime e si prendeva il merito di disastri mai causati. Protegge chi si fida di lui e prende sul serio le promesse personali, forse perché sa fin troppo bene quanto può costare una firma. Usa il potere del Creditore contro tutto ciò che il Creditore rappresenta, e non è mai sicuro di stare vincendo. Il suo difetto è credere di poter affrontare ogni rischio da solo, con una buona bugia e senza dare spiegazioni.</p>
+<h3>9. Che cosa pensa delle Congregazioni e di chi resta indipendente?</h3>
+<p>Ufficialmente appartiene ancora alla Congregazione di Simpoh, tramite l'Ufficio delle Adesioni. Non ha mai lasciato ufficialmente il suo incarico, quindi forse risulta ancora in missione. Il suo potere però non è mai venuto da Simpoh, ma da un contratto firmato in una stanza segreta dell'Ufficio. Sa per esperienza che <b>Morgana</b> è crudele e usa il suo ruolo per ricattare gli indipendenti, ma non sa quanto Simpoh conosca dell'Accordo Privato, né se lo approvi o lo tolleri. Non crede che il drago sia malvagio e non condanna tutti i membri della Congregazione. Pensa che gli indipendenti abbiano il diritto di restare liberi e di ricevere aiuto senza firmare niente: una libertà che lui ha perso a diciotto anni. L'affetto per la sua famiglia e l'amicizia con <b>Lucerys</b> gli impediscono di confondere le persone con le istituzioni.</p>
     </div>
   </section>
 </main>
@@ -690,7 +834,7 @@ const OLD_ITEMS = ['Armatura di cuoio','Focus arcano (sfera)','Libro (sapere occ
 const uid = () => Math.random().toString(36).slice(2, 9);
 const fresh = () => ({
   ver:VER, aoa:false, luck:0, hp:{cur:BASE_HP, temp:0}, slots:0, cunning:false, rebuke:false, hd:HD_MAX,
-  death:{s:0,f:0}, conds:[], conc:null, hexOn:false, insp:0, debt:0,
+  death:{s:0,f:0}, conds:[], conc:null, hexOn:false, insp:0, debt:0, mark:[],
   items:INIT_ITEMS.map(i => ({id:uid(), ...i})), coins:{mr:0,ma:3,me:0,mo:9,mp:0},
   notes:'', log:[], updatedAt:0
 });
@@ -717,8 +861,8 @@ function load(){
   return fresh();
 }
 let S = load();
-const TABS = {combat:['combat'], spells:['spells'], sheet:['sheet','feat','inv'], diary:['notes','guide','story']};
-const SUB_LBL = {sheet:'Prove', feat:'Privilegi', inv:'Zaino', notes:'Note', guide:'Guida', story:'Storia'};
+const TABS = {combat:['combat'], spells:['spells'], sheet:['sheet','feat','inv'], diary:['notes','pact','guide','story']};
+const SUB_LBL = {sheet:'Prove', feat:'Privilegi', inv:'Zaino', notes:'Note', pact:'Patto', guide:'Guida', story:'Storia'};
 const POTION = 'Pozione di guarigione';
 let tab = 'combat', sub = {sheet:'sheet', diary:'notes'};
 let rollMode = 'norm', useInsp = false, useLuck = false, openSpell = null;
@@ -1037,6 +1181,25 @@ function renderInv(){
 }
 function renderNotes(){
   const n = document.getElementById('notes'); if (document.activeElement !== n) n.value = S.notes || '';
+}
+const MONTHS = ['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic'];
+const when = t => { const d = new Date(t); return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}, ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`; };
+function span(ms){
+  const m = Math.round(Math.abs(ms) / 60000), h = Math.round(m / 60), d = Math.round(h / 24);
+  return m < 60 ? `${m} min` : h < 48 ? `${h} ${h === 1 ? 'ora' : 'ore'}` : `${d} giorni`;
+}
+const localNow = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
+let markDel = null, markTimer = null;
+function renderPact(){
+  const ms = (S.mark || []).slice().sort((a, b) => b.t - a.t), c = ms[0];
+  document.getElementById('markl').textContent = c ? c.l : '?';
+  document.getElementById('markwhen').textContent = c ? `Dal ${when(c.t)}` : 'Nessuna lettera annotata';
+  document.getElementById('markage').textContent = c ? `da ${span(Date.now() - c.t)}` : 'Annota la prima qui sotto';
+  const tIn = document.getElementById('mark-t'); if (!tIn.value) tIn.value = localNow();
+  document.getElementById('markcount').textContent = ms.length ? `${ms.length} ${ms.length === 1 ? 'cambio' : 'cambi'}` : '';
+  document.getElementById('marklist').innerHTML = ms.map((m, i) => `<div class="mrow"><span class="markl sm">${esc(m.l)}</span>
+    <div class="rl"><b>${when(m.t)}</b><div class="muted">${i < ms.length - 1 ? `dopo ${span(m.t - ms[i + 1].t)}` : 'prima annotazione'}${m.n ? ', ' + esc(m.n) : ''}</div></div>
+    <button class="btn sm${markDel === m.id ? ' gold' : ''}" data-a="markdel" data-id="${m.id}" aria-label="Elimina questa annotazione">${markDel === m.id ? 'Conferma' : '×'}</button></div>`).join('') || '<p class="muted">Ancora vuoto. Ogni volta che la lettera cambia, annotala con la data e cosa stava succedendo: magari prima o poi salta fuori uno schema.</p>';
   document.getElementById('debtbox').innerHTML = `<h2>Il debito col Creditore</h2>
     <div class="resline"><div class="rl"><span class="debt" id="debt">${S.debt}</span><div class="muted">La cifra sull'ultimo foglio trovato in cucina</div></div>
     <div class="stepper"><button class="btn sm" data-a="debt" data-d="-1" aria-label="Togli uno">−</button><button class="btn sm" data-a="debt" data-d="1" aria-label="Aggiungi uno">+</button><button class="btn sm" data-a="debt" data-d="10">+10</button></div></div>
@@ -1114,7 +1277,7 @@ function renderSheetUI(isNew){
   if (isNew){ el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; el.focus({preventScroll:true}); }
 }
 function render(){
-  renderHeader(); renderNav(); renderCombat(); renderSheet(); renderSpells(); renderFeat(); renderInv(); renderNotes(); renderSheetUI(false); renderResult();
+  renderHeader(); renderNav(); renderCombat(); renderSheet(); renderSpells(); renderFeat(); renderInv(); renderNotes(); renderPact(); renderSheetUI(false); renderResult();
 }
 
 // Fullscreen
@@ -1227,6 +1390,12 @@ document.addEventListener('click', e => {
     case 'cond': { const c = t.dataset.c; S.conds = S.conds.includes(c) ? S.conds.filter(x => x !== c) : [...S.conds, c]; commit(); break; }
     case 'iq': { const it = S.items.find(i => i.id === t.dataset.id); it.q += +t.dataset.d; if (it.q <= 0) S.items = S.items.filter(i => i !== it); commit(); break; }
     case 'debt': S.debt = Math.max(0, S.debt + +t.dataset.d); commit(); break;
+    case 'markdel': {
+      const id = t.dataset.id;
+      if (markDel === id){ markDel = null; clearTimeout(markTimer); S.mark = S.mark.filter(m => m.id !== id); commit(); }
+      else { markDel = id; clearTimeout(markTimer); markTimer = setTimeout(() => { markDel = null; render(); }, 3000); render(); }
+      break;
+    }
     case 'short': S.slots = 0; S.aoa = false; closeSheet(); show('Riposo breve', '✦', 'slot recuperati • puoi cambiare trucchetti e rituali del Libro • rilancia Vigore Immondo'); commit(); break;
     case 'long':
       S.slots = 0; S.cunning = false; S.rebuke = false; S.hp.cur = BASE_HP; S.hp.temp = 0; S.hd = HD_MAX; S.death = {s:0,f:0}; S.conc = null; S.hexOn = false; S.aoa = false; S.luck = 0; useLuck = false;
@@ -1236,6 +1405,13 @@ document.addEventListener('click', e => {
 document.addEventListener('submit', e => {
   e.preventDefault();
   if (e.target.id === 'exprform'){ const v = exprVal.trim(), r = rollExpr(v); if (r){ show(v, r.total, r.text); commit(); } return; }
+  if (e.target.id === 'markform'){
+    const l = document.getElementById('mark-l').value.trim(); if (!l) return;
+    const tv = document.getElementById('mark-t').value, t = tv ? new Date(tv).getTime() : Date.now();
+    S.mark = [...(S.mark || []), {id:uid(), l:l.toUpperCase(), t:isNaN(t) ? Date.now() : t, n:document.getElementById('mark-n').value.trim()}];
+    e.target.reset(); document.getElementById('mark-t').value = localNow();
+    show('Il segno cambia', l.toUpperCase(), 'annotato nel registro'); commit(); return;
+  }
   if (e.target.id === 'addform'){
     const n = document.getElementById('add-name').value.trim(); if (!n) return;
     S.items.push({id:uid(), n, q:Math.max(1, parseInt(document.getElementById('add-qty').value, 10) || 1), t:document.getElementById('add-note').value.trim()});
