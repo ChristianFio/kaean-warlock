@@ -1,0 +1,59 @@
+/* Kaean: the Creditor's ledger. Oxblood ink, brass fittings, ruled paper with a red double margin,
+   and the name signed by hand next to the seal that shows the current letter on his wrist. */
+:root{
+  --cloth:#150b0c; --cloth-rgb:21,11,12; --nav-1:#21110f; --nav-2:#0c0607; --bone:#efe3cb;
+  --paper:#f2e8d2; --ink:#1f1512; --ink-2:#5b4337; --rule:#b49a72;
+  --wax:#7d1820; --wax-hi:#ad2a30; --gilt:#a8834a; --gilt-hi:#dfc07e;
+  --ivy:#3f5d3a; --frost:#3d6585; --ledger:rgba(70,104,130,.13); --margin:rgba(173,42,48,.55);
+  --deco:"Pinyon Script",cursive;
+  --display:"Cormorant SC","Cormorant Garamond",Georgia,serif;
+  --body:"Alegreya",Georgia,"Times New Roman",serif;
+}
+body{background-image:radial-gradient(ellipse 120% 300px at 50% 0,rgba(125,24,32,.42),transparent 72%)}
+
+/* The signature */
+.brand{padding-bottom:16px}
+.brand h1{display:inline-block;padding:0 26px 2px 2px;font-family:var(--deco);font-weight:400;font-size:3.1rem;line-height:1.05;letter-spacing:0;color:#f4e6c6;text-shadow:0 0 18px rgba(173,42,48,.45),0 2px 0 #000;
+  background:linear-gradient(90deg,rgba(223,192,126,.85),rgba(223,192,126,0)) left bottom/100% 1px no-repeat}
+.brand p{margin-top:6px;font-size:.92rem;color:rgba(239,227,203,.72)}
+.brand .mono{background-image:var(--img-seal);color:#f8e9cc;text-shadow:0 1px 0 rgba(0,0,0,.6);font-size:2rem}
+
+/* Chrome in brass and lacquer */
+.vbar{border-top-color:rgba(168,131,74,.35);border-bottom-color:rgba(168,131,74,.6)}
+.hp,.stat{border-color:rgba(168,131,74,.45)}
+nav.tabs{border-top-color:rgba(168,131,74,.6)}
+nav.tabs button{font-family:var(--display);font-weight:600;font-size:.86rem;letter-spacing:.02em}
+.tag.ivy{background:#5b1a1f}
+
+/* Ledger paper: faint ruling and a red double margin on every page of the register */
+main,.panel,.sheet,.result{background-image:var(--img-noise),repeating-linear-gradient(180deg,transparent 0 31px,var(--ledger) 31px 32px)}
+.panel::after{content:"";position:absolute;top:0;bottom:0;left:7px;width:4px;border-left:1px solid var(--margin);border-right:1px solid var(--margin);pointer-events:none}
+.panel{padding-left:calc(var(--gut) + 8px)}
+.spell.is-open{margin-left:calc(-1 * var(--gut) - 8px);padding-left:calc(var(--gut) + 8px)}
+.panel h2,.sheet h2{font-family:var(--display);font-weight:600;font-size:1.22rem;letter-spacing:.02em;text-transform:none;border-bottom:1px solid rgba(125,24,32,.5);box-shadow:0 2px 0 -1px var(--paper),0 3px 0 -1px rgba(125,24,32,.35)}
+.panel > h2::before,.panel > summary > h2::before{content:"§";margin-right:-2px;font-family:var(--body);font-weight:400;color:var(--wax)}
+.panel > h2,.panel > summary > h2{justify-content:flex-start}
+.panel > h2 small,.panel > h2 .btn,.panel > summary > h2::after{margin-left:auto}
+h3{font-family:var(--display);font-style:normal;font-weight:600;font-size:1.12rem;color:var(--wax)}
+.subtabs button{font-family:var(--display);font-weight:600;font-size:1rem}
+.debt{font-family:var(--display);font-weight:700}
+.bgch .dc{font-family:var(--deco);font-size:4.2rem;line-height:.7;margin:10px 10px 0 0}
+.bgch h2{font-size:1.3rem}
+.bgch mark{color:#4a1410}
+.markl{font-family:var(--deco)}
+
+/* Wide screens: the register lies open on a dark lacquered desk */
+@media (min-width:900px){
+  body{background-image:radial-gradient(ellipse at 50% -10%,rgba(125,24,32,.42),transparent 55%),radial-gradient(ellipse at 100% 100%,rgba(168,131,74,.12),transparent 60%)}
+  main{background-image:none}
+  .brand h1{font-size:2.1rem;padding:0 18px 0 2px}
+  .panel,.panel + .panel{padding-left:30px;background-image:var(--img-noise),repeating-linear-gradient(180deg,transparent 0 31px,var(--ledger) 31px 32px),radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(110,70,40,.22) 100%)}
+  .panel::after{left:11px}
+  .spell.is-open{margin-left:-30px;padding-left:30px}
+}
+@media (min-width:600px) and (max-width:899px){
+  main{background-image:none}
+  .panel,.panel + .panel{padding-left:30px}
+  .panel::after{left:11px}
+  .spell.is-open{margin-left:-30px;padding-left:30px}
+}

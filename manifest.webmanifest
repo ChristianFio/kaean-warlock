@@ -10,8 +10,8 @@
     "standalone"
   ],
   "orientation": "any",
-  "background_color": "#0d110c",
-  "theme_color": "#0d110c",
+  "background_color": "#150b0c",
+  "theme_color": "#150b0c",
   "lang": "it",
   "icons": [
     {
