@@ -94,6 +94,15 @@ Sheet.start({
                 {kind:'msg', label:'Svantaggio a chi ti attacca', title:'Fortunato', msg:(c, left) => `svantaggio al tiro per colpire contro di te • punti rimasti: ${left}`}]}
       ],
 
+      combatGuide:{title:'Il tuo turno', steps:[
+        ['Prima dello scontro', `Vigore Immondo: ${VIGOR} PF temporanei.`],
+        ['Turno 1', 'Azione bonus: Maleficio sul nemico più forte. Azione: Deflagrazione Occulta sullo stesso bersaglio.'],
+        ['Se ti arrivano addosso', 'Azione bonus: Armatura di Agathys al posto del Maleficio, poi Deflagrazione.'],
+        ['Turni successivi', `Deflagrazione Occulta (+${c.spellAtk}, 1d10${fmt(M.car)}, +1d6 con Maleficio). Con un nemico adiacente hai svantaggio: allontanati o usa Passo Velato.`],
+        ['Contro un umanoide pericoloso', `Blocca Persone (TS Sag CD ${DC}): i colpi in mischia contro di lui sono critici.`],
+        ['Reazione', 'Rimprovero Infernale quando un nemico ti ferisce.'],
+        ['Regole', 'Un solo slot per turno. Una sola concentrazione: un nuovo incantesimo con concentrazione fa finire il Maleficio.']
+      ]},
       potions:{'Pozione di guarigione':'2d4+2'},
       concAdvantage:false,
       shortRestText:'Tornano gli slot del patto. Puoi spendere dadi vita e riscrivere trucchetti e rituali del Libro delle Ombre. Il Maleficio resta, se mantieni la concentrazione.',

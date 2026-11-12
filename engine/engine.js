@@ -411,7 +411,9 @@ function start(DEF){
     const riders = FX.filter(f => f.rider), defs = FX.filter(f => !f.rider);
     const inPanel = p => RES.filter(r => (r.panel || 'own') === p);
     const quick = SPELLS.filter(sp => sp.quick);
+    const cg = D.combatGuide;
     document.getElementById('tab-combat').innerHTML = `
+    ${cg ? `<details class="panel fold span2 turnguide" id="turnguide"${guideOpen ? ' open' : ''}><summary><h2>${esc(cg.title || 'Il tuo turno')}</h2></summary><dl class="kv">${cg.steps.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl></details>` : ''}
     ${down ? `<div class="panel">
       <h2>A terra <small>0 punti ferita</small></h2>
       <p>A inizio turno tiri contro la morte: 10 o più è un successo, 20 ti rialza con 1 PF, 1 vale due fallimenti.</p>
@@ -613,7 +615,7 @@ function start(DEF){
       <h3>Storico</h3>
       ${S.log.length ? `<ol class="log" id="logl">${S.log.map(e => `<li><b>${esc(e.total)}</b><span>${esc(e.label)}<br><span class="muted">${esc(e.detail)}</span></span><time>${new Date(e.t).toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'})}</time></li>`).join('')}</ol>` : '<p class="muted">Ancora nessun tiro.</p>'}`; }
   };
-  let srCount = 0;
+  let srCount = 0, guideOpen = (() => { try { return localStorage.getItem(KEY + ':turnguide') === '1'; } catch (e) { return false; } })();
   function openSheet(kind, arg){ sheet = {kind, arg}; if (kind === 'hp') hpBuf = ''; if (kind === 'rest'){ const miss = maxHp() - S.hp.cur; srCount = Math.min(HD_MAX - S.hdUsed, Math.max(0, Math.ceil(miss / (HD / 2 + 0.5 + M.cos)))); } renderSheetUI(true); renderResult(); }
   function closeSheet(){ sheet = null; }
   function renderSheetUI(isNew){
@@ -885,6 +887,7 @@ function start(DEF){
           S.conds = S.conds.filter(x => x !== 'Svenuto'); closeSheet(); show('Riposo lungo', '✦', D.longRestDone || 'PF, slot, dadi vita e risorse recuperati'); commit(); break;
       }
     });
+    document.addEventListener('toggle', e => { if (e.target.id === 'turnguide'){ guideOpen = e.target.open; store.set(KEY + ':turnguide', guideOpen ? '1' : '0'); } }, true);
     document.addEventListener('change', e => {
       if (e.target.id === 'importfile' && e.target.files && e.target.files[0]) importData(e.target.files[0]);
     });

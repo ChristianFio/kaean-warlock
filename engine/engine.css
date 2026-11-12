@@ -389,3 +389,8 @@ details.fold[open] > summary{margin-bottom:12px}
 .sheet h3{margin-top:22px}
 .markcur .markl{margin:0}
 @media (min-width:900px){.brand .mono{position:static;width:40px;height:40px;font-size:1.5rem;order:2}}
+.turnguide dl.kv{display:block;margin:0}
+.turnguide dl.kv dt{margin:10px 0 0;padding:0;border:0;font-weight:700;color:var(--ink)}
+.turnguide dl.kv dt:first-child{margin-top:0}
+.turnguide dl.kv dd{margin:2px 0 0;padding:0 0 10px;border:0;border-bottom:1px solid rgba(122,90,54,.25)}
+.turnguide dl.kv dd:last-child{border-bottom:0;padding-bottom:0}
