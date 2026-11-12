@@ -48,7 +48,7 @@ Sheet.start({
       trackTab:'Patto',
       notesPlaceholder:'PNG, indizi, luoghi, firme, debiti...',
       senses:'Scurovisione 18 m',
-      proficiencies:[['Armature', 'Leggere (indossa cuoio borchiato)'], ['Armi', 'Semplici'], ['Strumenti', 'Strumenti da falsario'], ['Lingue', 'Comune, Infernale, Elfico'], ['Resistenze', 'Fuoco'], ['Taglia', 'Media, 9 m di velocità']],
+      proficiencies:[['Età', '30 anni'], ['Armature', 'Leggere (indossa cuoio borchiato)'], ['Armi', 'Semplici'], ['Strumenti', 'Strumenti da falsario'], ['Lingue', 'Comune, Infernale, Elfico'], ['Resistenze', 'Fuoco'], ['Taglia', 'Media, 9 m di velocità']],
       scoresNote:'Tirati con 4d6: 17, 14, 13, 13, 11, 10. Il background dà +1 a Carisma, Intelligenza e Costituzione.',
       skillSource:{'Arcano':'Warlock', 'Inganno':'Warlock', 'Percezione':'background', 'Persuasione':'background'},
       skillInfo:{

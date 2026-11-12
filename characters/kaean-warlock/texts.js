@@ -76,7 +76,7 @@ window.SheetTexts = {
 
 *All'anagrafe risulta come Kaeraldo. È un funzionario della Congregazione dell'Ispirazione di Simpoh e, sulla carta, è ancora in missione.*
 
-Kaean è un tiefling alto e magro, con la pelle color ambra, i capelli rossi e due corna corte e scure, piegate all'indietro. In pubblico porta sempre occhiali dalle lenti scure. Chi riesce a guardarci dietro vede occhi gialli con la pupilla verticale, come quelli di un serpente.
+Kaean è un tiefling di trent'anni, alto e magro, con la pelle color ambra, i capelli rossi e due corna corte e scure, piegate all'indietro. In pubblico porta sempre occhiali dalle lenti scure. Chi riesce a guardarci dietro vede occhi gialli con la pupilla verticale, come quelli di un serpente.
 
 Veste sempre di nero, con abiti eleganti e stivali lucidi. Si muove in modo morbido e sinuoso, quasi da serpente, e quando si siede sembra sciogliersi sulla sedia. Parla a voce bassa e con molta ironia, tanto che spesso chi lo ascolta non capisce se è stato appena insultato.
 
@@ -206,7 +206,7 @@ Nel frattempo, una vicina di casa, l'anziana halfling che tutti chiamano **Nonna
 
 Oggi tutto il quartiere gli porta le piante morenti. Lui protesta, controlla le radici e trova posto per tutte. ==È l'unica cosa che fa senza usare il potere del Creditore==, e ci tiene più di quanto ammetterebbe mai: ogni pianta che rinasce sul suo davanzale è merito suo, e di nessun altro. Nessun registro ne terrà mai conto. **Nonna Pruna** dice a tutti che è un uomo buono, e lo dice ad alta voce, preferibilmente davanti alle stalle. «Abbassa la voce, Nonna», la prega lui, «ho una reputazione». «Lo so, caro», risponde lei, «ci sto lavorando». Vicino al recinto, **Lucerys** le dà ragione senza smettere di spazzolare **Notturna**. Ogni settimana Kaean porta a **Nonna Pruna** i pomodori migliori, scelti uno per uno, e giura che sono quelli di scarto.
 
-Sono passati quasi undici mesi. Ci sono piante su tutte le finestre, una carrozza lucidata con amore, una cavalla che ormai obbedisce a qualcun altro e una panca vicino al recinto dove nessuno osa sedersi. La tranquillità di Ivacuus rende i pomeriggi più lunghi e gli fa perdere il conto delle settimane. Il mondo è fatto di vino decente, pane caldo e di una persona capace di parlare per un'ora del carattere di un cavallo. Kaean trova assurdo che qualcuno voglia renderlo migliore dandogli ordini, e vorrebbe restare. Ma ogni tanto ripensa a **Mirta**, e alla risposta che le deve.
+Sono passati quasi undici mesi. Kaean ha trent'anni, e dodici li ha passati con quella lettera sul polso. Ci sono piante su tutte le finestre, una carrozza lucidata con amore, una cavalla che ormai obbedisce a qualcun altro e una panca vicino al recinto dove nessuno osa sedersi. La tranquillità di Ivacuus rende i pomeriggi più lunghi e gli fa perdere il conto delle settimane. Il mondo è fatto di vino decente, pane caldo e di una persona capace di parlare per un'ora del carattere di un cavallo. Kaean trova assurdo che qualcuno voglia renderlo migliore dandogli ordini, e vorrebbe restare. Ma ogni tanto ripensa a **Mirta**, e alla risposta che le deve.
 
 E ogni tanto, la mattina, trova sul tavolo della cucina un foglio piegato in due, scritto con un inchiostro che si muove ancora un po'. Non c'è nessuna minaccia. ==C'è solo un numero, ogni volta un po' più alto del precedente.==
 
