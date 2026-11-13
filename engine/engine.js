@@ -416,73 +416,32 @@ function start(DEF){
       case 'temphp': { const tp = tempBy(id); return tp && tp.econ && {k:tp.econ, label:tp.n}; }
       case 'potion': return {k:'bonus', label:'Pozione'};
       case 'resuse': { const r = resBy(id), u = r && r.uses[+t.dataset.u]; if (!u || u.kind !== 'spell') return u && u.econ ? {k:u.econ, label:r.n} : null; const s2 = spellBy(u.spell); return {k:econOf(s2), label:s2.n}; }
-      case 'turnmark': return {k:t.dataset.k, label:t.dataset.l};
     }
     return null;
   }
+  // Using the action or bonus action again means a new turn has started
   function markTurn(c){
     if (!c || !c.k) return;
-    if (!turn[c.k]) turn[c.k] = c.label || 'usata';
+    // Repeating the same thing within a minute (the rays of one spell) stays in the same turn
+    const now = Date.now(), same = turn[c.k] === c.label && now - (turn.at || 0) < 60000;
+    if ((c.k === 'action' || c.k === 'bonus') && turn[c.k] && !same) turn = freshTurn();
+    turn[c.k] = c.label || 'usata'; turn.at = now;
     if (c.slot && !turn.slot) turn.slot = c.label;
     saveTurn();
   }
-  const turnLeft = () => ECON.filter(([k]) => !turn[k]);
+  const turnLeft = () => ECON.filter(([k]) => k !== 'move' && !turn[k]);
+  const turnStarted = () => !!(turn.action || turn.bonus || turn.reaction);
+  function turnSummary(){
+    const left = turnLeft().map(([, n]) => n.toLowerCase());
+    const slot = SC && turn.slot ? ' Niente altri incantesimi con slot in questo turno.' : '';
+    return (left.length ? `Ti resta: ${left.join(', ')} e il movimento.` : 'Ti resta solo il movimento.') + slot;
+  }
   function turnPanel(){
-    const left = turnLeft();
     return `<div class="panel span2 turnbox">
       <h2>Questo turno <button class="btn sm" data-a="turnnew">Nuovo turno</button></h2>
-      <div class="econ">${ECON.map(([k, n]) => `<button class="pill${turn[k] ? ' used' : ''}" data-a="turntog" data-k="${k}" aria-pressed="${turn[k] ? 'true' : 'false'}"><b>${n}</b><span>${turn[k] ? esc(turn[k] === 'usata' ? 'usata' : turn[k]) : k === 'move' ? esc(DEF.speed) : 'libera'}</span></button>`).join('')}</div>
-      <p class="muted turnline">${left.length ? `Ti restano: <b>${left.map(([, n]) => n.toLowerCase()).join(', ')}</b>.` : 'Hai usato tutto: tocca Nuovo turno quando tocca di nuovo a te.'}${SC ? (turn.slot ? ` Slot già usato per ${esc(turn.slot)}: niente altri incantesimi con slot.` : slotsAny() ? ' Puoi ancora usare uno slot.' : ' Nessuno slot rimasto.') : ''}</p>
-      <button class="btn primary fullrow" data-a="turnopen"${left.length ? '' : ' disabled'}>Cosa posso fare?</button>
+      <div class="econ">${ECON.filter(([k]) => k !== 'move').map(([k, n]) => `<div class="pill${turn[k] ? ' used' : ''}"><b>${n}</b><span>${turn[k] ? esc(turn[k]) : 'libera'}</span></div>`).join('')}</div>
+      <p class="muted turnline">${turnSummary()} Si aggiorna da solo a ogni attacco o incantesimo, e riparte quando usi di nuovo l'azione o l'azione bonus.</p>
     </div>`;
-  }
-  // Options for the turn wizard, built from attacks, spells, temporary HP, potions and resources
-  function turnOptions(){
-    const o = {action:[], bonus:[], reaction:[]}, slotOk = SC && slotsAny() && !turn.slot;
-    const add = (k, x) => o[k] && o[k].push(x);
-    ATTACKS.forEach(a => add('action', {n:a.n, sub:`colpire ${fmt(atkBonus(a))}, danni ${atkDmg(a)}`, btn:`data-a="atk" data-k="${a.id}"`}));
-    SPELLS.forEach(sp => {
-      const k = econOf(sp); if (!k || sp.ritual || ATTACKS.some(a => a.id === sp.id)) return;
-      if (!(sp.atk || sp.dmg || sp.c || sp.quick || sp.tempHp || sp.save || sp.castMsg)) return;
-      const conc = sp.c && S.conc && S.conc !== sp.n ? ` Fa finire ${S.conc}.` : '';
-      if (sp.instant){
-        const fr = sp.freeWith && resBy(sp.freeWith), free = fr && S.res[fr.id] < resMax(fr);
-        add(k, {n:sp.n, sub:(free ? 'gratis una volta per riposo lungo' : 'con uno slot') + conc, btn:free ? `data-a="spfree" data-id="${sp.id}"` : `data-a="spslot" data-id="${sp.id}"`, dis:!free && !slotOk, why:!free && !slotOk ? (turn.slot ? 'slot già usato in questo turno' : 'nessuno slot') : ''});
-        return;
-      }
-      if (sp.tempHp){ const tp = tempBy(sp.tempHp); add(k, {n:sp.n, sub:`${tp.amount(c)} PF temporanei, senza slot`, btn:`data-a="temphp" data-id="${tp.id}"`}); return; }
-      if (sp.l === 0 || sp.free){
-        if (sp.atk) add(k, {n:sp.n, sub:`colpire ${fmt(SATK)}, danni ${spDmg(sp)}`, btn:`data-a="spatk" data-id="${sp.id}"`});
-        else if (sp.dmg) add(k, {n:sp.n, sub:`TS ${sp.save} CD ${DC}, danni ${spDmg(sp)}`, btn:`data-a="spdmg" data-econ="1" data-id="${sp.id}"`});
-        else if (sp.c) add(k, {n:sp.n, sub:'trucchetto, concentrazione.' + conc, btn:`data-a="concset" data-id="${sp.id}"`});
-        return;
-      }
-      const active = (sp.c && S.conc === sp.n) || (sp.fx && S.fx[sp.fx]);
-      add(k, {n:sp.n, sub:(sp.quick && sp.quick !== true ? sp.quick : sp.t.replace(/ • /g, ', ')) + (active ? '. Già attivo.' : '') + conc, btn:`data-a="cast" data-id="${sp.id}"`, slot:true, dis:!slotOk, why:!slotOk ? (turn.slot ? 'slot già usato in questo turno' : 'nessuno slot') : ''});
-    });
-    TEMP.filter(t => t.econ === 'action' && !SPELLS.some(sp => sp.tempHp === t.id)).forEach(t => add('action', {n:t.n, sub:`${t.amount(c)} PF temporanei`, btn:`data-a="temphp" data-id="${t.id}"`}));
-    S.items.filter(i => POTIONS[i.n] && i.q > 0).forEach(i => add('bonus', {n:i.n, sub:`cura ${POTIONS[i.n]}, ne hai ${i.q}`, btn:`data-a="potion" data-id="${i.id}"`}));
-    RES.forEach(r => (r.uses || []).forEach((u, i) => { if (u.econ && u.kind !== 'spell') add(u.econ, {n:r.n, sub:typeof r.sub === 'string' ? r.sub : '', btn:`data-a="resuse" data-id="${r.id}" data-u="${i}"`, dis:S.res[r.id] >= resMax(r), why:'già usato'}); }));
-    const melee = ATTACKS.find(a => /mischia/.test(a.range));
-    if (melee) add('reaction', {n:'Attacco di opportunità', sub:`quando un nemico esce dalla tua portata: ${melee.n}`, btn:`data-a="atk" data-econ="reaction" data-k="${melee.id}"`});
-    (D.turnExtras || []).forEach(x => add(x.econ, x));
-    return o;
-  }
-  const BASIC = [['Scatto', 'raddoppi il movimento'], ['Disimpegno', 'ti allontani senza attacchi di opportunità'], ['Schivata', 'chi ti attacca ha svantaggio'], ['Aiuto', 'un alleato ha vantaggio'], ['Nascondersi', 'prova di Furtività'], ['Usare un oggetto', 'oggetto che richiede un\'azione']];
-  function turnSheet(){
-    const o = turnOptions(), left = turnLeft();
-    const opt = (k, x) => `<div class="topt${x.dis ? ' off' : ''}"><div class="rl"><b>${esc(x.n)}</b><div class="muted">${esc(x.sub || '')}${x.dis && x.why ? ` <em>(${esc(x.why)})</em>` : ''}</div></div><button class="btn sm${x.slot ? '' : ' primary'}" ${x.btn} data-turnk="${k}"${x.dis ? ' disabled' : ''}>Usa</button></div>`;
-    const sec = (k, title, help, extra = '') => turn[k]
-      ? `<div class="tsec done"><h3>${title}</h3><p class="muted">Usata: ${esc(turn[k])}. <button class="linkbtn" data-a="turntog" data-k="${k}">Segna come libera</button></p></div>`
-      : `<div class="tsec"><h3>${title}</h3><p class="muted">${help}</p>${(o[k] || []).map(x => opt(k, x)).join('')}${extra}</div>`;
-    return `<h2>Il tuo turno</h2>
-      <p class="tsum">${left.length ? `Ti restano: <b>${left.map(([, n]) => n.toLowerCase()).join(', ')}</b>.` : 'Hai già usato tutto in questo turno.'}${SC ? ` ${turn.slot ? `Hai già usato uno slot (${esc(turn.slot)}): un solo incantesimo con slot per turno.` : 'Regola: un solo incantesimo con slot per turno.'}` : ''}${S.conc ? ` Sei concentrato su ${esc(S.conc)}.` : ''}</p>
-      ${turn.move ? `<div class="tsec done"><h3>Movimento</h3><p class="muted">Usato. <button class="linkbtn" data-a="turntog" data-k="move">Segna come libero</button></p></div>` : `<div class="tsec"><h3>Movimento</h3><p class="muted">${esc(DEF.speed)}. Puoi dividerlo prima e dopo l'azione.</p><div class="topt"><div class="rl"><b>Ho finito di muovermi</b></div><button class="btn sm" data-a="turntog" data-k="move">Segna</button></div></div>`}
-      ${sec('action', 'Azione', 'Una sola per turno.', `<div class="chips basic">${BASIC.map(([n, d]) => `<button class="btn sm" data-a="turnmark" data-k="action" data-l="${n}" title="${esc(d)}">${n}</button>`).join('')}</div><p class="muted small">${BASIC.map(([n, d]) => `${n}: ${d}`).join('. ')}.</p>`)}
-      ${sec('bonus', 'Azione bonus', 'Solo se hai qualcosa che la usa.')}
-      ${sec('reaction', 'Reazione', 'Una fino all\'inizio del tuo prossimo turno, anche nel turno degli altri.')}
-      <p class="muted small">Gratis: interagire con un oggetto (estrarre un'arma, aprire una porta) e parlare brevemente.</p>
-      <div class="btns"><button class="btn" data-a="turnnew">Nuovo turno</button><button class="btn primary" data-a="close">Chiudi</button></div>`;
   }
   function resLine(r){
     const max = resMax(r), used = S.res[r.id], left = max - used, uses = r.uses || [];
@@ -669,6 +628,7 @@ function start(DEF){
     t.textContent = l.total; t.className = 'sealn' + (l.kind ? ' ' + l.kind : '') + (String(l.total).length > 2 ? ' long' : '');
     document.getElementById('r-lab').textContent = l.label;
     document.getElementById('r-det').textContent = l.detail;
+    const rt = document.getElementById('r-turn'); if (rt){ rt.hidden = !turnStarted(); rt.textContent = turnStarted() ? turnSummary() : ''; }
     document.getElementById('r-fol').innerHTML = lastFollow.map(f => `<button class="btn sm${f.p ? ' primary' : ''}" data-a="${f.a}"${f.k ? ` data-k="${f.k}"` : ''}${f.id ? ` data-id="${f.id}"` : ''}${f.m ? ` data-m="${f.m}"` : ''}>${esc(f.t)}</button>`).join('') + (UNDO.length ? '<button class="btn sm undo" data-a="undo">Annulla</button>' : '');
     if (flash){ r.classList.remove('flash'); void r.offsetWidth; r.classList.add('flash'); flash = false; }
   }
@@ -704,7 +664,6 @@ function start(DEF){
       <p class="muted" id="syncst">${SYNC_TXT[syncState]}</p>
       <div class="btns"><button class="btn sm" data-a="undo"${UNDO.length ? '' : ' disabled'}>Annulla l'ultima azione</button><button class="btn sm" data-a="export">Scarica una copia</button><label class="btn sm filebtn">Ripristina una copia<input type="file" accept="application/json,.json" id="importfile"></label></div>
       ${confirmKey === 'import' ? '<p class="alert">Il file sostituirà tutti i dati della scheda. Tocca di nuovo "Ripristina una copia" per scegliere il file.</p>' : ''}`; },
-    turn:() => turnSheet(),
     dice:() => { const l = S.log[0]; return `<h2>Dadi</h2>
       ${l ? `<div class="last"><span class="sealn${l.kind ? ' ' + l.kind : ''}${String(l.total).length > 2 ? ' long' : ''}" id="d-total">${esc(l.total)}</span><div><b id="d-lab">${esc(l.label)}</b><div class="muted" id="d-det">${esc(l.detail)}</div></div></div>` : ''}
       <h3>Il prossimo d20</h3>
@@ -729,7 +688,7 @@ function start(DEF){
     sc.hidden = !sheet; document.documentElement.classList.toggle('lock', !!sheet);
     if (!sheet) return;
     const keep = el.scrollTop;
-    el.setAttribute('aria-label', {info:'Dettagli', hp:'Punti ferita', rest:'Riposo', dice:'Dadi', turn:'Il tuo turno'}[sheet.kind]);
+    el.setAttribute('aria-label', {info:'Dettagli', hp:'Punti ferita', rest:'Riposo', dice:'Dadi'}[sheet.kind]);
     el.innerHTML = '<div class="grab"></div><button class="x" data-a="close" aria-label="Chiudi">×</button>' + SHEETS[sheet.kind](sheet.arg);
     el.scrollTop = isNew ? 0 : keep;
     if (isNew){ el.style.animation = 'none'; void el.offsetWidth; el.style.animation = ''; el.focus({preventScroll:true}); }
@@ -800,7 +759,7 @@ function start(DEF){
     </main>
     <div class="result" id="result" hidden>
       <button class="sealn" id="r-total" data-a="dice" aria-label="Apri i dadi e lo storico"></button>
-      <div class="txt" aria-live="polite"><div class="lab" id="r-lab"></div><div class="det" id="r-det"></div></div>
+      <div class="txt" aria-live="polite"><div class="lab" id="r-lab"></div><div class="det" id="r-det"></div><div class="rturn" id="r-turn" hidden></div></div>
       <button class="x" data-a="rclose" aria-label="Chiudi il risultato">×</button>
       <div class="fol" id="r-fol"></div>
     </div>
@@ -917,13 +876,9 @@ function start(DEF){
       if (t.dataset.key){ key(t.dataset.key); return; }
       if (t.dataset.info && !t.dataset.a){ openSheet('info', t.dataset.info); return; }
       const a = t.dataset.a, id = t.dataset.id, val = () => parseInt(hpBuf, 10), fromBar = !!t.closest('#r-fol');
-      if (t.dataset.turnk && sheet && sheet.kind === 'turn') closeSheet();
       markTurn(costOf(a, t));
       switch (a){
-        case 'turnopen': openSheet('turn'); break;
-        case 'turnnew': turn = freshTurn(); saveTurn(); if (sheet && sheet.kind === 'turn') renderSheetUI(false); render(); toast('Nuovo turno: hai di nuovo azione, azione bonus, movimento e reazione'); break;
-        case 'turntog': { const k = t.dataset.k; turn[k] = turn[k] ? '' : 'usata'; saveTurn(); render(); break; }
-        case 'turnmark': closeSheet(); render(); toast(`Azione: ${t.dataset.l}`); break;
+        case 'turnnew': turn = freshTurn(); saveTurn(); render(); break;
         case 'fullscreen': toggleFs(); break;
         case 'close': closeSheet(); render(); break;
         case 'rclose': resultOpen = false; renderResult(); break;

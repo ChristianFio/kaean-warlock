@@ -408,7 +408,7 @@ ol.notes{list-style:none;margin:0;padding:0;counter-reset:nt}
 .noempty{padding:8px 0}
 .noempty::before{content:none}
 .turnbox h2{margin-bottom:10px}
-.econ{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.econ{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .pill{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:58px;padding:6px 4px;border:1.5px solid var(--ivy);border-radius:8px;background:rgba(63,93,58,.1);color:var(--ink);text-align:center;line-height:1.15}
 .pill b{font-size:.86rem}
 .pill span{font-size:.76rem;color:var(--ink-2);overflow-wrap:anywhere}
@@ -426,4 +426,5 @@ ol.notes{list-style:none;margin:0;padding:0;counter-reset:nt}
 .chips.basic{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .small{font-size:.86rem}
 .linkbtn{border:0;background:none;padding:0;color:var(--wax);text-decoration:underline;font:inherit;cursor:pointer}
-@media (max-width:360px){.econ{grid-template-columns:repeat(2,1fr)}}
+
+.result .rturn{margin-top:3px;font-size:.84rem;font-weight:600;color:var(--wax)}
