@@ -394,3 +394,15 @@ details.fold[open] > summary{margin-bottom:12px}
 .turnguide dl.kv dt:first-child{margin-top:0}
 .turnguide dl.kv dd{margin:2px 0 0;padding:0 0 10px;border:0;border-bottom:1px solid rgba(122,90,54,.25)}
 .turnguide dl.kv dd:last-child{border-bottom:0;padding-bottom:0}
+.noteform{display:flex;gap:8px;align-items:flex-end;margin:0 0 14px}
+.noteform textarea{flex:1;min-height:52px;resize:vertical}
+.noteform .btn{flex:0 0 auto}
+ol.notes{list-style:none;margin:0;padding:0;counter-reset:nt}
+.note{position:relative;padding:10px 0 10px 30px;border-top:1px solid rgba(122,90,54,.25);counter-increment:nt}
+.note::before{content:counter(nt) ".";position:absolute;left:0;top:10px;font-family:var(--display);font-weight:700;color:var(--wax)}
+.note .nx{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.45}
+.note .nbar{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
+.note .nbar .btn{min-width:40px}
+.note.editing textarea{width:100%;min-height:96px;margin-bottom:6px}
+.noempty{padding:8px 0}
+.noempty::before{content:none}

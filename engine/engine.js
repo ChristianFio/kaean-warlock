@@ -112,7 +112,7 @@ function start(DEF){
     conc:null, concDc:0, death:{s:0, f:0}, conds:[], exh:0, insp:0,
     counters:Object.fromEntries(COUNTERS.map(k => [k.id, 0])), journals:Object.fromEntries(JOURNALS.map(j => [j.id, []])),
     items:(D.items || []).map(i => ({id:uid(), ...i})), coins:{mr:0, ma:0, me:0, mo:0, mp:0, ...(D.coins || {})},
-    notes:'', log:[], updatedAt:0
+    notes:'', noteList:[], log:[], updatedAt:0
   });
   // Fill missing fields and repair wrong types, so a damaged save never crashes the page
   function sanitize(o){
@@ -134,9 +134,16 @@ function start(DEF){
       items:('items' in s ? arr(s.items) : f.items).filter(isObj).map(i => ({id:sid(i.id), n:String(i.n ?? 'Oggetto'), q:clamp(Math.round(num(i.q, 1)), 0, 9999), t:String(i.t || '')})),
       coins:objOf(s.coins, f.coins, (v, d) => clamp(Math.round(num(v, d)), 0, 9999999)),
       notes:typeof s.notes === 'string' ? s.notes : '',
+      noteList:arr(s.noteList).filter(isObj).map(n => ({id:sid(n.id), x:String(n.x ?? ''), t:num(n.t, 0)})).filter(n => n.x.trim()),
       log:arr(s.log).filter(isObj).slice(0, 40).map(e => ({t:num(e.t, 0), label:String(e.label ?? ''), total:e.total ?? '', detail:String(e.detail ?? ''), kind:String(e.kind || '')}))
     };
     if (!('items' in s) && s.ver) out.items = [];
+    // Free-text notes from older versions become a list of points (ids are fixed so every device converts them the same way)
+    if (!('noteList' in s) && out.notes.trim()){
+      const t = out.notes.replace(/\r/g, '').trim(), parts = /\n\s*\n/.test(t) ? t.split(/\n\s*\n/) : t.split('\n');
+      out.noteList = parts.map(x => x.trim()).filter(Boolean).map((x, i) => ({id:'old' + i, x, t:0}));
+      out.notes = '';
+    }
     return out;
   }
   // Older saves: the character converts its own legacy fields first
@@ -530,7 +537,19 @@ function start(DEF){
     if (!el.dataset.ok){ el.innerHTML = [['mr', 'Rame'], ['ma', 'Argento'], ['me', 'Electrum'], ['mo', 'Oro'], ['mp', 'Platino']].map(([k, nm]) => `<label>${nm}<input type="number" inputmode="numeric" min="0" data-coin="${k}"></label>`).join(''); el.dataset.ok = 1; }
     el.querySelectorAll('input').forEach(inp => { if (document.activeElement !== inp) inp.value = S.coins[inp.dataset.coin] || 0; });
   }
-  function renderNotes(){ const n = document.getElementById('notes'); if (document.activeElement !== n && !noteTimer) n.value = S.notes; }
+  function renderNotes(){
+    const el = document.getElementById('notelist'); if (!el) return;
+    const L = S.noteList, n = L.length;
+    document.getElementById('notecount').textContent = n ? (n === 1 ? '1 nota' : `${n} note`) : '';
+    el.innerHTML = L.map((x, i) => editNote === x.id ? `<li class="note editing"><textarea id="noteedit" aria-label="Modifica la nota">${esc(editDraft ?? x.x)}</textarea>
+        <div class="btns"><button class="btn sm primary" data-a="nsave" data-id="${x.id}">Salva</button><button class="btn sm" data-a="ncancel">Annulla</button></div></li>`
+      : `<li class="note"><div class="nx">${esc(x.x)}</div>
+        <div class="nbar"><button class="btn sm" data-a="nmove" data-id="${x.id}" data-d="-1" aria-label="Sposta su"${i ? '' : ' disabled'}>↑</button><button class="btn sm" data-a="nmove" data-id="${x.id}" data-d="1" aria-label="Sposta giù"${i < n - 1 ? '' : ' disabled'}>↓</button>
+        <button class="btn sm" data-a="nedit" data-id="${x.id}">Modifica</button><button class="btn sm${confirmKey === 'nd:' + x.id ? ' gold' : ''}" data-a="ndel" data-id="${x.id}" aria-label="Elimina la nota">${confirmKey === 'nd:' + x.id ? 'Elimina?' : '×'}</button></div></li>`).join('')
+      || '<li class="muted noempty">Nessuna nota. Scrivi qui sopra e tocca Aggiungi: poi potrai spostarle con le frecce.</li>';
+    const ed = document.getElementById('noteedit');
+    if (ed && editFocus){ editFocus = false; ed.focus(); ed.setSelectionRange(ed.value.length, ed.value.length); }
+  }
   function renderTrack(){
     const el = document.getElementById('tab-track'); if (!el) return;
     const keepForm = {};
@@ -684,7 +703,9 @@ function start(DEF){
         </div>
       </section>
       <section id="tab-notes" class="grid" hidden>
-        <div class="panel span2"><h2>Note di sessione</h2><textarea id="notes" placeholder="${esc(D.notesPlaceholder || 'PNG, indizi, luoghi...')}" aria-label="Note di sessione"></textarea><p class="muted" id="notesst"></p></div>
+        <div class="panel span2"><h2>Note di sessione <small id="notecount"></small></h2>
+          <form class="noteform" id="noteform"><textarea id="notenew" rows="2" placeholder="${esc(D.notesPlaceholder || 'PNG, indizi, luoghi...')}" aria-label="Nuova nota"></textarea><button class="btn primary" type="submit">Aggiungi</button></form>
+          <ol class="notes" id="notelist"></ol></div>
       </section>
       ${TRACK ? '<section id="tab-track" class="grid" hidden></section>' : ''}
       ${D.guide ? `<section id="tab-guide" class="grid" hidden>${guide}</section>` : ''}
@@ -790,11 +811,11 @@ function start(DEF){
     fr.readAsText(file);
   }
 
-  let noteTimer = null;
+  // Notes: drafts stay on this device until they are added or saved
+  let editNote = null, editDraft = null, editFocus = false;
+  const DRAFT_KEY = KEY + ':notedraft';
   function flushNotes(){
-    if (!noteTimer) return;
-    clearTimeout(noteTimer); noteTimer = null;
-    const n = document.getElementById('notes'); if (n && n.value !== S.notes){ S.notes = n.value; commit({undo:false, render:false}); }
+    if (editNote && editDraft != null){ const x = S.noteList.find(n => n.id === editNote); if (x && editDraft.trim() && x.x !== editDraft.trim()){ x.x = editDraft.trim(); commit({render:false}); } }
   }
 
   function bind(){
@@ -864,6 +885,11 @@ function start(DEF){
         case 'cast': castSpell(spellBy(id)); break;
         case 'cond': { const x = t.dataset.c; S.conds = S.conds.includes(x) ? S.conds.filter(y => y !== x) : [...S.conds, x]; commit(); break; }
         case 'iq': { const it = S.items.find(i => i.id === id); if (!it) break; const d = +t.dataset.d; if (d < 0 && it.q <= 1 && !ask('iq:' + id)) break; it.q += d; if (it.q <= 0) S.items = S.items.filter(i => i !== it); commit(); break; }
+        case 'nmove': { const L = S.noteList, i = L.findIndex(x => x.id === id), j = i + +t.dataset.d; if (i < 0 || j < 0 || j >= L.length) break; [L[i], L[j]] = [L[j], L[i]]; S.noteList = [...L]; commit(); const b = document.querySelector(`[data-a="nmove"][data-id="${id}"][data-d="${t.dataset.d}"]`); if (b && !b.disabled) b.focus({preventScroll:true}); break; }
+        case 'nedit': flushNotes(); editNote = id; editDraft = null; editFocus = true; renderNotes(); break;
+        case 'ncancel': editNote = null; editDraft = null; renderNotes(); break;
+        case 'nsave': { const x = S.noteList.find(n => n.id === id), v = (editDraft ?? (x && x.x) ?? '').trim(); editNote = null; editDraft = null; if (x && v) x.x = v; commit(); break; }
+        case 'ndel': { if (!ask('nd:' + id)) break; S.noteList = S.noteList.filter(x => x.id !== id); if (editNote === id) editNote = null; commit(); toast('Nota eliminata: puoi annullare dal pannello Riposo'); break; }
         case 'cnt': S.counters[id] = Math.max(0, S.counters[id] + +t.dataset.d); commit(); break;
         case 'jdel': { if (!ask('jd:' + id)) break; S.journals[t.dataset.j] = S.journals[t.dataset.j].filter(m => m.id !== id); commit(); break; }
         case 'hd': if (S.hdUsed < HD_MAX && S.hp.cur > 0){ S.hdUsed += 1; const r = rollExpr('1d' + HD + (M.cos ? fmt(M.cos) : '')); heal(Math.max(1, r.total), 'Dado vita', r.text); } break;
@@ -895,6 +921,11 @@ function start(DEF){
       e.preventDefault();
       const f = e.target;
       if (f.id === 'exprform'){ const v = exprVal.trim(), r = rollExpr(v); if (r){ show(v, r.total, r.text); commit(); } else toast('Formula non valida: usa per esempio 2d6+3'); return; }
+      if (f.id === 'noteform'){
+        const ta = document.getElementById('notenew'), x = ta.value.trim(); if (!x) return;
+        S.noteList = [...S.noteList, {id:uid(), x, t:Date.now()}];
+        ta.value = ''; store.set(DRAFT_KEY, ''); commit(); toast('Nota aggiunta'); return;
+      }
       if (f.id === 'addform'){
         const n = document.getElementById('add-name').value.trim(); if (!n) return;
         S.items.push({id:uid(), n, q:clamp(parseInt(document.getElementById('add-qty').value, 10) || 1, 1, 9999), t:document.getElementById('add-note').value.trim()});
@@ -911,10 +942,11 @@ function start(DEF){
     document.addEventListener('input', e => {
       const el = e.target;
       if (el.id === 'expr') exprVal = el.value;
-      else if (el.id === 'notes'){ clearTimeout(noteTimer); noteTimer = setTimeout(() => { noteTimer = null; S.notes = el.value; commit({undo:false, render:false}); const st = document.getElementById('notesst'); if (st) st.textContent = 'Salvate alle ' + new Date().toLocaleTimeString('it-IT', {hour:'2-digit', minute:'2-digit'}); }, 500); }
+      else if (el.id === 'notenew') store.set(DRAFT_KEY, el.value);
+      else if (el.id === 'noteedit') editDraft = el.value;
       else if (el.dataset.coin){ S.coins[el.dataset.coin] = clamp(parseInt(el.value, 10) || 0, 0, 9999999); commit({render:false}); }
     });
-    document.addEventListener('focusout', e => { if (e.target.id === 'notes') flushNotes(); });
+    document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter'){ if (e.target.id === 'notenew'){ e.preventDefault(); document.getElementById('noteform').requestSubmit(); } else if (e.target.id === 'noteedit'){ e.preventDefault(); document.querySelector('[data-a="nsave"]').click(); } } });
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape'){ if (sheet){ closeSheet(); render(); } else if (resultOpen){ resultOpen = false; renderResult(); } return; }
       if (sheet && sheet.kind === 'hp' && !e.ctrlKey && !e.metaKey){ if (/^\d$/.test(e.key)) key(e.key); else if (e.key === 'Backspace') key('back'); else if (e.key === 'Enter'){ const n = parseInt(hpBuf, 10); if (n > 0){ closeSheet(); damage(n); } } }
@@ -926,6 +958,7 @@ function start(DEF){
   buildPage();
   bind();
   if (window.matchMedia('(max-width:899px)').matches) document.querySelectorAll('#tab-guide details').forEach((d, i) => { d.open = i === 0; });
+  { const d = store.get(DRAFT_KEY); const ta = document.getElementById('notenew'); if (d && ta) ta.value = d; }
   try { render(); }
   catch (e) {
     console.error(e); store.set(KEY + ':broken', JSON.stringify(S));
