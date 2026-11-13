@@ -507,7 +507,7 @@ function start(DEF){
       body = `<div class="body"><div>${esc(sp.full[0])}</div><div class="btns">${b.join('')}</div></div>`;
     }
     return `<div class="spell${open ? ' is-open' : ''}"><button class="open" data-a="spopen" data-id="${sp.id}" aria-expanded="${open ? 'true' : 'false'}">
-      <span class="nm">${esc(sp.n)}${sp.c ? '<span class="cbadge" title="Concentrazione" aria-label="Concentrazione">C</span>' : ''}</span>
+      <span class="nm">${esc(sp.n)}${sp.c ? '<span class="cbadge" title="Concentrazione" aria-label="Concentrazione">C</span>' : ''}${sp.ritual ? '<span class="rbadge" title="Rituale: senza slot" aria-label="Rituale">R</span>' : ''}</span>
       <span class="side"><b>${lvl}</b><span class="src-${sp.src}">${esc((D.spellSources || {})[sp.src] || '')}</span></span>
       <span class="meta">${esc(sp.t.replace(/ • /g, ', '))}</span></button>${body}</div>`;
   }
@@ -519,7 +519,7 @@ function start(DEF){
     <div class="panel span2">
       <h2>${esc(SC.title || 'Incantesimi')} <small>CD ${DC}, attacco ${fmt(SATK)}</small></h2>
       ${SLOT_LVLS.map(L => `<div class="sealrow" style="border:0;padding-bottom:4px"><div class="seals">${seals(L)}</div><div><b>${slotLeft(L)} slot su ${SLOTS[L]}</b><div class="muted">${SC.pact ? `Sempre di ${L}° livello, tornano con un riposo breve` : `${L}° livello`}</div></div></div>`).join('')}
-      <p class="muted" style="margin:6px 0 0">Tocca un incantesimo per lanciarlo o tirare i dadi. Il cerchio con la C indica la concentrazione.</p>
+      <p class="muted" style="margin:6px 0 0">Tocca un incantesimo per lanciarlo o tirare i dadi. Il cerchio con la C indica la concentrazione, il riquadro con la R un rituale, che lanci senza slot impiegando 10 minuti in più.</p>
     </div>
     ${groups.map(g => { const list = SPELLS.filter(g.f); return list.length ? `<div class="panel"><h2>${esc(g.title)} <small>${esc(g.note || '')}</small></h2>${list.map(spellRow).join('')}</div>` : ''; }).join('')}`;
   }
