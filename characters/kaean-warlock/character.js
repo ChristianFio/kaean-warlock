@@ -77,7 +77,7 @@ Sheet.start({
       ],
 
       tempHp:[
-        {id:'vigor', n:'Vigore Immondo', short:'Vigore Immondo', sub:'Azione, a volontà', info:'feat:vigor', amount:() => VIGOR, detail:'PF temporanei'},
+        {id:'vigor', n:'Vigore Immondo', short:'Vigore Immondo', sub:'Azione, a volontà', info:'feat:vigor', amount:() => VIGOR, detail:'PF temporanei', econ:'action'},
         {id:'bless', n:'Benedizione dell\'Oscuro', short:'Benedizione', sub:'Quando un nemico va a 0 PF', info:'feat:bless', amount:() => BLESS, detail:'PF temporanei'}
       ],
 
@@ -94,7 +94,7 @@ Sheet.start({
                 {kind:'msg', label:'Svantaggio a chi ti attacca', title:'Fortunato', msg:(c, left) => `svantaggio al tiro per colpire contro di te • punti rimasti: ${left}`}]}
       ],
 
-      combatGuide:{title:'Il tuo turno', steps:[
+      combatGuide:{title:'Consigli per il turno', steps:[
         ['Prima dello scontro', `Vigore Immondo: ${VIGOR} PF temporanei.`],
         ['Turno 1', 'Azione bonus: Maleficio sul nemico più forte. Azione: Deflagrazione Occulta sullo stesso bersaglio.'],
         ['Se ti arrivano addosso', 'Azione bonus: Armatura di Agathys al posto del Maleficio, poi Deflagrazione.'],
