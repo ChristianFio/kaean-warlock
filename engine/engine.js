@@ -812,7 +812,21 @@ function start(DEF){
   const fsRoot = document.documentElement;
   const fsOn = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
   const fsApp = window.matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches || navigator.standalone === true;
+  // Keep the screen on while the sheet is full screen (or opened as an installed app)
+  let wakeLock = null, wakeBusy = false;
+  async function syncWake(){
+    if (wakeBusy) return;
+    const want = (fsOn() || fsApp) && document.visibilityState === 'visible';
+    wakeBusy = true;
+    try {
+      if (want && !wakeLock && navigator.wakeLock){ wakeLock = await navigator.wakeLock.request('screen'); wakeLock.addEventListener('release', () => { wakeLock = null; }); }
+      else if (!want && wakeLock){ const w = wakeLock; wakeLock = null; await w.release(); }
+    } catch (e) { wakeLock = null; }
+    wakeBusy = false;
+  }
+  document.addEventListener('visibilitychange', syncWake);
   function renderFs(){
+    syncWake();
     const b = document.getElementById('fsbtn'), can = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled) && !fsApp;
     b.hidden = !can; fsRoot.classList.toggle('fs-ok', can);
     b.setAttribute('aria-pressed', fsOn() ? 'true' : 'false');
