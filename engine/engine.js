@@ -187,7 +187,7 @@ function start(DEF){
   let base = null; try { base = JSON.parse(store.get(BASE_KEY) || 'null'); } catch (e) {}
   // Until the first remote snapshot arrives nothing is written: a stale or empty device must never overwrite the shared copy.
   // Without a stored base, the reference is the state this page loaded with, so only what was edited here can win.
-  let es = null, syncState = DEF.firebase ? 'saving' : 'local', saving = false, saveAgain = false, saveTimer = null, retryTimer = null, retryMs = 4000, ready = false, ref = JSON.parse(JSON.stringify(S)), tooOld = false;
+  let es = null, syncState = DEF.firebase ? 'saving' : 'local', saving = false, saveAgain = false, saveTimer = null, retryTimer = null, retryMs = 4000, ready = false, ref = JSON.parse(JSON.stringify(S)), tooOld = false, warnedOld = false;
   const BK_KEY = KEY + ':backups';
   function backup(){
     let list = []; try { list = JSON.parse(store.get(BK_KEY) || '[]'); } catch (e) {}
@@ -197,7 +197,8 @@ function start(DEF){
   function setBase(o){ base = JSON.parse(JSON.stringify(o)); store.set(BASE_KEY, JSON.stringify(base)); }
   function persist(){ store.set(KEY, JSON.stringify(S)); }
   function commit(opts = {}){
-    S.updatedAt = Date.now();
+    // Always later than anything already seen, even if this device's clock is behind
+    S.updatedAt = Math.max(Date.now(), num(S.updatedAt) + 1, num(base && base.updatedAt) + 1);
     const json = JSON.stringify(S);
     if (opts.undo !== false && json !== lastJson){ UNDO.push(lastJson); if (UNDO.length > 30) UNDO.shift(); }
     lastJson = JSON.stringify(S);
@@ -225,9 +226,12 @@ function start(DEF){
     if (saveAgain){ saveAgain = false; flush(); }
   }
   function onRemote(remote){
+    // A snapshot older than the copy this device already has is out of date: skip it
+    if (base && isObj(remote) && num(remote.updatedAt) < num(base.updatedAt)) return;
     ready = true;
     if (remote == null){ flush(); return; }
     if (isObj(remote) && num(remote.ver) > VER){ tooOld = true; syncState = 'error'; renderSync(); toast('La scheda è stata aggiornata su un altro dispositivo: ricarica la pagina.'); return; }
+    if (isObj(remote) && num(remote.ver) < VER && isObj(remote.fx) && !warnedOld){ warnedOld = true; toast('Un altro dispositivo ha aperta una versione vecchia della scheda: ricaricala lì.'); }
     const up = upgrade(remote), R = up.state;
     if (base && norm(base) === norm(R) && !up.changed){ if (norm(S) !== norm(base)) flush(); else { syncState = 'synced'; renderSync(); } return; }
     const local = S, b = sanitize(base || ref), merged = JSON.parse(JSON.stringify(R));
@@ -245,9 +249,23 @@ function start(DEF){
     if (!DEF.firebase || !window.EventSource) { syncState = 'local'; renderSync(); return; }
     try { if (es) es.close(); } catch (e) {}
     es = new EventSource(DEF.firebase);
-    const refetch = () => fetch(DEF.firebase).then(r => r.json()).then(onRemote).catch(() => {});
-    es.addEventListener('put', e => { try { const m = JSON.parse(e.data); if (m.path === '/') onRemote(m.data); else refetch(); } catch (x) {} });
-    es.addEventListener('patch', refetch);
+    // Firebase sends the whole document first, then only the parts that change: apply them in order
+    // to a local copy instead of refetching, so an older answer can never arrive after a newer one
+    let doc = null;
+    const apply = (path, data, merge) => {
+      const keys = path.split('/').filter(Boolean);
+      if (!keys.length){ doc = merge && isObj(doc) && isObj(data) ? {...doc, ...data} : data; return; }
+      if (!isObj(doc)) doc = {};
+      let o = doc;
+      for (const k of keys.slice(0, -1)){ if (!isObj(o[k]) && !Array.isArray(o[k])) o[k] = {}; o = o[k]; }
+      const last = keys[keys.length - 1];
+      if (merge && isObj(o[last]) && isObj(data)) Object.assign(o[last], data);
+      else if (data === null) { if (Array.isArray(o)) o[last] = null; else delete o[last]; }
+      else o[last] = data;
+    };
+    const ev = merge => e => { try { const m = JSON.parse(e.data); apply(m.path, m.data, merge); onRemote(doc == null ? null : JSON.parse(JSON.stringify(doc))); } catch (x) {} };
+    es.addEventListener('put', ev(false));
+    es.addEventListener('patch', ev(true));
     es.addEventListener('cancel', () => { syncState = 'readonly'; renderSync(); });
     es.onerror = () => { if (es.readyState === 2){ syncState = 'error'; renderSync(); setTimeout(connect, 5000); } };
   }
@@ -852,7 +870,7 @@ function start(DEF){
     const was = S.log[0];
     S = sanitize(JSON.parse(prev)); S.ver = VER; lastJson = JSON.stringify(S);
     closeSheet(); resultOpen = false; lastFollow = [];
-    S.updatedAt = Date.now(); lastJson = JSON.stringify(S); persist(); render(); queueSave();
+    S.updatedAt = Math.max(Date.now(), num(S.updatedAt) + 1, num(base && base.updatedAt) + 1); lastJson = JSON.stringify(S); persist(); render(); queueSave();
     toast(`Annullato${was ? ': ' + was.label : ''}`);
   }
   function toast(msg){

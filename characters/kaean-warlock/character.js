@@ -253,6 +253,9 @@ Sheet.start({
       const arm = (Array.isArray(s.items) ? s.items : []).find(i => i && i.n === INIT_ITEMS[0].n);
       if (arm && /^CA 12 \+ Des = \d+\./.test(arm.t || '')) arm.t = INIT_ITEMS[0].t;
     }
+    // A v5+ document rewritten by an old page still open somewhere keeps ver 4 but already has the new fields:
+    // converting it again would reset slots, effects and resources
+    if (from < 5 && s.fx && s.res) from = 5;
     if (from < 5){
       s.slots = {l2:typeof s.slots === 'number' ? s.slots : 0};
       s.res = {luck:s.luck || 0, cunning:s.cunning ? 1 : 0, rebuke:s.rebuke ? 1 : 0};
