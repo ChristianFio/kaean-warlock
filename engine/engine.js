@@ -409,7 +409,7 @@ function start(DEF){
     const id = t.dataset.id, sp = id && spellBy(id);
     switch (a){
       case 'atk': { const k = ATTACKS.find(x => x.id === t.dataset.k); return k && {k:t.dataset.econ || 'action', label:k.n}; }
-      case 'spatk': case 'concset': return sp && {k:econOf(sp), label:sp.n};
+      case 'spatk': case 'concset': return sp && {k:econOf(sp), label:sp.n, multi:a === 'spatk' && !!sp.rays};
       case 'spdmg': return sp && sp.l === 0 && !sp.atk ? {k:econOf(sp), label:sp.n} : null;
       case 'cast': case 'spslot': return sp && {k:econOf(sp), label:sp.n, slot:true};
       case 'spfree': return sp && {k:econOf(sp), label:sp.n};
@@ -422,12 +422,33 @@ function start(DEF){
   // Using the action or bonus action again means a new turn has started
   function markTurn(c){
     if (!c || !c.k) return;
-    // Repeating the same thing within a minute (the rays of one spell) stays in the same turn
-    const now = Date.now(), same = turn[c.k] === c.label && now - (turn.at || 0) < 60000;
-    if ((c.k === 'action' || c.k === 'bonus') && turn[c.k] && !same) turn = freshTurn();
-    turn[c.k] = c.label || 'usata'; turn.at = now;
+    if (!turn[c.k]) turn[c.k] = c.label || 'usata';
     if (c.slot && !turn.slot) turn.slot = c.label;
     saveTurn();
+  }
+  // Once something is used, the buttons that need the same action disappear until Nuovo turno
+  const NOCOST = ['info', 'resinfo', 'iteminfo'];
+  function applyTurnFilter(){
+    const showAll = turn.all;
+    ['#tab-combat', '#tab-spells'].forEach(sel => {
+      const root = document.querySelector(sel); if (!root) return;
+      root.querySelectorAll('button[data-a]').forEach(b => {
+        if (b.closest('.turnbox') || NOCOST.includes(b.dataset.a)) return;
+        const c = costOf(b.dataset.a, b);
+        const spent = !showAll && c && c.k && ((turn[c.k] && !(c.multi && turn[c.k] === c.label)) || (c.slot && turn.slot));
+        b.classList.toggle('tspent', !!spent);
+        if (spent) b.dataset.spent = '1'; else delete b.dataset.spent;
+      });
+      if (sel !== '#tab-combat') return;
+      root.querySelectorAll('.resline, .atk').forEach(row => {
+        const btns = [...row.querySelectorAll('button[data-a]')].filter(b => !NOCOST.includes(b.dataset.a));
+        row.classList.toggle('tspent', btns.length > 0 && btns.some(b => b.dataset.spent) && btns.every(b => b.dataset.spent || /dmg/.test(b.dataset.a)));
+      });
+      root.querySelectorAll(':scope > .panel:not(.turnbox):not(details)').forEach(pn => {
+        const rows = pn.querySelectorAll('.resline, .atk');
+        pn.classList.toggle('tspent', rows.length > 0 && [...rows].every(r => r.classList.contains('tspent')));
+      });
+    });
   }
   const turnLeft = () => ECON.filter(([k]) => k !== 'move' && !turn[k]);
   const turnStarted = () => !!(turn.action || turn.bonus || turn.reaction);
@@ -440,7 +461,8 @@ function start(DEF){
     return `<div class="panel span2 turnbox">
       <h2>Questo turno <button class="btn sm" data-a="turnnew">Nuovo turno</button></h2>
       <div class="econ">${ECON.filter(([k]) => k !== 'move').map(([k, n]) => `<div class="pill${turn[k] ? ' used' : ''}"><b>${n}</b><span>${turn[k] ? esc(turn[k]) : 'libera'}</span></div>`).join('')}</div>
-      <p class="muted turnline">${turnSummary()} Si aggiorna da solo a ogni attacco o incantesimo, e riparte quando usi di nuovo l'azione o l'azione bonus.</p>
+      <p class="muted turnline">${turnSummary()}${turnStarted() ? ' Quello che hai già usato è nascosto fino a Nuovo turno.' : ''}</p>
+      ${turnStarted() ? `<button class="linkbtn" data-a="turnall">${turn.all ? 'Nascondi quello che hai già usato' : 'Mostra tutto'}</button>` : ''}
     </div>`;
   }
   function resLine(r){
@@ -628,8 +650,9 @@ function start(DEF){
     t.textContent = l.total; t.className = 'sealn' + (l.kind ? ' ' + l.kind : '') + (String(l.total).length > 2 ? ' long' : '');
     document.getElementById('r-lab').textContent = l.label;
     document.getElementById('r-det').textContent = l.detail;
+    requestAnimationFrame(() => document.body.style.setProperty('--res-h', r.offsetHeight + 'px'));
     const rt = document.getElementById('r-turn'); if (rt){ rt.hidden = !turnStarted(); rt.textContent = turnStarted() ? turnSummary() : ''; }
-    document.getElementById('r-fol').innerHTML = lastFollow.map(f => `<button class="btn sm${f.p ? ' primary' : ''}" data-a="${f.a}"${f.k ? ` data-k="${f.k}"` : ''}${f.id ? ` data-id="${f.id}"` : ''}${f.m ? ` data-m="${f.m}"` : ''}>${esc(f.t)}</button>`).join('') + (UNDO.length ? '<button class="btn sm undo" data-a="undo">Annulla</button>' : '');
+    document.getElementById('r-fol').innerHTML = lastFollow.map(f => `<button class="btn sm${f.p ? ' primary' : ''}" data-a="${f.a}"${f.k ? ` data-k="${f.k}"` : ''}${f.id ? ` data-id="${f.id}"` : ''}${f.m ? ` data-m="${f.m}"` : ''}>${esc(f.t)}</button>`).join('') + (UNDO.length ? '<button class="btn sm undo" data-a="undo">Annulla</button>' : '') + (turnStarted() ? '<button class="btn sm" data-a="turnnew">Nuovo turno</button>' : '');
     if (flash){ r.classList.remove('flash'); void r.offsetWidth; r.classList.add('flash'); flash = false; }
   }
 
@@ -698,7 +721,7 @@ function start(DEF){
     const ae = document.activeElement, key = ae && ae.dataset && (ae.dataset.a || ae.dataset.sub || ae.dataset.tab) ? ['a', 'id', 'k', 'l', 'i', 'c', 'n', 'sub', 'tab', 'd', 'u'].map(x => ae.dataset[x] ?? '').join('|') : null, inSheet = ae && ae.closest && ae.closest('#sheet');
     renderHeader(); renderNav();
     renderCombat(); renderSheet(); renderSpells(); renderFeat(); renderInv(); renderNotes(); renderTrack();
-    renderSheetUI(false); renderResult();
+    renderSheetUI(false); renderResult(); applyTurnFilter();
     if (key && !document.activeElement.closest('body > *')) {
       const el = [...document.querySelectorAll('[data-a],[data-sub],[data-tab]')].find(b => ['a', 'id', 'k', 'l', 'i', 'c', 'n', 'sub', 'tab', 'd', 'u'].map(x => b.dataset[x] ?? '').join('|') === key && (!inSheet || b.closest('#sheet')));
       if (el && !el.disabled) el.focus({preventScroll:true});
@@ -878,7 +901,8 @@ function start(DEF){
       const a = t.dataset.a, id = t.dataset.id, val = () => parseInt(hpBuf, 10), fromBar = !!t.closest('#r-fol');
       markTurn(costOf(a, t));
       switch (a){
-        case 'turnnew': turn = freshTurn(); saveTurn(); render(); break;
+        case 'turnnew': turn = {...freshTurn(), all:turn.all}; saveTurn(); resultOpen = false; render(); window.scrollTo(0, 0); break;
+        case 'turnall': turn.all = !turn.all; saveTurn(); render(); break;
         case 'fullscreen': toggleFs(); break;
         case 'close': closeSheet(); render(); break;
         case 'rclose': resultOpen = false; renderResult(); break;
@@ -889,7 +913,7 @@ function start(DEF){
         case 'goslots': if (tab !== 'combat') resultOpen = false; tab = 'combat'; render(); { const p = document.getElementById('slotpanel'); if (p) p.scrollIntoView({block:'center'}); } break;
         case 'undo': undo(); break;
         case 'export': exportData(); break;
-        case 'init': turn = freshTurn(); saveTurn(); d20('Iniziativa', M.des); break;
+        case 'init': turn = {...freshTurn(), all:turn.all}; saveTurn(); d20('Iniziativa', M.des); break;
         case 'check': d20('Prova di ' + ABN[t.dataset.k], M[t.dataset.k]); break;
         case 'save': { const k = t.dataset.k; d20('TS ' + ABN[k], M[k] + (SAVES.has(k) ? PB : 0)); break; }
         case 'skill': { const sk = SKILLS.find(s => s[0] === t.dataset.n); if (sheet) closeSheet(); d20(sk[0], skillMod(sk[1], sk[2])); break; }

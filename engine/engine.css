@@ -25,7 +25,7 @@ body{
   background-image:radial-gradient(ellipse 120% 320px at 50% 0,rgba(138,28,28,.3),transparent 70%);background-repeat:no-repeat;
   padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 22px);
 }
-body.has-result{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 170px)}
+body.has-result{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + var(--res-h,170px) + 16px)}
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 input,textarea{font:inherit;color:var(--ink)}
 :focus-visible{outline:2px solid var(--wax-hi);outline-offset:2px}
@@ -428,3 +428,5 @@ ol.notes{list-style:none;margin:0;padding:0;counter-reset:nt}
 .linkbtn{border:0;background:none;padding:0;color:var(--wax);text-decoration:underline;font:inherit;cursor:pointer}
 
 .result .rturn{margin-top:3px;font-size:.84rem;font-weight:600;color:var(--wax)}
+.tspent{display:none !important}
+.turnbox .linkbtn{margin-top:-4px}
