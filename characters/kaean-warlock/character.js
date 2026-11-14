@@ -20,6 +20,14 @@ const INIT_ITEMS = [
   {n:'Registro dell\'Ufficio', q:1, t:'Oggetto personale. Il secondo registro, nascosto nella carrozza. Mai riletto.'},
   {n:'Lettere di Elena', q:1, t:'Oggetto personale. Molte ancora chiuse.'}
 ];
+// History told by the master. Exact dates are unknown: they are spread across each year.
+const MARK_HISTORY = [
+  ['C', '2014-06-01T12:00', 'da quando ne ha memoria'],
+  ...[['R', '01-14T09:40'], ['I', '04-02T22:15'], ['C', '06-27T07:05'], ['L', '10-09T17:30']].map(([l, d]) => [l, '2023-' + d, '1° anno dei cambi, data indicativa']),
+  ...[['H', '01-22T15:10'], ['C', '03-30T06:45'], ['S', '07-11T20:20'], ['R', '09-03T11:35'], ].map(([l, d]) => [l, '2024-' + d, '2° anno dei cambi, data indicativa']),
+  ...[['A', '01-05T18:50'], ['C', '03-19T08:25'], ['T', '05-28T23:40'], ['N', '08-14T13:05'], ['C', '11-02T10:15']].map(([l, d]) => [l, '2025-' + d, '3° anno dei cambi, data indicativa']),
+  ...[['N', '02-11T19:30'], ['Z', '05-06T07:50'], ['R', '08-20T16:40'], ['C', '10-27T21:05']].map(([l, d]) => [l, '2026-' + d, 'quest\'anno, data indicativa'])
+];
 const OLD_ITEMS = ['Armatura di cuoio', 'Focus arcano (sfera)', 'Libro (sapere occulto)', 'Dotazione da studioso', 'Abiti pregiati neri', 'Mele', 'Cesoie e attrezzi da giardino'];
 
 Sheet.start({
@@ -27,7 +35,7 @@ Sheet.start({
   storageKey:'kaean-warlock-v1',
   firebase:'https://kaean-scheda-default-rtdb.europe-west1.firebasedatabase.app/kaean-warlock.json',
   serviceWorker:'sw.js',
-  version:5,
+  version:6,
   title:'Kaean Warlock',
   name:'Kaean',
   subtitle:'Tiefling di Aurena, warlock dell\'Immondo, 3° livello',
@@ -217,7 +225,7 @@ Sheet.start({
       ],
 
       journals:[{id:'mark', n:'Il segno sul polso', field:'Nuova lettera', submit:'Annota il cambio', listTitle:'Registro delle lettere', doneLabel:'Il segno cambia',
-        help:'Una lettera in corsivo elegante. A volte resta uguale per giorni, a volte cambia tre volte nella stessa giornata.',
+        help:'Una lettera in corsivo elegante. È stata una C da quando ne hai memoria; da quattro anni cambia a intervalli irregolari. Il cambio non fa male: te ne accorgi solo guardandola.',
         empty:'Ancora vuoto. Ogni volta che la lettera cambia, annotala con la data e cosa stava succedendo: magari prima o poi salta fuori uno schema.'}],
       counters:[{id:'debt', n:'Il debito col Creditore', sub:'La cifra sull\'ultimo foglio trovato in cucina', steps:[-1, 1, 10],
         note:'Non ha effetti di regole: segnalo quando la master te lo chiede, o quando usi il potere in modo vistoso.'}],
@@ -253,6 +261,12 @@ Sheet.start({
       s.counters = {debt:s.debt || 0};
       s.journals = {mark:Array.isArray(s.mark) ? s.mark : s.mark && typeof s.mark === 'object' ? Object.values(s.mark) : []};
       ['luck', 'cunning', 'rebuke', 'hexOn', 'aoa', 'hd', 'debt', 'mark'].forEach(k => delete s[k]);
+    }
+    if (from < 6){
+      s.journals = s.journals && typeof s.journals === 'object' ? s.journals : {};
+      const list = Array.isArray(s.journals.mark) ? s.journals.mark : s.journals.mark && typeof s.journals.mark === 'object' ? Object.values(s.journals.mark) : [];
+      if (!list.some(e => e && /^h\d+$/.test(e.id))) MARK_HISTORY.forEach(([l, d, n], i) => list.push({id:'h' + i, l, t:Date.parse(d + ':00Z'), n}));
+      s.journals.mark = list;
     }
   }
 });
