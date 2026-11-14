@@ -37,6 +37,8 @@ Sheet.start({
   serviceWorker:'sw.js',
   version:6,
   title:'Kaean Warlock',
+  avatar:'characters/kaean-warlock/avatar.jpg',
+  portrait:'characters/kaean-warlock/portrait.jpg',
   name:'Kaean',
   subtitle:'Tiefling di Aurena, warlock dell\'Immondo, 3° livello',
   level:3, hitDie:8, hp:24, speed:'9 m',

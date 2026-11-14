@@ -796,7 +796,7 @@ function start(DEF){
       </section>
       ${TRACK ? '<section id="tab-track" class="grid" hidden></section>' : ''}
       ${D.guide ? `<section id="tab-guide" class="grid" hidden>${guide}</section>` : ''}
-      <section id="tab-story" class="grid" hidden>${D.story ? `<div class="panel story span2">${D.story}</div>` : ''}${bg}</section>
+      <section id="tab-story" class="grid" hidden>${DEF.portrait ? `<figure class="panel portrait span2"><img src="${esc(DEF.portrait)}" alt="Ritratto di ${esc(DEF.name)}" loading="lazy"></figure>` : ''}${D.story ? `<div class="panel story span2">${D.story}</div>` : ''}${bg}</section>
     </main>
     <div class="result" id="result" hidden>
       <button class="sealn" id="r-total" data-a="dice" aria-label="Apri i dadi e lo storico"></button>

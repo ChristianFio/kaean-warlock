@@ -1,6 +1,6 @@
 // Offline copy of the sheet: pages and scripts from the network first, the cache when there is no connection.
-const CACHE = 'sheet-v16';
-const CORE = ['./', 'index.html', 'engine/engine.js?v=16', 'engine/engine.css?v=16', 'characters/kaean-warlock/texts.js?v=16', 'characters/kaean-warlock/character.js?v=16', 'characters/kaean-warlock/theme.css?v=16', 'manifest.webmanifest', 'icon-192.png'];
+const CACHE = 'sheet-v17';
+const CORE = ['./', 'index.html', 'engine/engine.js?v=17', 'engine/engine.css?v=17', 'characters/kaean-warlock/texts.js?v=17', 'characters/kaean-warlock/character.js?v=17', 'characters/kaean-warlock/theme.css?v=17', 'manifest.webmanifest', 'icon-192.png', 'characters/kaean-warlock/avatar.jpg'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {
