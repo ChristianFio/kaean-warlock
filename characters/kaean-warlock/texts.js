@@ -76,7 +76,7 @@ window.SheetTexts = {
 
 *All'anagrafe risulta come Kaeraldo. È un funzionario della Congregazione dell'Ispirazione di Simpoh e, sulla carta, è ancora in missione.*
 
-Kaean è un tiefling di trent'anni, alto e magro, con la pelle color ambra, i capelli rossi e due corna corte e scure, piegate all'indietro. In pubblico porta sempre occhiali dalle lenti scure. Chi riesce a guardarci dietro vede occhi gialli con la pupilla verticale, come quelli di un serpente.
+Kaean è un tiefling di retaggio infernale: nelle sue vene scorre, lontano, il sangue dei diavoli dei Nove Inferi. Ha trent'anni, è alto e magro, con la pelle color ambra, i capelli rossi e due corna corte e scure, piegate all'indietro. In pubblico porta sempre occhiali dalle lenti scure. Chi riesce a guardarci dietro vede occhi gialli con la pupilla verticale, come quelli di un serpente.
 
 Veste sempre di nero, con abiti eleganti e stivali lucidi. Si muove in modo morbido e sinuoso, quasi da serpente, e quando si siede sembra sciogliersi sulla sedia. Parla a voce bassa e con molta ironia, tanto che spesso chi lo ascolta non capisce se è stato appena insultato.
 

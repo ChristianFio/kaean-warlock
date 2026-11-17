@@ -40,7 +40,7 @@ Sheet.start({
   avatar:'characters/kaean-warlock/avatar.jpg',
   portrait:'characters/kaean-warlock/portrait.jpg',
   name:'Kaean',
-  subtitle:'Tiefling di Aurena, warlock dell\'Immondo, 3° livello',
+  subtitle:'Tiefling infernale di Aurena, warlock dell\'Immondo, 3° livello',
   level:3, hitDie:8, hp:24, speed:'9 m',
   abilities:{for:10, des:14, cos:14, int:14, sag:11, car:18},
   saves:['sag', 'car'],
